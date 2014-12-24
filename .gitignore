@@ -26,7 +26,8 @@ $RECYCLE.BIN/
 .LSOverride
 
 # Icon must ends with two \r.
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -40,3 +41,6 @@ Icon
 
 # ignore images
 image/
+
+#node modules
+node_modules/

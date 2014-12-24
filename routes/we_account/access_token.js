@@ -37,3 +37,8 @@ setInterval(function(){
         access_token = data.access_token;
     });
 },1000*3600*1.5);
+getAccess_token(function(data){
+    data = JSON.parse(data);
+    console.log(data);
+    access_token = data.access_token;
+});

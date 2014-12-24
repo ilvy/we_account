@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>test</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+</head>
+<body>
+    test
+    <button id="upload">上传照片</button>
+<!--<input type="file" name="media" method="post" multiple size="10" value="多图上传"/>-->
+    <!--<input type="button" value="上传" id="upload"/>-->
+    <!--<form method="post" action="http://file.api.weixin.qq.com/cgi-bin/media/upload">-->
+        <!--<input type="text" name="access_token" style="visibility: hidden;" value="D3E-YnYHAHuD-UtZBM9KGcXzTLdTf9ImLOtk5zv7Di3BdGGVLhRguXEFImaOmBQR4Tg-FHwpeX1dZEyTjcKfabG9wE9IF8QbugYs91N--Hg"/>-->
+        <!--<input type="text" name="type" style="visibility: hidden;" value="image"/>-->
+        <!--<input type="file" name="media" method="post" multiple size="10" value="多图上传"/>-->
+        <!--<input type="submit" value="提交">-->
+    <!--</form>-->
+</body>
+<!--<script src="./javascripts/cordova.js"></script>-->
+<script src="./javascripts/jquery.js"></script>
+<script src="./javascripts/ajaxupload.js"></script>
+<script>
+    $(document).ready(function(){
+        var access_token = 'D3E-YnYHAHuD-UtZBM9KGcXzTLdTf9ImLOtk5zv7Di3BdGGVLhRguXEFImaOmBQR4Tg-FHwpeX1dZEyTjcKfabG9wE9IF8QbugYs91N--Hg';
+//        $("#upload").on("click",function(){
+//            $.ajax({
+//                url:"http://192.168.60.216:880/we_account/upload",
+//                type:"post",
+//                success:function(data){
+//                    console.log(data);
+//                },
+//                error:function(error){
+//                    console.log(error);
+//                }
+//            })
+//        });
+        $(function(){
+            new AjaxUpload("#upload",{
+                action:"http://192.168.60.216:880/we_account/upload",
+                name:'file',
+                onSubmit:function(file,ext){
+                    console.log(file +" "+ ext);
+
+                },
+                onComplete:function(file,res){
+                    alert(res);
+                    console.log(res);
+                    $("#imgDiv").html('<img  src="'+res.response+'" width="300" height="300"/>');
+                }
+            })
+        })
+    });
+</script>
+</html>

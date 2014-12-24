@@ -21,11 +21,12 @@ var parser = new xml.SaxParser(function(cb) {
 //            setTimeout(function (){parser.resume();}, 200); //resume the parser
         console.log("onEndElementNS--"+elem+":"+resultObj[elem])
     });
-    cb.onCharacters(function(chars) {
+    cb.onCharacters(function(chars) { // linux 上chars也是进了两次
         console.log("*************************");
         if(!isCdata){
             resultObj[currEle] = chars.toString();
         }
+        isCdata = true;
         console.log(currEle+":"+resultObj[currEle]);
         util.log('<CHARS>'+chars+"</CHARS>");
     });

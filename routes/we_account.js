@@ -6,7 +6,12 @@ var express = require("express"),
     router = express.Router(),
     crypto = require("crypto"),
     checkWeAuth = require("./we_account/wexin_check").check,
-    xmlParser = require("./we_account/util/xml_parser");
+    xmlParser = require("./we_account/util/xml_parser"),
+    upload = require("formidable-upload"),
+    formidable = require("formidable"),
+    path = require("path"),
+    fs = require("fs"),
+    dispatcher = require("./we_account/business/dispatcher");
 var TOKEN = 'jxfgx_20140526';
 router.get("/",function(req,res){
     var query = req.query;
@@ -58,8 +63,9 @@ router.post("/",function(req,res){
                     '<MsgType><![CDATA['+result["MsgType"]+']]></MsgType>' +
                     '<Content><![CDATA['+"请求已接收，处理中，请稍后..."+']]></Content>' +
                     '</xml>';//result["FromUserName"];
-                res.write(replyXml);
-                res.end();
+//                res.write(replyXml);
+//                res.end();
+                dispatcher.dispatch(result,res);
             },resultObj);
         });
 //    }else{
@@ -68,11 +74,46 @@ router.post("/",function(req,res){
 //    }
 
 });
+
 //console.log(crypto.createHmac("sha1","21212121212hahahhehe").digest().toString('base64'));
 //字典序排列
 //[0,1,5,10,15].sort().forEach(function(item){
 //    console.log(item);
 //});
+
+router.get("/publish",function(req,res){
+    res.redirect("../test.html");
+});
+
+router.post("/upload",function(req,res){
+    console.log(req);
+    var form = new formidable.IncomingForm();
+    form.uploadDir = __dirname+'/public/images';
+    //form.uploadDir = __dirname + '/';
+
+    form.on('file', function(field, file) {
+        //rename the incoming file to the file's name
+        fs.rename(file.path, form.uploadDir + "/" + file.name);
+    })
+        .on('error', function(err) {
+            console.log("an error has occured with form upload");
+            console.log(err);
+//            request.resume();
+        })
+        .on('aborted', function(err) {
+            console.log("user aborted upload");
+        })
+        .on('end', function() {
+            console.log('-> upload done');
+        });
+
+    form.parse(req,function(err,fields,files){
+//            fs.renameSync(files.upload.path,"/image/test.png");
+        console.log(err);
+        res.send("upload success");
+    });
+})
+
 
 router.get("/xml",function(req,res){
     xmlParser.parseXml("<xml><ToUserName><![CDATA[gh_d28b25ec1197]]></ToUserName>" +

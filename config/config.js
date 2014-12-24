@@ -4,29 +4,24 @@
 var menusObj = {
     "button": [
         {
-            "type": "click",
-            "name": "今日歌曲",
-            "key": "V1001_TODAY_MUSIC"
-        },
-        {
-            "name": "菜单",
-            "sub_button": [
+            name:"我要发布",
+            sub_button:[
                 {
-                    "type": "view",
-                    "name": "搜索",
-                    "url": "http://www.soso.com/"
+                    type:"view",
+                    name:"我有直播号",
+                    url:"http://120.24.224.144/we_account/publish"
                 },
                 {
-                    "type": "view",
-                    "name": "视频",
-                    "url": "http://v.qq.com/"
-                },
-                {
-                    "type": "click",
-                    "name": "赞一下我们",
-                    "key": "V1001_GOOD"
+                    type:"click",
+                    name:"申请直播号",
+                    key:"apply_account"
                 }
             ]
+        },
+        {
+            type:"click",
+            name:"进入直播间",
+            key:"enter-live-room"
         }
     ]
 };
