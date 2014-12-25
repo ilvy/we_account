@@ -7,7 +7,6 @@ var express = require("express"),
     crypto = require("crypto"),
     checkWeAuth = require("./we_account/wexin_check").check,
     xmlParser = require("./we_account/util/xml_parser"),
-    upload = require("formidable-upload"),
     formidable = require("formidable"),
     path = require("path"),
     fs = require("fs"),
@@ -86,11 +85,10 @@ router.get("/publish",function(req,res){
 });
 
 router.post("/upload",function(req,res){
-    console.log(req);
+    //console.log(req);
     var form = new formidable.IncomingForm();
     form.uploadDir = __dirname+'';
     console.log(process.cwd()+" ******** "+__dirname);
-    //form.uploadDir = __dirname + '/';
 
     form.on('file', function(field, file) {
         //rename the incoming file to the file's name
