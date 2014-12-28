@@ -7,12 +7,13 @@ var boxes = [],
 
 $(document).ready(function(){
     boxes = $(".box");//sorted date source
+    datas = $(".box");
 })
 $(window).on("load",function(){
     waterfall = new Waterfall();
 });
 $(window).on("resize",function(){
-    waterfall.init();
+//    waterfall.init();
 });
 
 var Waterfall = function(){
@@ -57,10 +58,11 @@ Waterfall.prototype.setPosition = function(add_quantity){
         _this = this,
         len = _this.box_quantity + (add_quantity?add_quantity:0) - 1,
         i = 0;
+    printArray("start",hs);
     boxes.each(function(i,item){
 //        i = index;
-        if(add_quantity){
-            i = i + _this.box_quantity;
+        if(add_quantity && i < _this.box_quantity){
+            return;
         }
         box_h = boxes.eq(i).outerHeight();
         if(i < colNum){
@@ -86,9 +88,11 @@ Waterfall.prototype.setPosition = function(add_quantity){
             if(i == len){//初始化加载器
                 asyncLoader = new AsyncLoader();
                 _this.lastPosition = {top:min_H,left:0};
+                printArray("end",hs);
             }
         }
     });
+    printArray("end",hs);
     this.box_quantity += (add_quantity?add_quantity:0);//当前瀑布流卡片总数
 }
 
@@ -99,7 +103,7 @@ Waterfall.prototype.asyncLoader = function(){
         $(this).clone().css(_this.lastPosition).appendTo(".waterfall");
     })
     boxes = $(".box");
-    this.setPosition(boxes.length / 2);
+    this.setPosition(loadDatas.length);
 }
 
 
@@ -130,11 +134,11 @@ var AsyncLoader = Waterfall.Loader = function(){
 
 AsyncLoader.prototype.init = function(){
     //
-    $(window).on("scroll",function(){
-        if($("body").scrollTop() + $(window).height() >= 0.8 * $(document).height()){
-            waterfall.asyncLoader();
-        }
-    })
+//    $(window).on("scroll",function(){
+//        if($("body").scrollTop() + $(window).height() >= 0.8 * $(document).height()){
+//            waterfall.asyncLoader();
+//        }
+//    })
 }
 
 AsyncLoader.prototype.setTheLastPos = function(){
@@ -142,5 +146,13 @@ AsyncLoader.prototype.setTheLastPos = function(){
 }
 
 AsyncLoader.prototype.load = function(){
-    return boxes;
+    return datas;
+}
+
+function printArray(str,arr){
+    var res = '';
+    for(var i in arr){
+        res += ","+arr[i]
+    }
+    console.log(str+":"+res);
 }

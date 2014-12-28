@@ -10,21 +10,32 @@
         }
         .box{
             position: absolute;
-            width: 200px;
+            border:1px solid #CCCCFF;
+            border-radius: 5px;
+            /*padding: 3px;*/
         }
         .box img{
-            width:98%;
-            margin-left:1%;
-	}
+            width:100%;
+            /*margin-left:1%;*/
+	    }
+        .box img:first-child{
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            /*margin-left:1%;*/
+	    }
         .box div{
             word-break:break-all;
             text-align:center;
-	}
+	    }
     </style>
 </head>
 <body>
+<div style="position: fixed;left: 0;top: 0;z-index: 10;">
+    <button onclick="load()">加载</button>
+</div>
     <section class="waterfall">
         <div class="box">
+            <div></div>
             <img src="images/img1.jpg" />
         </div>
         <div class="box">
@@ -36,6 +47,7 @@
         <div class="box">
             <img src="images/img1.jpg" />
             <div>kkkkkkkkkkkkkkkkjkfdjklfjdkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</div>
+            <img src="images/img2.jpg">
         </div>
         <div class="box">
             <img src="images/img2.jpg" />
@@ -48,6 +60,7 @@
         <div class="box">
             <img src="images/img3.jpg" />
             <div>kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</div>
+            <img src="images/img2.jpg">
         </div>
         <div class="box">
             <img src="images/img2.jpg" />
@@ -56,6 +69,7 @@
         <div class="box">
             <img src="images/img1.jpg" />
             <div>kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</div>
+            <img src="images/img2.jpg">
         </div>
         <div class="box">
             <img src="images/img3.jpg" />
@@ -68,6 +82,7 @@
         <div class="box">
             <img src="images/img1.jpg" />
             <div>kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</div>
+            <img src="images/img3.jpg">
         </div>
         <div class="box">
             <img src="images/img1.jpg" />
@@ -98,6 +113,8 @@
 <script src="javascripts/jquery.js"></script>
 <script src="javascripts/waterfall.js"></script>
 <script>
-    
+    function load(){
+        waterfall.asyncLoader();
+    }
 </script>
 </html>
