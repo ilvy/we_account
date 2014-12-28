@@ -89,11 +89,13 @@ router.post("/upload",function(req,res){
     var form = new formidable.IncomingForm();
     form.uploadDir = __dirname+'';
     console.log(process.cwd()+" ******** "+__dirname);
+    var newFileName = "test_"+new Date().getTime();//test换成用户的唯一识别
 
     form.on('file', function(field, file) {
         //rename the incoming file to the file's name
-        console.log( "rename:"+path.normalize(process.cwd()+"/public/images/" + file.name));
-        fs.rename(file.path, path.normalize(process.cwd()+"/public/images/" + file.name),function(err){
+        newFileName = newFileName + "." +file.name.split(".")[1];
+        console.log( "rename:"+path.normalize(process.cwd()+"/public/images/" + newFileName));
+        fs.rename(file.path, path.normalize(process.cwd()+"/public/images/" + newFileName),function(err){
             console.log("newPath:"+file.path);
         });
     })
@@ -111,8 +113,11 @@ router.post("/upload",function(req,res){
 
     form.parse(req,function(err,fields,files){
 //            fs.renameSync(files.upload.path,"/image/test.png");
-        console.log(err);
-        res.send("upload success");
+        if(err){
+            console.log(err);
+            res.send("err");
+        }
+        res.send(newFileName);
     });
 })
 

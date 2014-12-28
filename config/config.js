@@ -26,4 +26,10 @@ var menusObj = {
     ]
 };
 
+var dbConfig = {
+    host     : 'example.org',
+    user     : 'bob',
+    password : 'secret'
+};
+
 exports.menusObj = menusObj;
