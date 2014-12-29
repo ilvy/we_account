@@ -26,10 +26,13 @@ var menusObj = {
     ]
 };
 
-var dbConfig = {
-    host     : 'example.org',
-    user     : 'bob',
-    password : 'secret'
+var dbPoolConfig = {
+    host     : '120.24.224.144',
+    user     : 'root',
+    password : 'root@123',
+    database:'moment',
+    connectionLimit:10
 };
 
 exports.menusObj = menusObj;
+exports.dbPoolConfig = dbPoolConfig;
