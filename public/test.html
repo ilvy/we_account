@@ -47,7 +47,16 @@
             left: 35%;
             top: 0;
         }
-
+        #submit{
+            margin: 0 auto;
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid #CCCCFF;
+            background: #ffffff;
+        }
+        #submit:active{
+            background: purple;
+        }
     </style>
 </head>
 <body>
@@ -69,6 +78,7 @@
 
         </div>
     </div>
+    <input type="button" id="submit" value="确定"/>
 <!--<input type="file" name="media" method="post" multiple size="10" value="多图上传"/>-->
     <!--<input type="button" value="上传" id="upload"/>-->
     <!--<form method="post" action="http://file.api.weixin.qq.com/cgi-bin/media/upload">-->
@@ -82,6 +92,7 @@
 <script src="./javascripts/jquery.js"></script>
 <script src="./javascripts/ajaxupload.js"></script>
 <script>
+    var products = '',desc = '';
     $(document).ready(function(){
         var access_token = 'D3E-YnYHAHuD-UtZBM9KGcXzTLdTf9ImLOtk5zv7Di3BdGGVLhRguXEFImaOmBQR4Tg-FHwpeX1dZEyTjcKfabG9wE9IF8QbugYs91N--Hg';
 //        $("#upload").on("click",function(){
@@ -108,9 +119,30 @@
                     alert(res);
                     console.log(res);
                     $("#image_content").append('<div><img  src="images/'+res+'" width="300" height="300"/></div>');
+                    products?products += res + ";":products += res;
                 }
             })
         })
+
+        $("#submit").on("click",function(){
+            var desc = $(".edit-desc-content").html();//TODO 检验字符串合法性
+            var url = "http://120.24.224.144/we_account/publish",
+                    postData = {
+                        products:products,
+                        desc:desc
+                    };
+            $.ajax({
+                url:url,
+                type:"post",
+                data:postData,
+                success:function(data){
+                    console.log(data);
+                },
+                error:function(err){
+                    console.log(err);
+                }
+            });
+        });
     });
 </script>
 </html>

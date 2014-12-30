@@ -6,13 +6,15 @@ var mysql = require("mysql"),
 
 var pool = mysql.createPool(dbPoolConfig);
 
-var query = function(sql,callback){
+var query = function(sql,posts,callback){
+    sql = mysql.format(sql,posts);
+    console.log("sql:\n"+sql);
     pool.getConnection(function(err,connection){
         if(err){
             console.log(err);
             return;
         }
-        connection.query(sql,function(err,rows){
+        connection.query(sql,posts,function(err,rows){
             callback(err,rows);
             connection.release();
         });
@@ -21,10 +23,30 @@ var query = function(sql,callback){
 
 exports.query = query;
 
-query("select * from user",function(err,rows){
-    if(err){
-        console.log(err);
-    }else{
-        console.log(rows);
-    }
-})
+//query("select * from ?? where id = ?",['user',1],function(err,rows){
+//    if(err){
+//        console.log(err);
+//    }else{
+//        console.log(rows);
+//    }
+//});
+
+/**
+ * 调用存储过程测试
+ */
+//query("call pro_test()",[],function(err,rows){
+//    if(err){
+//        console.log(err);
+//    }else{
+//        console.log(rows);
+//    }
+//});
+
+
+//query("call pro_publish(?,?,?)",["img1.jpg;img2.jpg",'hhhhhhhhhhaaaaaaa',100],function(err,row){
+//    if(err){
+//        console.log(err);
+//    }else{
+//        console.log(row);
+//    }
+//});
