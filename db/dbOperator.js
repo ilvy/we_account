@@ -50,3 +50,10 @@ exports.query = query;
 //        console.log(row);
 //    }
 //});
+
+//query("call pro_check_register_by_weAccount(?)",['fdsfdfdsfdsfdsfdsfdfs'],function(err,rows){
+//    if(err){
+//        console.log(err);
+//    }
+//    console.log(rows);
+//});

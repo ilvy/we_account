@@ -15,4 +15,8 @@ function response(data,res){
     res.end();
 }
 
+function success(res){
+
+}
+
 exports.response = response;

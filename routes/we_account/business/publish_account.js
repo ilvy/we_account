@@ -21,8 +21,9 @@ function register(req,res){
 }
 
 function checkUser(open_id){
+    var openId = open_id;
     return function(cb){
-        dbOperator.query("call pro_check_register_by_weAccount(?)",[open_id],function(err,rows){
+        dbOperator.query("call pro_check_register_by_weAccount(?)",[openId],function(err,rows){
             if(err){
                 console.log(err);
             }
@@ -48,5 +49,5 @@ function publishProduct(req,res){
 
 exports.applyAccount = applyAccount;
 exports.publishProduct = publishProduct;
-
+exports.checkUser = checkUser;
 

@@ -4,19 +4,9 @@
 var menusObj = {
     "button": [
         {
+            type:"click",
             name:"我要发布",
-            sub_button:[
-                {
-                    type:"view",
-                    name:"我有直播号",
-                    url:"http://120.24.224.144/we_account/publish"
-                },
-                {
-                    type:"click",
-                    name:"申请直播号",
-                    key:"apply_account"
-                }
-            ]
+            key:"publish"
         },
         {
             type:"click",

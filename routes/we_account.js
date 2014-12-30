@@ -12,6 +12,7 @@ var express = require("express"),
     fs = require("fs"),
     dispatcher = require("./we_account/business/dispatcher"),
     publishAccount = require("./we_account/business/publish_account");
+var checkUser = require("./we_account/business/publish_account").checkUser;
 
 var TOKEN = 'jxfgx_20140526';
 router.get("/",function(req,res){
@@ -92,7 +93,7 @@ router.post("register",function(req,res){
 
 router.get("/publish",function(req,res){
     //判断用户是否存在账号，若无，返回注册界面，若已有账号，直接登录即可
-    res.redirect("../test.html");
+    res.redirect("/test.html");
 });
 
 router.post("/publish",function(req,res){

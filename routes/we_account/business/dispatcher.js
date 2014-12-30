@@ -5,7 +5,9 @@
 var applyAccount = require("./publish_account").applyAccount,
     response = require("../response/response").response,
     transitionManager = require("./transitionManager"),
-    transition = '';//apply_account、enter-live-room、apply_nice_num:申请靓号
+    transition = '',//apply_account、enter-live-room、apply_nice_num:申请靓号
+    checkUser = require("./publish_account").checkUser,
+    async = require("async");
 var niceNums = ['121212','438438','436436'];
 
 function dispatch(data,res){
@@ -44,6 +46,20 @@ function dispatch(data,res){
                     data.replyContent = "请输入想要进入的直播号(6位)";
                     transition = transitionManager.enter_live_room;
                     response(data,res);
+                }else if(data.EventKey == 'publish'){
+                    var open_id = data["FromUserName"];
+                    var funs = [checkUser(open_id),
+                                function response(results,cb){
+                                    if(results["count(1)"]){
+                                        res.redirect("/live-room-waterfall.html");
+                                    }else{
+                                        res.redirect("/register.html");
+                                    }
+                                }
+                        ];
+                    async.waterfall(funs,function(err,results){
+
+                    })
                 }
             }else if(data.Event == 'VIEW'){
                 break;
