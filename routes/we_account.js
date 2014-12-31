@@ -11,7 +11,8 @@ var express = require("express"),
     path = require("path"),
     fs = require("fs"),
     dispatcher = require("./we_account/business/dispatcher"),
-    publishAccount = require("./we_account/business/publish_account");
+    publishAccount = require("./we_account/business/publish_account"),
+    urlencode = require("urlencode");
 var checkUser = require("./we_account/business/publish_account").checkUser;
 
 var TOKEN = 'jxfgx_20140526';
@@ -93,7 +94,8 @@ router.post("register",function(req,res){
 
 router.get("/publish",function(req,res){
     //判断用户是否存在账号，若无，返回注册界面，若已有账号，直接登录即可
-    res.redirect("/test.html");
+    res.redirect("https://open.weixin.qq.com/connect/oauth2/authorize?" +
+        "appid=wxaef4aefd905a4662&redirect_uri=&response_type=code&scope=SCOPE&state=STATE#wechat_redirect");
 });
 
 router.post("/publish",function(req,res){
