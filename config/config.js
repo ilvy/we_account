@@ -4,9 +4,9 @@
 var menusObj = {
     "button": [
         {
-            type:"click",
+            type:"view",
             name:"我要发布",
-            key:"publish"
+            url:"http://120.24.224.144/we_account/publish"
         },
         {
             type:"click",
@@ -24,5 +24,11 @@ var dbPoolConfig = {
     connectionLimit:10
 };
 
+var serverConfig =  {
+    ip:"120.24.224.144",
+    port:'80'
+}
+
 exports.menusObj = menusObj;
 exports.dbPoolConfig = dbPoolConfig;
+exports.serverConfig = serverConfig;
