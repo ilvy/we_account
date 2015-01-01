@@ -4,6 +4,7 @@
 
 var express = require("express"),
     router = express.Router(),
+    https = require("https"),
     crypto = require("crypto"),
     checkWeAuth = require("./we_account/wexin_check").check,
     xmlParser = require("./we_account/util/xml_parser"),
@@ -12,7 +13,8 @@ var express = require("express"),
     fs = require("fs"),
     dispatcher = require("./we_account/business/dispatcher"),
     publishAccount = require("./we_account/business/publish_account"),
-    urlencode = require("urlencode");
+    urlencode = require("urlencode"),
+    appConfig = require("../config/config").appConfig;
 var checkUser = require("./we_account/business/publish_account").checkUser;
 
 var TOKEN = 'jxfgx_20140526';
@@ -94,8 +96,46 @@ router.post("register",function(req,res){
 
 router.get("/publish",function(req,res){
     //判断用户是否存在账号，若无，返回注册界面，若已有账号，直接登录即可
+    var redirect_uri = urlencode("http://120.24.224.144/goto_publish");
     res.redirect("https://open.weixin.qq.com/connect/oauth2/authorize?" +
-        "appid=wxaef4aefd905a4662&redirect_uri=&response_type=code&scope=SCOPE&state=STATE#wechat_redirect");
+        "appid="+appConfig.appId+"&redirect_uri="+redirect_uri+"&response_type=code&scope=SCOPE&state=STATE#wechat_redirect");
+});
+
+router.get("/goto_publish",function(req,resp){
+    var query = req.query;
+    var code = query.code,
+        status = query.status,
+        appId = appConfig.appId,
+        appSecret = appConfig.appSecret;
+    var openId ;
+    var url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='+appId+'&secret='+appSecret+'' +
+        '&code='+code+'&grant_type=authorization_code';
+    https.get(url,function(res){
+        var chunks = "";
+        res.on("data",function(data){
+            chunks += data;
+        });
+        res.on('end',function(){
+//            console.log(chunks.toString());
+            var userInfo = JSON.parse(chunks);
+            openId = userInfo.openid;
+            var funs = [checkUser(open_id),
+                function response(results,cb){
+                    if(results["count(1)"]){
+                        resp.redirect("/live-room-waterfall.html");
+                    }else{
+                        resp.redirect("/register.html");
+                    }
+                }
+            ];
+            async.waterfall(funs,function(err,results){
+
+            })
+        })
+    }).on("error",function(e){
+        console.log("get error:"+ e.message);
+    });
+
 });
 
 router.post("/publish",function(req,res){
