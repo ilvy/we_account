@@ -27,8 +27,14 @@ var dbPoolConfig = {
 var serverConfig =  {
     ip:"120.24.224.144",
     port:'80'
-}
+};
+
+var appConfig = {
+    appId:"wxaef4aefd905a4662",
+    appSecret:"ca038c00a3764885a2d18b53d47f8282"
+};
 
 exports.menusObj = menusObj;
 exports.dbPoolConfig = dbPoolConfig;
 exports.serverConfig = serverConfig;
+exports.appConfig = appConfig;
