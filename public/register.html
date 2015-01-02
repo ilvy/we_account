@@ -2,7 +2,8 @@
 <html>
 <head>
     <title></title>
-    <meta charset="utf-8" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
     <style>
         #form{
             width: 60%;
@@ -30,16 +31,27 @@
     </style>
 </head>
 <body>
-    <div id="form">
-        <div class="form-control"><input type="text" id="username" placeholder="    email账号"/></div>
-        <div class="form-control"><input type="password" id="pwd" placeholder="    密码"/></div>
+    <form id="form" action="/we_account/register" method="post">
+        <div class="form-control"><input type="text" name="username" id="username" placeholder="    email账号"/></div>
+        <div class="form-control"><input type="password" name="pwd" id="pwd" placeholder="    密码"/></div>
         <div class="form-control"><input type="password" id="confirmPwd" placeholder="    确认密码"/></div>
-        <input type="button" id="loginBtn" class="" value="登录"/>
-    </div>
+        <input type="submit" id="loginBtn" class="" value="登录"/>
+    </form>
 </body>
+<script src="javascripts/jquery.js"></script>
 <script>
-    $(document).on("click","#loginBtn",function(){
-        var url = 'http://localhost:880/we_account/register';
-    });
+//    $(document).on("click","#loginBtn",function(){
+//        var url = 'http://localhost:880/we_account/register';
+//        $.ajax({
+//            url:url,
+//            type:'post',
+//            success:function(data){
+//                console.log(data);
+//            },
+//            error:function(err){
+//                console.log(err);
+//            }
+//        })
+//    });
 </script>
 </html>

@@ -14,8 +14,12 @@ var express = require("express"),
     dispatcher = require("./we_account/business/dispatcher"),
     publishAccount = require("./we_account/business/publish_account"),
     urlencode = require("urlencode"),
-    appConfig = require("../config/config").appConfig;
-var checkUser = require("./we_account/business/publish_account").checkUser;
+    appConfig = require("../config/config").appConfig,
+    async = require("async"),
+    session = require("express-session");
+var publish_account = require("./we_account/business/publish_account"),
+    checkUser = publish_account.checkUser,
+    register = publish_account.register;
 
 var TOKEN = 'jxfgx_20140526';
 router.get("/",function(req,res){
@@ -86,19 +90,36 @@ router.post("/",function(req,res){
 //    console.log(item);
 //});
 
-router.get("register",function(req,res){
+router.get("/register",function(req,res){
 
 });
 
-router.post("register",function(req,res){
+router.get("/writeSession",function(req,res){
+    var session = req.session;
+    console.log("****"+session.name+"***"+session.openId);
+    session.openId = Math.random()*100;
+    console.log("req.session.openId");
+    console.log(session);
+    res.redirect("/register.html");
+})
 
+router.post("/register",function(req,res){
+//    var session = req.session;
+//    var body = req.body;
+//    var openId = session.openId,
+//        username = body.username,
+//        pwd = body.pwd;
+//    console.log(session);
+//    console.log("**************"+session.name+"*********openId:"+openId);
+//    res.send("**************"+session.name+"*********openId:"+openId);
+    register(req,res);
 });
 
 router.get("/publish",function(req,res){
     //判断用户是否存在账号，若无，返回注册界面，若已有账号，直接登录即可
-    var redirect_uri = urlencode("http://120.24.224.144/goto_publish");
+    var redirect_uri = urlencode("http://120.24.224.144/we_account/goto_publish");
     res.redirect("https://open.weixin.qq.com/connect/oauth2/authorize?" +
-        "appid="+appConfig.appId+"&redirect_uri="+redirect_uri+"&response_type=code&scope=SCOPE&state=STATE#wechat_redirect");
+        "appid="+appConfig.appId+"&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect");
 });
 
 router.get("/goto_publish",function(req,resp){
@@ -107,7 +128,6 @@ router.get("/goto_publish",function(req,resp){
         status = query.status,
         appId = appConfig.appId,
         appSecret = appConfig.appSecret;
-    var openId ;
     var url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='+appId+'&secret='+appSecret+'' +
         '&code='+code+'&grant_type=authorization_code';
     https.get(url,function(res){
@@ -118,19 +138,19 @@ router.get("/goto_publish",function(req,resp){
         res.on('end',function(){
 //            console.log(chunks.toString());
             var userInfo = JSON.parse(chunks);
-            openId = userInfo.openid;
-            var funs = [checkUser(open_id),
-                function response(results,cb){
-                    if(results["count(1)"]){
-                        resp.redirect("/live-room-waterfall.html");
-                    }else{
-                        resp.redirect("/register.html");
-                    }
+            var openId = userInfo.openid;
+            session.openId = openId;
+            checkUser(openId,function response(err,results){
+                if(err){
+                    resp.redirect("err.html");
+                    return;
                 }
-            ];
-            async.waterfall(funs,function(err,results){
-
-            })
+                if(results["count(1)"]){
+                    resp.redirect("/live-room-waterfall.html");
+                }else{
+                    resp.redirect("/register.html");
+                }
+            });
         })
     }).on("error",function(e){
         console.log("get error:"+ e.message);

@@ -2,7 +2,8 @@
  * Created by Administrator on 14-12-29.
  */
 var mysql = require("mysql"),
-    dbPoolConfig = require("../config/config").dbPoolConfig;
+    dbPoolConfig = require("../config/config").dbPoolConfig,
+    urlencode = require("urlencode");
 
 var pool = mysql.createPool(dbPoolConfig);
 
@@ -23,6 +24,7 @@ var query = function(sql,posts,callback){
 
 exports.query = query;
 
+//console.log(urlencode("http://120.24.224.144/we_account"));
 //query("select * from ?? where id = ?",['user',1],function(err,rows){
 //    if(err){
 //        console.log(err);
@@ -56,4 +58,12 @@ exports.query = query;
 //        console.log(err);
 //    }
 //    console.log(rows);
+//});
+
+//query('call pro_register(?,?,?,?)',['1111110','222222222222','11111111111','1111111111111'],function(err,rows) {
+//    if (err) {
+//        console.log(err);
+//    } else {
+//        console.log(rows);
+//    }
 //});

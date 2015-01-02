@@ -20,16 +20,34 @@ function register(req,res){
 
 }
 
-function checkUser(open_id){
+function checkUser(open_id,cb){
     var openId = open_id;
-    return function(cb){
-        dbOperator.query("call pro_check_register_by_weAccount(?)",[openId],function(err,rows){
-            if(err){
-                console.log(err);
-            }
-            cb(err,rows[0]);
-        });
-    }
+    dbOperator.query("call pro_check_register_by_weAccount(?)",[openId],function(err,rows){
+        if(err){
+            console.log(err);
+        }
+        cb(err,rows[0]);
+    });
+}
+
+function register(req,res){
+    var session = req.session;
+    var body = req.body;
+    var openId = session.openId,
+        username = body.username,
+        pwd = body.pwd;
+//    console.log(session);
+//    console.log("**************"+session.name+"*********openId:"+openId);
+//    res.send("**************"+session.name+"*********openId:"+openId);
+    dbOperator.query('call pro_register(?,?,?,?)',[openId,username,username,pwd],function(err,rows){
+        if(err){
+            console.log(err);
+            res.redirect("/err.html");
+        }else{
+            console.log(rows);
+            res.redirect('/live-room-waterfall.html');
+        }
+    });
 }
 
 function publishProduct(req,res){
@@ -50,4 +68,4 @@ function publishProduct(req,res){
 exports.applyAccount = applyAccount;
 exports.publishProduct = publishProduct;
 exports.checkUser = checkUser;
-
+exports.register = register;
