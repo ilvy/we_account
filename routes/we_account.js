@@ -19,7 +19,8 @@ var express = require("express"),
     session = require("express-session");
 var publish_account = require("./we_account/business/publish_account"),
     checkUser = publish_account.checkUser,
-    register = publish_account.register;
+    register = publish_account.register,
+    gotoLiveRoom = require("./we_account/business/live_room").renderLiveRoom;
 
 var TOKEN = 'jxfgx_20140526';
 router.get("/",function(req,res){
@@ -123,6 +124,7 @@ router.get("/publish",function(req,res){
 });
 
 router.get("/goto_publish",function(req,resp){
+    var session = req.session;
     var query = req.query;
     var code = query.code,
         status = query.status,
@@ -145,7 +147,7 @@ router.get("/goto_publish",function(req,resp){
                     resp.redirect("err.html");
                     return;
                 }
-                if(results["count(1)"]){
+                if(results[0]["count(1)"]){
                     resp.redirect("/live-room-waterfall.html");
                 }else{
                     resp.redirect("/register.html");
@@ -155,8 +157,9 @@ router.get("/goto_publish",function(req,resp){
     }).on("error",function(e){
         console.log("get error:"+ e.message);
     });
-
 });
+
+router.get("/live-room",gotoLiveRoom);
 
 router.post("/publish",function(req,res){
     publishAccount.publishProduct(req,res);

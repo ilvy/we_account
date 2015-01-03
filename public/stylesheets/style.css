@@ -6,3 +6,34 @@ body {
 a {
   color: #00B7FF;
 }
+.waterfall{
+    width: 100%;
+    margin-top: 20px;
+    position: relative;
+}
+.box{
+    position: absolute;
+    border:1px solid #CCCCFF;
+    border-radius: 5px;
+    /*padding: 3px;*/
+}
+.box img{
+    width:33%;
+    /*margin-left:1%;*/
+}
+.box img:first-child{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    width: 100%;
+    /*margin-left:1%;*/
+}
+.box div{
+    word-break:break-all;
+    text-align:center;
+    font-size: 12px;
+    font-family: "microsoft yahei";
+}
+div.desc{
+    border-bottom: 1px solid #CCCCFF;
+}
+#ls-load{position: fixed;left: 0;top: 0;z-index: 10;}

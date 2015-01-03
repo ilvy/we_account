@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>live room waterfall</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+    <style>
+        .waterfall{
+            width: 100%;
+            margin-top: 20px;
+            position: relative;
+        }
+        .box{
+            position: absolute;
+            border:1px solid #CCCCFF;
+            border-radius: 5px;
+            /*padding: 3px;*/
+        }
+        .box img{
+            width:33%;
+            /*margin-left:1%;*/
+	    }
+        .box img:first-child{
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            width: 100%;
+            /*margin-left:1%;*/
+	    }
+        .box div{
+            word-break:break-all;
+            text-align:center;
+            font-size: 12px;
+            font-family: "microsoft yahei";
+	    }
+        div.desc{
+            border-bottom: 1px solid #CCCCFF;
+        }
+    </style>
+</head>
+<body>
+<div style="position: fixed;left: 0;top: 0;z-index: 10;">
+    <button onclick="load()">加载</button>
+</div>
+    <section class="waterfall">
+        <%
+            var product = '',imgUrls;
+            for(var i = 0; i < products.length; i++){
+            product = products[i],
+            imgUrls = product['image_url'];
+                %>
+        <div class="box">
+            <div class="desc"><%=product.text%></div>
+            <div>
+                <%
+                 for(var j = 0; j < imgUrls.length; j++){
+                %>
+                <img src="images/<%=imgUrls[j]%>">
+                <%
+                 }
+                  %>
+
+            </div>
+
+            <div class="contact-saler">
+                联系卖家
+            </div>
+        </div>
+        <%
+            }
+          %>
+
+
+    </section>
+</body>
+<script src="javascripts/jquery.js"></script>
+<script src="javascripts/waterfall.js"></script>
+<script>
+    function load(){
+        waterfall.asyncLoader();
+    }
+</script>
+</html>

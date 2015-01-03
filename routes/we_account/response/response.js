@@ -15,8 +15,21 @@ function response(data,res){
     res.end();
 }
 
-function success(res){
-
+function success(data,res,msg){
+    res.send({
+        flag:1,
+        data:data,
+        msg:msg || ""
+    });
+}
+function failed(data,res,msg){
+    res.send({
+        flag:0,
+        data:data,
+        msg:msg || ""
+    });
 }
 
 exports.response = response;
+exports.success = success;
+exports.failed = failed;

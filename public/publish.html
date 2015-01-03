@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>test</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+    <style>
+        .edit-desc{
+            width: 50%;
+            margin: 0 auto;
+            height: 100px;
+        }
+        .edit-desc-content{
+            width: 100%;
+            height: 60%;
+            border: 1px solid #CCCCFF;
+            word-break: break-all;
+        }
+        #addImage{
+            width: 100%;
+        }
+        #upload-div{
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+        }
+        #upload{
+            border: none;
+            background-color: white;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        #upload .horizon{
+            width: 100%;
+            height: 30%;
+            background-color: #CCCCFF;
+            position: absolute;
+            top: 35%;
+            left: 0;
+        }
+        #upload .vertical{
+            width: 30%;
+            height: 100%;
+            background-color: #CCCCFF;
+            position: absolute;
+            left: 35%;
+            top: 0;
+        }
+        .img-display{
+            display: inline-block;
+            width: 150px;
+            height: 150px;
+         }
+        .img-display img{
+            width: 100%;
+            height: 100%;
+         }
+        #submit{
+            margin: 0 auto;
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid #CCCCFF;
+            background: #ffffff;
+        }
+        #submit:active{
+            background: purple;
+        }
+        #sub-btn{
+            text-align: center;position: absolute;bottom: 0;width: 100%;
+        }
+    </style>
+</head>
+<body>
+<a href="/we_account/live-room" style="float: right;">直播间----></a>
+    <div class="edit-desc">
+        <span>编辑文字：</span>
+        <div class="edit-desc-content" contenteditable="true">
+
+        </div>
+    </div>
+    <div id="addImage">
+        <div id="upload-div">
+            <button id="upload">
+                <div class="vertical"></div>
+                <div class="horizon"></div>
+            </button>
+        </div>
+
+        <div id="image_content">
+
+        </div>
+    </div>
+    <div id="sub-btn" style=""><input type="button" id="submit" value="确定"/></div>
+    <!--<a id="writeSession" href="http://localhost:880/we_account/writeSession">writeSess</a>-->
+<!--<input type="file" name="media" method="post" multiple size="10" value="多图上传"/>-->
+    <!--<input type="button" value="上传" id="upload"/>-->
+    <!--<form method="post" action="http://file.api.weixin.qq.com/cgi-bin/media/upload">-->
+        <!--<input type="text" name="access_token" style="visibility: hidden;" value="D3E-YnYHAHuD-UtZBM9KGcXzTLdTf9ImLOtk5zv7Di3BdGGVLhRguXEFImaOmBQR4Tg-FHwpeX1dZEyTjcKfabG9wE9IF8QbugYs91N--Hg"/>-->
+        <!--<input type="text" name="type" style="visibility: hidden;" value="image"/>-->
+        <!--<input type="file" name="media" method="post" multiple size="10" value="多图上传"/>-->
+        <!--<input type="submit" value="提交">-->
+    <!--</form>-->
+</body>
+<!--<script src="./javascripts/cordova.js"></script>-->
+<script src="./javascripts/jquery.js"></script>
+<script src="./javascripts/ajaxupload.js"></script>
+<script>
+    var products = '',desc = '';
+    $(document).ready(function(){
+        var access_token = 'D3E-YnYHAHuD-UtZBM9KGcXzTLdTf9ImLOtk5zv7Di3BdGGVLhRguXEFImaOmBQR4Tg-FHwpeX1dZEyTjcKfabG9wE9IF8QbugYs91N--Hg';
+//        $("#upload").on("click",function(){
+//            $.ajax({
+//                url:"http://192.168.60.216:880/we_account/upload",
+//                type:"post",
+//                success:function(data){
+//                    console.log(data);
+//                },
+//                error:function(error){
+//                    console.log(error);
+//                }
+//            })
+//        });
+        $(function(){
+            new AjaxUpload("#upload",{
+                action:"http://localhost:880/we_account/upload",
+//                action:"http://120.24.224.144:80/we_account/upload",
+                name:'file',
+                onSubmit:function(file,ext){
+                    console.log(file +" "+ ext);
+                },
+                onComplete:function(file,res){
+//                    alert(res);
+                    console.log(res);
+                    $("#image_content").append('<div class="img-display"><img  src="images/'+res+'"/></div>');
+                    products?products += res + ";":products += res;
+                }
+            })
+        })
+
+        $("#submit").on("click",function(){
+            var desc = $(".edit-desc-content").html();//TODO 检验字符串合法性
+            var url = "/we_account/publish",
+                    postData = {
+                        products:products,
+                        desc:desc
+                    };
+            $.ajax({
+                url:url,
+                type:"post",
+                data:postData,
+                success:function(data){
+                    console.log(data);
+                    if(data && data.flag == 1){
+                        alert("上传成功");
+                    }
+                },
+                error:function(err){
+                    console.log(err);
+                }
+            });
+        });
+    });
+</script>
+</html>

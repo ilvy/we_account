@@ -2,7 +2,8 @@
  * Created by Administrator on 14-12-22.
  */
 
-var dbOperator = require("../../../db/dbOperator");
+var dbOperator = require("../../../db/dbOperator"),
+    response = require("../response/response");
 
 function applyAccount(data,res){
 
@@ -36,6 +37,10 @@ function register(req,res){
     var openId = session.openId,
         username = body.username,
         pwd = body.pwd;
+    if(!openId){
+        res.redirect("/err.html");
+        return;
+    }
 //    console.log(session);
 //    console.log("**************"+session.name+"*********openId:"+openId);
 //    res.send("**************"+session.name+"*********openId:"+openId);
@@ -54,13 +59,20 @@ function publishProduct(req,res){
     var body = req.body;
     var products = body.products,
         desc = body.desc,
-        publisher_id = 100,
-        params = [products,desc,publisher_id];
+        open_id = req.session.openId,
+        params = [products,desc,open_id];
     dbOperator.query("call pro_publish(?,?,?)",params,function(err,row){
         if(err){
             console.log(err);
+            response.failed("",res,err);
         }else{
             console.log(row);
+            if(row[0][0] && row[0][0]['publish_res'] != 0){
+                console.log(row[0]['publish_res']);
+                response.success("",res);
+            }else{
+                response.failed("",res);
+            }
         }
     });
 }

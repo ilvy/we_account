@@ -1,0 +1,29 @@
+//
+   Created by Administrator on 2015/1/3.
+
+doctype html
+html
+    head
+        title live-room-waterfall
+        meta(name="viewport",content="width=device-width,initial-scale=1.0,user-scalable=no")
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+        div#ls-load
+            button( onclick="load()")加载
+        - if (products.length)
+            section.waterfall
+                each product in products
+                    div.box
+                        div.desc
+                            div test
+                                each imageName in product.image_url
+                                img(src='/images/'+imageName)
+                            div.ontact-saler
+                                联系卖家
+
+script(src="/javascripts/jquery.js")
+script(src="/javascripts/waterfall.js")
+script.
+    function load(){
+        waterfall.asyncLoader();
+    }
