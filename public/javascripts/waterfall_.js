@@ -22,6 +22,7 @@ var Waterfall = function(){
     this.box_w = 200;
     this.h_weights = [];//weight of height,including prices,img size and so on 每列的高度
     this.box_quantity = boxes.length;
+    this.smallH = 30;
     this.init();
 }
 
@@ -42,11 +43,8 @@ Waterfall.prototype.init = function(){
         this.min_col_num = 8;
     }
     this.box_w = Math.floor((win_w - this.min_col_num * this.margin * 2) / this.min_col_num);
+    this.smallH = this.box_w / 3;
     $(".box").css("width",this.box_w);
-    var smallH = this.box_w / 3;
-    $(".box").each(function(){
-        $(this).find("img:first-child").siblings("img").css("height",smallH);
-    });
     this.setPosition();
 }
 
@@ -77,7 +75,7 @@ Waterfall.prototype.setPosition = function(add_quantity){
                 left:left,
                 width:box_w,
                 visibility:'visible'
-            });//.find("img:first").siblings("img").css("height",_this.smallH);
+            }).find("img:first").siblings("img").css("height",_this.smallH);
         }else{
             min_H = _this.min(hs);
             minKey = _this.getMinKey(min_H,hs);
@@ -90,7 +88,7 @@ Waterfall.prototype.setPosition = function(add_quantity){
                 left:boxes.eq(minKey).position().left,
                 width:box_w,
                 visibility:'visible'
-            });//.find("img:first").siblings("img").css("height",_this.smallH);
+            }).find("img:first").siblings("img").css("height",_this.smallH);
             if(i == len){//初始化加载器
                 asyncLoader = new AsyncLoader();
                 _this.lastPosition = {top:min_H,left:0};

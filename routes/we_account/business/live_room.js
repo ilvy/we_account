@@ -17,7 +17,7 @@ function gotoLiveRoom(req,res){
         products.forEach(function(item,i){
             item.image_url = item.image_url.split(";");
         });
-        console.log("products:"+products);
+//        console.log("products:"+products);
         res.render("live-room",{products:products||[]});
     });
 }

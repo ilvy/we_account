@@ -1,5 +1,4 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -16,6 +15,7 @@ a {
     border:1px solid #CCCCFF;
     border-radius: 5px;
     /*padding: 3px;*/
+    visibility:hidden;
 }
 .box img{
     width:33%;

@@ -140,7 +140,7 @@ router.get("/goto_publish",function(req,resp){
         res.on('end',function(){
 //            console.log(chunks.toString());
             var userInfo = JSON.parse(chunks);
-            var openId = userInfo.openid;
+            var openId = userInfo.openid || 'oHbq1t0enasGWD7eQoJuslZY6R-4';
             session.openId = openId;
             checkUser(openId,function response(err,results){
                 if(err){
@@ -148,7 +148,7 @@ router.get("/goto_publish",function(req,resp){
                     return;
                 }
                 if(results[0]["count(1)"]){
-                    resp.redirect("/live-room-waterfall.html");
+                    resp.redirect("/publish.html");
                 }else{
                     resp.redirect("/register.html");
                 }

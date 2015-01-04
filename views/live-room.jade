@@ -7,7 +7,14 @@ html
         title live-room-waterfall
         meta(name="viewport",content="width=device-width,initial-scale=1.0,user-scalable=no")
         link(rel='stylesheet', href='/stylesheets/style.css')
+        style.
+            .back_to_add{
+                position:fixed;
+                right:0;
+                top:0;
+            }
     body
+        a(href='/publish.html').back_to_add 添加商品
         div#ls-load
             button( onclick="load()")加载
         - if (products.length)
@@ -15,9 +22,9 @@ html
                 each product in products
                     div.box
                         div.desc
-                            div test
+                            div #{product.text}
                                 each imageName in product.image_url
-                                img(src='/images/'+imageName)
+                                    img(src='/images/#{imageName}')
                             div.ontact-saler
                                 联系卖家
 
