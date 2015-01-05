@@ -67,3 +67,11 @@ exports.query = query;
 //        console.log(rows);
 //    }
 //});
+
+//query("call pro_check_publisher_knock(?,?)",['null','12133113'],function(err,results){
+//    if(err){
+//        console.log(err);
+//    }
+//    console.log(results[0][0]);
+////    cb(err,results[0][0]);
+//});

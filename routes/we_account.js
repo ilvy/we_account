@@ -20,7 +20,10 @@ var express = require("express"),
 var publish_account = require("./we_account/business/publish_account"),
     checkUser = publish_account.checkUser,
     register = publish_account.register,
-    gotoLiveRoom = require("./we_account/business/live_room").renderLiveRoom;
+    live_room = require("./we_account/business/live_room"),
+    gotoLiveRoom = live_room.renderLiveRoom,
+    knockDoor = live_room.knockDoor,
+    knocktoLiveRoom = live_room.knocktoLiveRoom ;
 
 var TOKEN = 'jxfgx_20140526';
 router.get("/",function(req,res){
@@ -116,6 +119,7 @@ router.post("/register",function(req,res){
     register(req,res);
 });
 
+//AUTH2.0 网页获取用户权限
 router.get("/publish",function(req,res){
     //判断用户是否存在账号，若无，返回注册界面，若已有账号，直接登录即可
     var redirect_uri = urlencode("http://120.24.224.144/we_account/goto_publish");
@@ -200,8 +204,57 @@ router.post("/upload",function(req,res){
         }
         res.send(newFileName);
     });
-})
+});
 
+/*
+ *顾客 到达直播间门口 非发布者
+ */
+router.get("/customer",function(req,res){
+    res.redirect("/room_door.html");
+});
+
+/**
+ * 输入门牌号，敲门进入
+ */
+router.post("/knock_door",knockDoor);
+
+//AUTH2.0 网页获取用户权限 打开门，允许用户以open_id方式进入
+router.get("/open_door",function(req,res){
+    //判断用户是否存在账号，若无，返回注册界面，若已有账号，直接登录即可
+    var redirect_uri = urlencode("http://120.24.224.144/we_account/goto_LiveRoom");
+    res.redirect("https://open.weixin.qq.com/connect/oauth2/authorize?" +
+        "appid="+appConfig.appId+"&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect");
+});
+
+/**
+ * 用户进入直播间
+ */
+router.get("/goto_LiveRoom",function(req,resp){
+    var session = req.session;
+    var query = req.query;
+    var code = query.code,
+        status = query.status,
+        appId = appConfig.appId,
+        appSecret = appConfig.appSecret,
+        room = session.room;
+    var url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='+appId+'&secret='+appSecret+'' +
+        '&code='+code+'&grant_type=authorization_code';
+    https.get(url,function(res){
+        var chunks = "";
+        res.on("data",function(data){
+            chunks += data;
+        });
+        res.on('end',function(){
+//            console.log(chunks.toString());
+            var userInfo = JSON.parse(chunks);
+            var openId = userInfo.openid || 'oHbq1t0enasGWD7eQoJuslZY6R-4';
+            session.openId = openId;
+            knocktoLiveRoom(req,resp);
+        })
+    }).on("error",function(e){
+            console.log("get error:"+ e.message);
+        });
+});
 
 router.get("/xml",function(req,res){
     xmlParser.parseXml("<xml><ToUserName><![CDATA[gh_d28b25ec1197]]></ToUserName>" +

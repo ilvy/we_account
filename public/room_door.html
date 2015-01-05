@@ -7,9 +7,10 @@
         #room{
             width: 80%;
             height: 50px;
-            font-size: 36px;
+            font-size: 40px;
             border: 1px solid #cdcdcd;
             margin: 50px auto;
+            text-align: center;
         }
         .room_input_desc{
             width: 100%;
@@ -20,6 +21,18 @@
             width: 100%;
             text-align: center;
         }
+        #enter-room-btn{
+            padding: 8px 12px;
+            border: 1px solid #cdcdcd;
+            background-color: #ffffff;
+            color: #1c9aff;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        #enter-room-btn:hover{
+            background-color: #c3cece;
+            color: blue;
+        }
     </style>
 </head>
 <body>
@@ -29,9 +42,35 @@
 
         </div>
         <div class="submit-div">
-            <input type="button" value=""/>
+            <input type="button" id="enter-room-btn" value="进入直播间"/>
         </div>
     </form>
-
+<script src="javascripts/jquery.js"></script>
+<script>
+    $("#enter-room-btn").on("click",function(){
+        var room = encodeURI($("#room").html().trim());
+        if(room.length > 20){
+            alert("输入不合法");
+        }else if(room.length == 0){
+            alert("不能为空");
+        }else{
+            $.ajax({
+                url:'/we_account/knock_door',
+                type:"post",
+                data:{room:room},
+                success:function(results){
+                    if(results && results.flag == 1){
+                        window.location.href = '/we_account/open_door';
+                    }else{
+                        alert("对不起，您输入的门牌号有误");
+                    }
+                },
+                error:function(err){
+                    console.log(err);
+                }
+            })
+        }
+    });
+</script>
 </body>
 </html>
