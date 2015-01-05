@@ -22,9 +22,9 @@ html
                 each product in products
                     div.box
                         div.desc
-                            div #{product.text}
-                                each imageName in product.image_url
-                                    img(src='/images/#{imageName}')
+                            div(data-imgnum='#{product.image_url.length}') #{product.text}
+                                each imageName,i in product.image_url
+                                    img(src='/images/#{imageName}' data-num='#{i+1}')
                             div.ontact-saler
                                 联系卖家
 
