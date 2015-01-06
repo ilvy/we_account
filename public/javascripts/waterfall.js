@@ -104,12 +104,20 @@ Waterfall.prototype.setPosition = function(add_quantity){
 
 Waterfall.prototype.asyncLoader = function(){
     var _this = this;
-    var loadDatas = asyncLoader.load();
-    loadDatas.each(function(){
-        $(this).clone().css(_this.lastPosition).appendTo(".waterfall");
-    })
-    boxes = $(".box");
-    this.setPosition(loadDatas.length);
+    var productsStrs = '';
+    asyncLoader.load(function(results){
+        if(results.flag != 1){
+            return;
+        }
+        var loadDatas = results.data;
+        loadDatas.forEach(function(item){
+//        $(this).clone().css(_this.lastPosition).appendTo(".waterfall");
+
+        });
+        boxes = $(".box");
+        _this.setPosition(loadDatas.length);
+    });
+
 }
 
 
@@ -151,8 +159,19 @@ AsyncLoader.prototype.setTheLastPos = function(){
 
 }
 
-AsyncLoader.prototype.load = function(){
-    return datas;
+AsyncLoader.prototype.load = function(callback){
+    var url = '/we_account/load_more';
+    $.ajax({
+        url:url,
+        type:"get",
+        success:function(results){
+            console.log(results);
+            callback(results);
+        },
+        error:function(err){
+            console.log(err);
+        }
+    })
 }
 
 function printArray(str,arr){

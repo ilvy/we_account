@@ -23,7 +23,8 @@ var publish_account = require("./we_account/business/publish_account"),
     live_room = require("./we_account/business/live_room"),
     gotoLiveRoom = live_room.renderLiveRoom,
     knockDoor = live_room.knockDoor,
-    knocktoLiveRoom = live_room.knocktoLiveRoom ;
+    knocktoLiveRoom = live_room.knocktoLiveRoom ,
+    loadMoreProducts = live_room.loadMoreProducts;
 
 var TOKEN = 'jxfgx_20140526';
 router.get("/",function(req,res){
@@ -255,6 +256,8 @@ router.get("/goto_LiveRoom",function(req,resp){
             console.log("get error:"+ e.message);
         });
 });
+
+router.get("/load_more",loadMoreProducts);
 
 router.get("/xml",function(req,res){
     xmlParser.parseXml("<xml><ToUserName><![CDATA[gh_d28b25ec1197]]></ToUserName>" +

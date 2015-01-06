@@ -52,7 +52,7 @@ function knocktoLiveRoom(req,res){
     var funs = [
         //监测是不是发布者自己进入
         function checkPublisher(cb){
-            dbOperator.query("call pro_check_publisher_knock(?,?)",[room,openId],function(err,results){
+            dbOperator.query("call pro_check_publisher_knock(?,?)",[room,null],function(err,results){
                 if(err){
                     console.log(err);
                 }
@@ -101,6 +101,30 @@ function knockDoor(req,res){
 
 }
 
+function loadMoreProducts(req,res){
+    var session = req.session,
+        openId = session.openId;
+    if(session.productPageNum){
+        session.productPageNum = 0;
+    }
+    session.productPageNum++;
+    var products;
+    dbOperator.query("call pro_select_product(?)",[openId],function(err,rows){
+        if(err){
+            console.log("select products err");
+            res.redirect("/err.html");
+        }
+        console.log(rows);
+        products = rows[0];
+        products.forEach(function(item,i){
+            item.image_url = item.image_url.split(";");
+        });
+//        console.log("products:"+products);
+        response.success(products,res,"加载成功");
+    });
+}
+
 exports.renderLiveRoom = gotoLiveRoom;
 exports.knockDoor = knockDoor;
 exports.knocktoLiveRoom = knocktoLiveRoom;
+exports.loadMoreProducts = loadMoreProducts;

@@ -14,7 +14,8 @@ html
                 top:0;
             }
     body
-        a(href='/publish.html').back_to_add 添加商品
+        - if (publisher)
+            a(href='/publish.html').back_to_add 添加商品
         div#ls-load
             button( onclick="load()")加载
         - if (products.length)
