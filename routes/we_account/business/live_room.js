@@ -21,7 +21,8 @@ function gotoLiveRoom(req,res){
             });
         },
         function select_product(publisher,cb){
-            dbOperator.query("call pro_select_product(?)",[openId],function(err,rows){
+            req.session.isPublisher = publisher ? 1:0;
+            dbOperator.query("call pro_select_products(?,?,?)",[openId,null,0],function(err,rows){
                 if(err){
                     console.log("select products err");
                     res.redirect("/err.html");
@@ -60,7 +61,8 @@ function knocktoLiveRoom(req,res){
             });
         },
         function select_product(publisher,cb){
-            dbOperator.query("call pro_select_product(?)",[openId],function(err,rows){
+            req.session.isPublisher = publisher ? 1:0;
+            dbOperator.query("call pro_select_products(?,?,?)",[openId,null,0],function(err,rows){
                 if(err){
                     console.log("select products err");
                     res.redirect("/err.html");
@@ -104,12 +106,16 @@ function knockDoor(req,res){
 function loadMoreProducts(req,res){
     var session = req.session,
         openId = session.openId;
-    if(session.productPageNum){
+    if(!session.productPageNum){
         session.productPageNum = 0;
     }
     session.productPageNum++;
+    var paras = [null,null,session.productPageNum];
     var products;
-    dbOperator.query("call pro_select_product(?)",[openId],function(err,rows){
+    if(session.isPublisher){
+        
+    }
+    dbOperator.query("call pro_select_products(?,?,?)",[openId],function(err,rows){
         if(err){
             console.log("select products err");
             res.redirect("/err.html");
