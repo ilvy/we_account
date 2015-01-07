@@ -104,7 +104,7 @@ Waterfall.prototype.setPosition = function(add_quantity){
 
 Waterfall.prototype.asyncLoader = function(){
     var _this = this;
-    var productsStrs = '';
+    var productsStrs = '',imgstr = '';
     asyncLoader.load(function(results){
         if(results.flag != 1){
             return;
@@ -112,8 +112,14 @@ Waterfall.prototype.asyncLoader = function(){
         var loadDatas = results.data;
         loadDatas.forEach(function(item){
 //        $(this).clone().css(_this.lastPosition).appendTo(".waterfall");
-
+            item.image_url.forEach(function(url,i){
+                imgstr += '<img src="/images/'+url+'" data-num="'+(i+1)+'">';
+            });
+            productsStrs += '<div class="box">' +
+                '<div class="desc"><div data-imgnum="'+item.image_url.length+'">'+ item.text +imgstr +
+                '<div class="ontact-saler">联系卖家</div></div></div>';
         });
+        $(".waterfall").append(productsStrs);
         boxes = $(".box");
         _this.setPosition(loadDatas.length);
     });
