@@ -43,7 +43,8 @@ Waterfall.prototype.init = function(){
     }
     this.box_w = Math.floor((win_w - this.min_col_num * this.margin * 2) / this.min_col_num);
     $(".box").css("width",this.box_w);
-    var smallH = this.box_w / 3;
+    var smallH = this.smallH = this.box_w / 3;
+
     $(".box").each(function(){
         $(this).find("img:first-child").siblings("img").css("height",smallH);
     });
@@ -91,11 +92,11 @@ Waterfall.prototype.setPosition = function(add_quantity){
                 width:box_w,
                 visibility:'visible'
             });//.find("img:first").siblings("img").css("height",_this.smallH);
-            if(i == len){//初始化加载器
-                asyncLoader = new AsyncLoader();
-                _this.lastPosition = {top:min_H,left:0};
-                printArray("end",hs);
-            }
+        }
+        if(i == len){//初始化加载器
+            asyncLoader = new AsyncLoader();
+            _this.lastPosition = {top:min_H,left:0};
+            printArray("end",hs);
         }
     });
     printArray("end",hs);
@@ -112,7 +113,16 @@ Waterfall.prototype.asyncLoader = function(){
         var loadDatas = results.data;
         loadDatas.forEach(function(item){
 //        $(this).clone().css(_this.lastPosition).appendTo(".waterfall");
-
+            var imgstr = '';
+            item.image_url.forEach(function(url,i){
+                if(i > 0){
+                    imgstr += '<img src="/images/'+url+'" data-num="'+(i+1)+'" style="'+_this.smallH+'px">';
+                }else{
+                    imgstr += '<img src="/images/'+url+'" data-num="'+(i+1)+'">';
+                }
+            });
+            $(".waterfall").append('<div class="box" ><div class="desc"><div data-imgnum="'+item.image_url.length+'">'+ item.text +imgstr+
+                '</div><div class="ontact-saler">联系卖家</div></div></div>');
         });
         boxes = $(".box");
         _this.setPosition(loadDatas.length);

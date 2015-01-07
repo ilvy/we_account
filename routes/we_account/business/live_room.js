@@ -105,7 +105,8 @@ function knockDoor(req,res){
 
 function loadMoreProducts(req,res){
     var session = req.session,
-        openId = session.openId;
+        openId = session.openId,
+        room = session.room;
     if(!session.productPageNum){
         session.productPageNum = 0;
     }
@@ -113,9 +114,11 @@ function loadMoreProducts(req,res){
     var paras = [null,null,session.productPageNum];
     var products;
     if(session.isPublisher){
-        
+        paras[0] = openId;
+    }else{
+        paras[1] = room;
     }
-    dbOperator.query("call pro_select_products(?,?,?)",[openId],function(err,rows){
+    dbOperator.query("call pro_select_products(?,?,?)",paras,function(err,rows){
         if(err){
             console.log("select products err");
             res.redirect("/err.html");
