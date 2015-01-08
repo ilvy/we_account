@@ -275,10 +275,4 @@ router.get("/xml",function(req,res){
     res.send("OK");
 });
 
-var obj = {};
-obj["var1"] = 11111;
-obj["var2"] = 22222;
-obj["var3"] = 33333;
-console.log(obj);
-
 module.exports = router;
