@@ -116,7 +116,7 @@ Waterfall.prototype.asyncLoader = function(){
             var imgstr = '';
             item.image_url.forEach(function(url,i){
                 if(i > 0){
-                    imgstr += '<img src="/images/'+url+'" data-num="'+(i+1)+'" style="'+_this.smallH+'px">';
+                    imgstr += '<img src="/images/'+url+'" data-num="'+(i+1)+'" style="height:'+_this.smallH+'px">';
                 }else{
                     imgstr += '<img src="/images/'+url+'" data-num="'+(i+1)+'">';
                 }

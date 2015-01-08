@@ -9,12 +9,18 @@ var menusObj = {
             url:"http://120.24.224.144/we_account/publish"
         },
         {
-            type:"click",
+            type:"view",
             name:"进入直播间",
-            key:"enter-live-room"
+            url:"http://120.24.224.144/we_account/customer"
         }
     ]
 };
+//        ,
+//        {
+//            type:"click",
+//            name:"进入直播间",
+//            key:"enter-live-room"
+//        }
 
 var dbPoolConfig = {
     host     : '120.24.224.144',

@@ -2,7 +2,7 @@
  * Created by Administrator on 14-12-19.
  */
 
-var getAccess_token = require("./access_token").getAccess_token;
+var token_access = require("./access_token").access_token;
 
 function setMenu(){
     var option = {
