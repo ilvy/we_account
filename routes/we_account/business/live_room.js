@@ -9,7 +9,7 @@ var dbOperator = require("../../../db/dbOperator"),
 
 function gotoLiveRoom(req,res){
     var openId = req.session.openId;
-    var products;
+    var products,totalPage;
     var funs = [
         //监测是不是发布者自己进入
         function checkPublisher(cb){
@@ -28,12 +28,13 @@ function gotoLiveRoom(req,res){
                     res.redirect("/err.html");
                 }
                 console.log(rows);
-                products = rows[0];
+                totalPage = rows[0][0]['totalpage'];
+                products = rows[1];
                 products.forEach(function(item,i){
                     item.image_url = item.image_url.split(";");
                 });
 //        console.log("products:"+products);
-                res.render("live-room",{products:products||[],publisher:publisher});
+                res.render("live-room",{products:products||[],publisher:publisher,totalPage:totalPage});
             });
         }
     ];
@@ -49,7 +50,7 @@ function knocktoLiveRoom(req,res){
         response.failed("",res,"room is null");
         return;
     }
-    var products;
+    var products,totalPage;
     var funs = [
         //监测是不是发布者自己进入
         function checkPublisher(cb){
@@ -68,12 +69,13 @@ function knocktoLiveRoom(req,res){
                     res.redirect("/err.html");
                 }
                 console.log(rows);
-                products = rows[0];
+                totalPage = rows[0][0]['totalpage'];
+                products = rows[1];
                 products.forEach(function(item,i){
                     item.image_url = item.image_url.split(";");
                 });
 //        console.log("products:"+products);
-                res.render("live-room",{products:products||[],publisher:publisher});
+                res.render("live-room",{products:products||[],publisher:publisher,totalPage:totalPage});
             });
         }
     ];
@@ -103,15 +105,17 @@ function knockDoor(req,res){
 
 }
 
+/**
+ * 延时加载接口
+ * @param req
+ * @param res
+ */
 function loadMoreProducts(req,res){
     var session = req.session,
         openId = session.openId,
         room = session.room;
-    if(!session.productPageNum){
-        session.productPageNum = 0;
-    }
-    session.productPageNum++;
-    var paras = [null,null,session.productPageNum];
+    var query = req.query;
+    var paras = [null,null,query.page];
     var products;
     if(session.isPublisher){
         paras[0] = openId;
@@ -124,12 +128,12 @@ function loadMoreProducts(req,res){
             res.redirect("/err.html");
         }
         console.log(rows);
-        products = rows[0];
+        products = rows[1];
         products.forEach(function(item,i){
             item.image_url = item.image_url.split(";");
         });
 //        console.log("products:"+products);
-        response.success(products,res,"加载成功");
+        response.success({products:products,totalPage:rows[0][0]['totalpage']},res,"加载成功");
     });
 }
 
