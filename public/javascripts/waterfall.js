@@ -130,7 +130,9 @@ Waterfall.prototype.asyncLoader = function(){
                 '</div><div class="ontact-saler">联系卖家</div></div></div>');
         });
         boxes = $(".box");
-        _this.setPosition(loadDatas.length);
+//        $('.box').on("load",function(){
+            _this.setPosition(loadDatas.length);
+//        });
     });
 
 }
