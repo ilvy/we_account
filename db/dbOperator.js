@@ -68,10 +68,10 @@ exports.query = query;
 //    }
 //});
 
-//query("call pro_check_publisher_knock(?,?)",['null','12133113'],function(err,results){
+//query("call pro_select_products(?,?,?)",['oHbq1t0enasGWD7eQoJuslZY6R-4','888888',0],function(err,results){
 //    if(err){
 //        console.log(err);
 //    }
-//    console.log(results[0][0]);
+//    console.log(results);
 ////    cb(err,results[0][0]);
 //});

@@ -3,7 +3,8 @@
  */
 var boxes = [],
     waterfall,
-    asyncLoader;
+    asyncLoader,
+    totalPage,currentPage = 0;
 
 $(document).ready(function(){
     boxes = $(".box");//sorted date source
@@ -110,7 +111,11 @@ Waterfall.prototype.asyncLoader = function(){
         if(results.flag != 1){
             return;
         }
-        var loadDatas = results.data;
+        var loadDatas;
+        if(results.data){
+            loadDatas = results.data.products;
+            totalPage = results.data.totalPage;
+        }
         loadDatas.forEach(function(item){
 //        $(this).clone().css(_this.lastPosition).appendTo(".waterfall");
             var imgstr = '';
@@ -126,7 +131,9 @@ Waterfall.prototype.asyncLoader = function(){
         });
         $(".waterfall").append(productsStrs);
         boxes = $(".box");
-        _this.setPosition(loadDatas.length);
+//        $('.box').on("load",function(){
+            _this.setPosition(loadDatas.length);
+//        });
     });
 
 }
@@ -171,7 +178,11 @@ AsyncLoader.prototype.setTheLastPos = function(){
 }
 
 AsyncLoader.prototype.load = function(callback){
-    var url = '/we_account/load_more';
+    if(currentPage + 1 >= totalPage){
+        return;
+    }
+    currentPage++;
+    var url = '/we_account/load_more?page='+currentPage;
     $.ajax({
         url:url,
         type:"get",
