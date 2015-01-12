@@ -1,5 +1,6 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  overflow-x:hidden;
 }
 
 a {
@@ -37,3 +38,59 @@ div.desc{
     border-bottom: 1px solid #CCCCFF;
 }
 #ls-load{position: fixed;left: 0;top: 0;z-index: 10;}
+
+#tools-btn{
+    position:absolute;
+    right:0;
+    top:0;
+    padding:0px 12px;
+    cursor:pointer;
+}
+#tools-btn > div{
+    width:3px;
+    height:3px;
+    display:inline-block;
+    margin-left:3px;
+    background-color:#cdcdcd;
+}
+#tools-panel{
+    position:absolute;
+    right:10px;
+    display:none;
+}
+#tools-panel > div{
+    border-bottom:black 1px solid;
+    background-color:#303030;
+    color:#fff;
+    padding:6px 8px;
+    cursor:pointer;
+}
+#tools-panel > div:last-child{
+    border-top:white 1px solid;
+    background-color:#303030;
+}
+
+/********start 照片显示弹出框********/
+#popup-btn{
+    position:absolute;
+    bottom:0px;
+}
+
+.modal-body img{
+    max-width:100%;
+}
+
+.big-img-display{
+    text-align:center;
+}
+
+#next{
+    position:absolute;
+    right:-48px;
+    top:0%;
+    color:white;
+    font-size: 24px;
+}
+
+
+/********start 照片显示弹出框********/
