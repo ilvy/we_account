@@ -24,13 +24,15 @@ html
                 div.myLiveRoom 我的直播间
                 div.addProduct
                     a(href='/publish.html') 发布
-                div.changeRoom 切换房间
-                div.favorite 收藏
+                div.changeRoom
+                    a(href="/we_account/customer")切换房间
+                div.favorite 收藏一下
                 div.myFavorite 我的收藏
             -else
                 div.myLiveRoom 我的直播间
-                div.changeRoom 切换房间
-                div.favorite 收藏
+                div.changeRoom
+                    a(href="/we_account/customer")切换房间
+                div.favorite 收藏一下
                 div.myFavorite 我的收藏
 
         div#ls-load
@@ -39,7 +41,7 @@ html
             section.waterfall
                 each product in products
                     div.box
-                        div.desc #{product.text}
+                        div(data-desc='#{product.text}').desc #{product.text}
                         div(data-imgnum='#{product.image_url.length}').img-display
                             each imageName,i in product.image_url
                                 img(src='/images/#{imageName}' data-num='#{i+1}')
@@ -47,6 +49,8 @@ html
                             联系卖家
 
         div(role="dialog" aria-hidden="true" data-backdrop="static")#popup.modal.fade
+            div(data-dismiss="modal")#popup-close
+                span ×
             div.modal-dialog
                 div.modal-content
                     div.modal-header
@@ -58,6 +62,7 @@ html
                         div#next next
 
         button(data-toggle="modal" data-target="#popup")#popup-btn popup-btn
+
 script(src="/javascripts/jquery.js")
 script(src="/javascripts/libs/bootstrap.min.js")
 script(src="/javascripts/waterfall.js")

@@ -92,5 +92,13 @@ div.desc{
     font-size: 24px;
 }
 
+#popup-close{
+    position:absolute;
+    right:0;
+    top:-24px;
+    font-size:72px;
+    color:white;
+    cursor:pointer;
+}
 
 /********start 照片显示弹出框********/
