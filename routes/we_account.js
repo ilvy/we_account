@@ -210,9 +210,7 @@ router.post("/upload",function(req,res){
 /*
  *顾客 到达直播间门口 非发布者
  */
-router.get("/customer",function(req,res){
-    res.redirect("/room_door.html");
-});
+router.get("/customer",live_room.renderRoom_door);
 
 /**
  * 输入门牌号，敲门进入
@@ -260,9 +258,7 @@ router.get("/goto_LiveRoom",function(req,resp){
 
 router.get("/load_more",loadMoreProducts);
 
-router.post("/favourite",function(req,res){
-
-});
+router.post("/favourite",live_room.addFavourite);
 
 router.get("/favourite",function(){
 

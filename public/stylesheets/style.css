@@ -103,3 +103,36 @@ div.desc{
 }
 
 /********start 照片显示弹出框********/
+
+/*********start room-door*********/
+#room{
+    width: 80%;
+    height: 50px;
+    font-size: 40px;
+    border: 1px solid #cdcdcd;
+    margin: 50px auto;
+    text-align: center;
+}
+.room_input_desc{
+    width: 100%;
+    text-align: center;
+    margin-top: 250px;
+}
+.submit-div{
+    width: 100%;
+    text-align: center;
+}
+#enter-room-btn{
+    padding: 8px 12px;
+    border: 1px solid #cdcdcd;
+    background-color: #ffffff;
+    color: #1c9aff;
+    font-size: 24px;
+    cursor: pointer;
+}
+#enter-room-btn:hover{
+    background-color: #c3cece;
+    color: blue;
+}
+
+/*********end room-door*********/

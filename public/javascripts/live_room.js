@@ -44,4 +44,22 @@ function addListener(){
         var imgSrc = $currImgAlbum.eq(currNum - 1).attr("src");
         $(".big-img-display img").attr("src",imgSrc);
     });
+    //收藏直播间
+    $(".favorite").on("click",function(){
+        var url = '/we_account/favourite';
+        $.ajax({
+            url:url,
+            type:"post",
+            success:function(result){
+                if(result.flag == 1){
+                    alert("收藏成功");
+                }else{
+                    alert("收藏失败");
+                }
+            },
+            error:function(err){
+                console.log(err);
+            }
+        })
+    })
 }

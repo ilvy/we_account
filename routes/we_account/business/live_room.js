@@ -139,7 +139,56 @@ function loadMoreProducts(req,res){
     });
 }
 
+/**
+ * 添加收藏直播间
+ * @param req
+ * @param res
+ */
+function addFavourite(req,res){
+    var room = req.session.room,
+        open_id = req.session.openId;
+    var paras = [open_id,room];
+    if(room && open_id){
+        dbOperator.query('call pro_add_favourite(?,?)',paras,function(err,rows){
+            if(err){
+                console.log("call pro_add_favourite error:"+err);
+                response.failed("-2",res,'');//程序报错
+            }else{
+                var result = rows[0][0]["res"];
+                if(result == 1){//添加收藏成功
+                    response.success("1",res,'收藏成功');
+                }else if(result == 0){//房间不存在或者已经收藏过
+                    response.failed("-1",res,'已经收藏，不能重复收藏');
+                }else if(result == -1){//当前房间发布者不用收藏
+
+                }
+            }
+        })
+    }
+}
+
+/**
+ *
+ * @param req
+ * @param res
+ */
+function renderRoom_door(req,res){
+    var open_id = req.session.openId;
+    var paras = [open_id];
+    if(open_id){
+        dbOperator.query("call pro_select_favourite_rooms(?)",paras,function(err,rows){
+            if(err){
+                console.log(err);
+            }else{
+                res.render('room-door',{favourite_rooms:rows[0]});
+            }
+        })
+    }
+}
+
 exports.renderLiveRoom = gotoLiveRoom;
 exports.knockDoor = knockDoor;
 exports.knocktoLiveRoom = knocktoLiveRoom;
 exports.loadMoreProducts = loadMoreProducts;
+exports.addFavourite = addFavourite;
+exports.renderRoom_door = renderRoom_door;
