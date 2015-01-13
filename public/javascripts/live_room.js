@@ -36,6 +36,7 @@ function addListener(){
         var imgSrc = $(this).attr("src"),
             naturalWidth = $(this)[0].naturalWidth;
         $(".big-img-display").html('<img src="'+imgSrc+'">');
+        $(".modal-header").html($(this).parents('.box').find(".desc").data("desc"));
         $("#popup").modal();
     });
     $("#next").on("click",function(){

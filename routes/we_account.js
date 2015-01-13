@@ -249,6 +249,7 @@ router.get("/goto_LiveRoom",function(req,resp){
 //            console.log(chunks.toString());
             var userInfo = JSON.parse(chunks);
             var openId = userInfo.openid || 'oHbq1t0enasGWD7eQoJuslZY6R-4';
+            console.log("==============customer openId:"+openId);
             session.openId = openId;
             knocktoLiveRoom(req,resp);
         })
@@ -258,6 +259,14 @@ router.get("/goto_LiveRoom",function(req,resp){
 });
 
 router.get("/load_more",loadMoreProducts);
+
+router.post("/favourite",function(req,res){
+
+});
+
+router.get("/favourite",function(){
+
+});
 
 router.get("/xml",function(req,res){
     xmlParser.parseXml("<xml><ToUserName><![CDATA[gh_d28b25ec1197]]></ToUserName>" +
