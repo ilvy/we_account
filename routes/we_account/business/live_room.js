@@ -8,6 +8,7 @@ var dbOperator = require("../../../db/dbOperator"),
     async = require("async");
 
 function gotoLiveRoom(req,res){
+    console.log("***********************gotoLiveRoom");
     var openId = req.session.openId;
     var products,totalPage;
     var funs = [
@@ -43,6 +44,7 @@ function gotoLiveRoom(req,res){
 }
 
 function knocktoLiveRoom(req,res){
+    console.log("***********************knocktoLiveRoom");
     var openId = req.session.openId,
         room = req.session.room || '888888';
     if(!room){
@@ -54,7 +56,7 @@ function knocktoLiveRoom(req,res){
     var funs = [
         //监测是不是发布者自己进入
         function checkPublisher(cb){
-            dbOperator.query("call pro_check_publisher_knock(?,?)",[room,null],function(err,results){
+            dbOperator.query("call pro_check_publisher_knock(?,?)",[room,openId],function(err,results){
                 if(err){
                     console.log(err);
                 }
@@ -63,7 +65,7 @@ function knocktoLiveRoom(req,res){
         },
         function select_product(publisher,cb){
             req.session.isPublisher = publisher ? 1:0;
-            dbOperator.query("call pro_select_products(?,?,?)",[openId,null,0],function(err,rows){
+            dbOperator.query("call pro_select_products(?,?,?)",[null,room,0],function(err,rows){
                 if(err){
                     console.log("select products err");
                     res.redirect("/err.html");
