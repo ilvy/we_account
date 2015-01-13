@@ -57,6 +57,7 @@ div.desc{
     position:absolute;
     right:10px;
     display:none;
+    z-index:101;
 }
 #tools-panel > div{
     border-bottom:black 1px solid;
