@@ -8,7 +8,7 @@ var session = require('express-session');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var we_account = require('./routes/we_account');
+var we_account = require('./routes/we_account_2');
 
 var app = express();
 

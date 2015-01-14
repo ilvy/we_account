@@ -227,50 +227,6 @@ router.post("/upload",function(req,res){
  */
 router.get("/customer",live_room.renderRoom_door);
 
-/**
- * 输入门牌号，敲门进入
- */
-router.post("/knock_door",knockDoor);
-
-//AUTH2.0 网页获取用户权限 打开门，允许用户以open_id方式进入
-router.get("/open_door",function(req,res){
-    //判断用户是否存在账号，若无，返回注册界面，若已有账号，直接登录即可
-    var redirect_uri = urlencode("http://120.24.224.144/we_account/goto_LiveRoom");
-    res.redirect("https://open.weixin.qq.com/connect/oauth2/authorize?" +
-        "appid="+appConfig.appId+"&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect");
-});
-
-/**
- * 用户进入直播间
- */
-router.get("/goto_LiveRoom",function(req,resp){
-    var session = req.session;
-    var query = req.query;
-    var code = query.code,
-        status = query.status,
-        appId = appConfig.appId,
-        appSecret = appConfig.appSecret,
-        room = session.room;
-    var url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='+appId+'&secret='+appSecret+'' +
-        '&code='+code+'&grant_type=authorization_code';
-    https.get(url,function(res){
-        var chunks = "";
-        res.on("data",function(data){
-            chunks += data;
-        });
-        res.on('end',function(){
-//            console.log(chunks.toString());
-            var userInfo = JSON.parse(chunks);
-            var openId = userInfo.openid || 'oHbq1t0enasGWD7eQoJuslZY6R-4';
-            console.log("==============customer openId:"+openId);
-            session.openId = openId;
-            knocktoLiveRoom(req,resp);
-        })
-    }).on("error",function(e){
-            console.log("get error:"+ e.message);
-        });
-});
-
 router.get("/load_more",loadMoreProducts);
 
 router.post("/favourite",live_room.addFavourite);
