@@ -32,7 +32,8 @@
             alert("不能为空");
         }else{
             $.ajax({
-                url:'/we_account/knock_door',
+                url:'/we_account/live-room?room_id='+room,
+//                url:'/we_account/knock_door',
                 type:"post",
                 data:{room:room},
                 success:function(results){

@@ -41,7 +41,8 @@ function addListener(){
                 data:{room:room},
                 success:function(results){
                     if(results && results.flag == 1){
-                        window.location.href = '/we_account/open_door';
+                        window.location.href = '/we_account/live-room?room_id='+room;
+//                        window.location.href = '/we_account/open_door';
                     }else{
                         alert("对不起，您输入的门牌号有误");
                     }

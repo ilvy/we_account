@@ -7,6 +7,64 @@ var dbOperator = require("../../../db/dbOperator"),
     response = require("../response/response"),
     async = require("async");
 
+function gotoLiveRoom_new(req,res){
+    console.log("***********************gotoLiveRoom");
+    var openId = req.session.openId,
+        type = req.session.type;
+    var room_id = req.query.room_id;
+    req.session.room_id = room_id;
+    var products,totalPage,
+        paras1 = [null,null,0];
+    var funs = [
+        function select_product(cb){
+            dbOperator.query("call pro_select_products(?,?,?)",[openId,null,0],function(err,rows){
+                if(err){
+                    console.log("select products err");
+                    res.redirect("/err.html");
+                }
+                console.log(rows);
+                totalPage = rows[0][0]['totalpage'];
+                products = rows[1];
+                products.forEach(function(item,i){
+                    item.image_url = item.image_url.split(";");
+                });
+//        console.log("products:"+products);
+//                res.render("live-room",{products:products||[],publisher:publisher,totalPage:totalPage});
+                cb(err,{products:products||[],totalPage:totalPage})
+            });
+        }
+    ];
+    req.session.isPublisher = type==1 ? 1:0;
+    if(type == 1){//发布者
+        funs.shift(checkPublisher);
+        paras1[0] = openId;
+    }else{
+        paras1[1] = room_id;
+    }
+    async.series(funs,function(err,results){
+        var productRes,publisher = null;
+        if(type == 1){
+            productRes = results[1];//商品信息
+            publisher = results[0];//发布者信息
+        }else{
+            productRes = results[0];
+        }
+        res.render("live-room",{products:productRes["products"]||[],publisher:publisher,totalPage:productRes["totalPage"]});
+    });
+
+    //监测是不是发布者自己进入
+    function checkPublisher(cb){
+        dbOperator.query("call pro_check_publisher_knock(?,?)",[null,openId],function(err,results){
+            if(err){
+                console.log(err);
+            }
+            cb(err,results[0][0]);
+        });
+    }
+
+}
+
+
 function gotoLiveRoom(req,res){
     console.log("***********************gotoLiveRoom");
     var openId = req.session.openId;
@@ -85,7 +143,6 @@ function knocktoLiveRoom(req,res){
 
 }
 
-
 /**
  * 顾客（非发布者）输入门牌号，敲门
  */
@@ -105,6 +162,39 @@ function knockDoor(req,res){
         });
     }
 
+}
+
+/**
+ * 延时加载接口
+ * @param req
+ * @param res
+ */
+function loadMoreProducts_new(req,res){
+    var session = req.session,
+        openId = session.openId,
+        type = req.session.type;
+    var room_id = session.room_id;
+    var query = req.query;
+    var paras = [null,null,query.page];
+    var products;
+    if(session.isPublisher){
+        paras[0] = openId;
+    }else{
+        paras[1] = room_id;
+    }
+    dbOperator.query("call pro_select_products(?,?,?)",paras,function(err,rows){
+        if(err){
+            console.log("select products err");
+            res.redirect("/err.html");
+        }
+        console.log(rows);
+        products = rows[1];
+        products.forEach(function(item,i){
+            item.image_url = item.image_url.split(";");
+        });
+//        console.log("products:"+products);
+        response.success({products:products,totalPage:rows[0][0]['totalpage']},res,"加载成功");
+    });
 }
 
 /**
@@ -185,12 +275,17 @@ function renderRoom_door(req,resp){
                 resp.render('room-door',{favourite_rooms:rows[0]});
             }
         })
+    }else{
+        //提示用户请先关注本公众号
     }
 }
 
 exports.renderLiveRoom = gotoLiveRoom;
+exports.renderLiveRoom_new = gotoLiveRoom_new;
+exports.knockDoor_new = knockDoor_new;
 exports.knockDoor = knockDoor;
 exports.knocktoLiveRoom = knocktoLiveRoom;
 exports.loadMoreProducts = loadMoreProducts;
+exports.loadMoreProducts_new = loadMoreProducts_new;
 exports.addFavourite = addFavourite;
 exports.renderRoom_door = renderRoom_door;

@@ -6,12 +6,12 @@ var menusObj = {
         {
             type:"view",
             name:"我要发布",
-            url:"http://120.24.224.144/we_account/publish"
+            url:"http://120.24.224.144/we_account/publish?type=1"
         },
         {
             type:"view",
             name:"进入直播间",
-            url:"http://120.24.224.144/we_account/customer"
+            url:"http://120.24.224.144/we_account/publish?type=2"
         }
     ]
 };

@@ -22,10 +22,10 @@ var publish_account = require("./we_account/business/publish_account"),
     checkUser = publish_account.checkUser,
     register = publish_account.register,
     live_room = require("./we_account/business/live_room"),
-    gotoLiveRoom = live_room.renderLiveRoom,
+    gotoLiveRoom = live_room.renderLiveRoom_new,
     knockDoor = live_room.knockDoor,
     knocktoLiveRoom = live_room.knocktoLiveRoom ,
-    loadMoreProducts = live_room.loadMoreProducts;
+    loadMoreProducts = live_room.loadMoreProducts_new;
 
 var TOKEN = 'jxfgx_20140526';
 router.get("/",function(req,res){
@@ -123,8 +123,15 @@ router.post("/register",function(req,res){
 
 //AUTH2.0 网页获取用户权限
 router.get("/publish",function(req,res){
+    var type = req.query.type;
     //判断用户是否存在账号，若无，返回注册界面，若已有账号，直接登录即可
-    var redirect_uri = urlencode("http://120.24.224.144/we_account/goto_publish");
+    var redirect_uri;// = urlencode("http://120.24.224.144/we_account/goto_publish");
+    redirect_uri = urlencode("http://120.24.224.144/we_account/goto_publish?type="+type);
+//    if(type == 1){//发布者进入
+//    }else if(type == 2){//普通浏览者进入
+//        redirect_uri = urlencode("http://120.24.224.144/we_account/goto_publish?type="+type);
+//    }
+
     res.redirect("https://open.weixin.qq.com/connect/oauth2/authorize?" +
         "appid="+appConfig.appId+"&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect");
 });
@@ -135,7 +142,8 @@ router.get("/goto_publish",function(req,resp){
     var code = query.code,
         status = query.status,
         appId = appConfig.appId,
-        appSecret = appConfig.appSecret;
+        appSecret = appConfig.appSecret,
+        type = query.type;
     var url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='+appId+'&secret='+appSecret+'' +
         '&code='+code+'&grant_type=authorization_code';
     https.get(url,function(res){
@@ -148,24 +156,30 @@ router.get("/goto_publish",function(req,resp){
             var userInfo = JSON.parse(chunks);
             var openId = userInfo.openid || 'oHbq1t0enasGWD7eQoJuslZY6R-4';
             session.openId = openId;
-            checkUser(openId,function response(err,results){
-                if(err){
-                    resp.redirect("err.html");
-                    return;
-                }
-                if(results[0]["count(1)"]){
-                    resp.redirect("/publish.html");
-                }else{
-                    resp.redirect("/register.html");
-                }
-            });
+            session.type = type;
+            if(type == 1){//发布者登录
+                checkUser(openId,function response(err,results){
+                    if(err){
+                        resp.redirect("err.html");
+                        return;
+                    }
+                    if(results[0]["count(1)"]){
+                        resp.redirect("/live-room?room_id="+results[0]["room_id"]);
+                    }else{
+                        resp.redirect("/register.html");
+                    }
+                });
+            }else if(type == 2){//普通用户登录
+                live_room.renderRoom_door(req,resp);//返回room_door
+            }
+
         })
     }).on("error",function(e){
             console.log("get error:"+ e.message);
         });
 });
 
-router.get("/live-room",gotoLiveRoom);
+router.get("/live-room",gotoLiveRoom);//带上参数room_id
 
 router.post("/publish",function(req,res){
     publishAccount.publishProduct(req,res);
