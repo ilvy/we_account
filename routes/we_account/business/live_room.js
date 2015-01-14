@@ -282,7 +282,6 @@ function renderRoom_door(req,resp){
 
 exports.renderLiveRoom = gotoLiveRoom;
 exports.renderLiveRoom_new = gotoLiveRoom_new;
-exports.knockDoor_new = knockDoor_new;
 exports.knockDoor = knockDoor;
 exports.knocktoLiveRoom = knocktoLiveRoom;
 exports.loadMoreProducts = loadMoreProducts;
