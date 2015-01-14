@@ -7,14 +7,22 @@ html
         meta(charset="UTF-8")
         meta(name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no")
         link(href="/stylesheets/style.css" rel="stylesheet")
+        link(rel='stylesheet', href='/stylesheets/bootstrap.css')
 
     body
-        div#favourite_rooms
-            div#favour_rooms_btn 我的收藏
-            -if (favourite_rooms.length)
-            div#favour_rooms_options
-                each room_option,i in favourite_rooms
-                    div.favour_room_option #{room_option}
+        div#favour_rooms_btn
+            button(type="button" data-toggle="modal" data-target="#favour_rooms_options_popup") 我的收藏
+
+        -if (favourite_rooms.length)
+        div(role="dialog" aria-hidden="true" data-backdrop="static")#favour_rooms_options_popup.modal.fade
+            div(data-dismiss="modal")#popup-close
+                span ×
+            div.modal-dialog
+                div.modal-content
+                    div.modal-body
+                        div.favour_rooms
+                            each room_option,i in favourite_rooms
+                                div.favour_room_option #{room_option.room_id}
 
         form
             div.room_input_desc 输入直播号:
@@ -22,28 +30,5 @@ html
             div.submit-div
                 input(type="button" value="进入直播间")#enter-room-btn
     script(src="/javascripts/jquery.js")
-    script.
-        $("#enter-room-btn").on("click",function(){
-            var room = encodeURI($("#room").html().trim());
-            if(room.length > 20){
-                alert("输入不合法");
-            }else if(room.length == 0){
-                alert("不能为空");
-            }else{
-                $.ajax({
-                    url:'/we_account/knock_door',
-                    type:"post",
-                    data:{room:room},
-                    success:function(results){
-                        if(results && results.flag == 1){
-                            window.location.href = '/we_account/open_door';
-                        }else{
-                            alert("对不起，您输入的门牌号有误");
-                        }
-                    },
-                    error:function(err){
-                        console.log(err);
-                    }
-                })
-            }
-        });
+    script(src="/javascripts/libs/bootstrap.min.js")
+    script(src="/javascripts/room-door.js")

@@ -75,3 +75,11 @@ exports.query = query;
 //    console.log(results);
 ////    cb(err,results[0][0]);
 //});
+
+//query("call pro_select_favourite_rooms(?)",['oHbq1t0enasGWD7eQoJuslZY6R-4'],function(err,rows){
+//    if(err){
+//        console.log(err);
+//    }else{
+//        console.log(rows)
+//    }
+//})

@@ -135,4 +135,24 @@ div.desc{
     color: blue;
 }
 
+.modal-body{
+    overflow-y: auto;
+}
+
+#favour_rooms_btn{
+    text-align: center;
+}
+
+.favour_rooms{
+    width: 100%;
+}
+
+.favour_room_option{
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid whitesmoke;
+    padding-bottom: 5px;
+    font-size: 18px;
+}
+
 /*********end room-door*********/
