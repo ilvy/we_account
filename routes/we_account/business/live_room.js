@@ -7,6 +7,11 @@ var dbOperator = require("../../../db/dbOperator"),
     response = require("../response/response"),
     async = require("async");
 
+/**
+ * 进入直播间页面
+ * @param req
+ * @param res
+ */
 function gotoLiveRoom_new(req,res){
     console.log("***********************gotoLiveRoom");
     var openId = req.session.openId,
@@ -17,7 +22,7 @@ function gotoLiveRoom_new(req,res){
         paras1 = [null,null,0];
     var funs = [
         function select_product(cb){
-            dbOperator.query("call pro_select_products(?,?,?)",[openId,null,0],function(err,rows){
+            dbOperator.query("call pro_select_products(?,?,?)",paras1,function(err,rows){
                 if(err){
                     console.log("select products err");
                     res.redirect("/err.html");
@@ -36,7 +41,7 @@ function gotoLiveRoom_new(req,res){
     ];
     req.session.isPublisher = type==1 ? 1:0;
     if(type == 1){//发布者
-        funs.shift(checkPublisher);
+        funs.unshift(checkPublisher);
         paras1[0] = openId;
     }else{
         paras1[1] = room_id;
@@ -276,15 +281,15 @@ function renderRoom_door(req,resp){
             }
         })
     }else{
-        //提示用户请先关注本公众号
+
     }
 }
 
-exports.renderLiveRoom = gotoLiveRoom;
+//exports.renderLiveRoom = gotoLiveRoom;
 exports.renderLiveRoom_new = gotoLiveRoom_new;
 exports.knockDoor = knockDoor;
-exports.knocktoLiveRoom = knocktoLiveRoom;
-exports.loadMoreProducts = loadMoreProducts;
+//exports.knocktoLiveRoom = knocktoLiveRoom;
+//exports.loadMoreProducts = loadMoreProducts;
 exports.loadMoreProducts_new = loadMoreProducts_new;
 exports.addFavourite = addFavourite;
 exports.renderRoom_door = renderRoom_door;

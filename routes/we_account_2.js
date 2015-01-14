@@ -24,7 +24,7 @@ var publish_account = require("./we_account/business/publish_account"),
     live_room = require("./we_account/business/live_room"),
     gotoLiveRoom = live_room.renderLiveRoom_new,
     knockDoor = live_room.knockDoor,
-    knocktoLiveRoom = live_room.knocktoLiveRoom ,
+//    knocktoLiveRoom = live_room.knocktoLiveRoom ,
     loadMoreProducts = live_room.loadMoreProducts_new;
 
 var TOKEN = 'jxfgx_20140526';
@@ -164,7 +164,7 @@ router.get("/goto_publish",function(req,resp){
                         return;
                     }
                     if(results[0]["count(1)"]){
-                        resp.redirect("/live-room?room_id="+results[0]["room_id"]);
+                        resp.redirect("/we_account/live-room?room_id="+results[0]["room_id"]);
                     }else{
                         resp.redirect("/register.html");
                     }
@@ -222,10 +222,14 @@ router.post("/upload",function(req,res){
     });
 });
 
-/*
- *顾客 到达直播间门口 非发布者
+/**
+ *
  */
-router.get("/customer",live_room.renderRoom_door);
+router.get("/room_door",live_room.renderRoom_door);//返回room_door
+/**
+ * 输入门牌号，敲门进入
+ */
+router.post("/knock_door",knockDoor);
 
 router.get("/load_more",loadMoreProducts);
 

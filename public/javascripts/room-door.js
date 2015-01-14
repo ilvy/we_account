@@ -15,13 +15,12 @@ function addListener(){
             data:{room:room},
             success:function(results){
                 if(results && results.flag == 1){
-                    window.location.href = '/we_account/open_door';
-                    $("#favour_rooms_options_popup").hideModal();
+                    window.location.href = '/we_account/live-room?room_id='+room;
+                    $("#favour_rooms_options_popup").modal('hide');
                 }else{
                     alert("对不起，您输入的门牌号有误");
-                    $("#favour_rooms_options_popup").modal({hide:true});
+                    $("#favour_rooms_options_popup").modal('hide');
                 }
-
             },
             error:function(err){
                 console.log(err);
