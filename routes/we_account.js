@@ -124,7 +124,7 @@ router.post("/register",function(req,res){
 router.get("/publish",function(req,res){
     console.log("&&&&&&&&&&&&&&&&&& visit type:"+req.query.type)
     //判断用户是否存在账号，若无，返回注册界面，若已有账号，直接登录即可
-    var redirect_uri = urlencode("http://120.24.224.144/we_account/goto_publish");
+    var redirect_uri = urlencode("http://120.24.224.144/we_account/goto_publish?type="+req.query.type);
     res.redirect("https://open.weixin.qq.com/connect/oauth2/authorize?" +
         "appid="+appConfig.appId+"&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect");
 });
@@ -132,6 +132,7 @@ router.get("/publish",function(req,res){
 router.get("/goto_publish",function(req,resp){
     var session = req.session;
     var query = req.query;
+    console.log("&&&&&&&&&&&&&&&&&& goto_publish ******** visit type:"+req.query.type)
     var code = query.code,
         status = query.status,
         appId = appConfig.appId,
