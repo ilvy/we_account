@@ -145,6 +145,7 @@ function loadMoreProducts(req,res){
  * @param res
  */
 function addFavourite(req,res){
+    console.log("*****************");
     var room = req.session.room,
         open_id = req.session.openId;
     var paras = [open_id,room];

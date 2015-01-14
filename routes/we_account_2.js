@@ -1,5 +1,6 @@
 /**
  * Created by Administrator on 14-12-10.
+ *
  */
 
 var express = require("express"),
@@ -57,31 +58,31 @@ router.get("/",function(req,res){
 router.post("/",function(req,res){
     var xmlData = "",resultObj = {};
 //    if(checkWeAuth(req)){
-        console.log("get normal message from weixin user");
-        req.on("data",function(data){
-            xmlData += data;
-        });
-        req.on("end",function(){
-            console.log("req end:"+xmlData);
-            xmlParser.parseXml(xmlData,function(result){
-                console.log("*****************************");
-                for(var key in result){
-                    console.log(key+": "+result[key]);
-                }
-                console.log("----------------"+result["ToUserName"]);
-                console.log("in argument result:"+resultObj);
-                var replyXml = '<xml>' +
-                    '<ToUserName><![CDATA['+result["FromUserName"]+']]></ToUserName>' +
-                    '<FromUserName><![CDATA['+result["ToUserName"]+']]></FromUserName>' +
-                    '<CreateTime>'+new Date().getTime()+'</CreateTime>' +
-                    '<MsgType><![CDATA['+result["MsgType"]+']]></MsgType>' +
-                    '<Content><![CDATA['+"请求已接收，处理中，请稍后..."+']]></Content>' +
-                    '</xml>';//result["FromUserName"];
+    console.log("get normal message from weixin user");
+    req.on("data",function(data){
+        xmlData += data;
+    });
+    req.on("end",function(){
+        console.log("req end:"+xmlData);
+        xmlParser.parseXml(xmlData,function(result){
+            console.log("*****************************");
+            for(var key in result){
+                console.log(key+": "+result[key]);
+            }
+            console.log("----------------"+result["ToUserName"]);
+            console.log("in argument result:"+resultObj);
+            var replyXml = '<xml>' +
+                '<ToUserName><![CDATA['+result["FromUserName"]+']]></ToUserName>' +
+                '<FromUserName><![CDATA['+result["ToUserName"]+']]></FromUserName>' +
+                '<CreateTime>'+new Date().getTime()+'</CreateTime>' +
+                '<MsgType><![CDATA['+result["MsgType"]+']]></MsgType>' +
+                '<Content><![CDATA['+"请求已接收，处理中，请稍后..."+']]></Content>' +
+                '</xml>';//result["FromUserName"];
 //                res.write(replyXml);
 //                res.end();
-                dispatcher.dispatch(result,res);
-            },resultObj);
-        });
+            dispatcher.dispatch(result,res);
+        },resultObj);
+    });
 //    }else{
 //        res.send("");
 //        console.log("get normal message ,authority check failed");
@@ -122,7 +123,6 @@ router.post("/register",function(req,res){
 
 //AUTH2.0 网页获取用户权限
 router.get("/publish",function(req,res){
-    console.log("&&&&&&&&&&&&&&&&&& visit type:"+req.query.type)
     //判断用户是否存在账号，若无，返回注册界面，若已有账号，直接登录即可
     var redirect_uri = urlencode("http://120.24.224.144/we_account/goto_publish");
     res.redirect("https://open.weixin.qq.com/connect/oauth2/authorize?" +
@@ -161,8 +161,8 @@ router.get("/goto_publish",function(req,resp){
             });
         })
     }).on("error",function(e){
-        console.log("get error:"+ e.message);
-    });
+            console.log("get error:"+ e.message);
+        });
 });
 
 router.get("/live-room",gotoLiveRoom);
