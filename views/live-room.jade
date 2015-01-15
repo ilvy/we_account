@@ -42,7 +42,7 @@ html
                         div(data-desc='#{product.text}').desc #{product.text}
                         div(data-imgnum='#{product.image_url.length}').img-display
                             each imageName,i in product.image_url
-                                img(src='/images/#{imageName}' data-num='#{i+1}')
+                                img(src='http://120.24.224.144/images/#{imageName}' data-num='#{i+1}')
                         div.ontact-saler
                             联系卖家
 

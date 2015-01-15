@@ -128,9 +128,9 @@ Waterfall.prototype.asyncLoader = function(){
             var imgstr = '';
             item.image_url.forEach(function(url,i){
                 if(i > 0){
-                    imgstr += '<img class="lazy" src="/images/'+url+'" data-num="'+(i+1)+'" style="height:'+_this.smallH+'px">';
+                    imgstr += '<img class="lazy" src="http://120.24.224.144/images/'+url+'" data-num="'+(i+1)+'" style="height:'+_this.smallH+'px">';
                 }else{
-                    imgstr += '<img class="lazy" src="/images/'+url+'" data-num="'+(i+1)+'">';
+                    imgstr += '<img class="lazy" src="http://120.24.224.144/images/'+url+'" data-num="'+(i+1)+'">';
                 }
 //                urlArray.push('/images/'+url);
             });
