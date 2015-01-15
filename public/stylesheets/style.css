@@ -72,6 +72,10 @@ div.desc{
 }
 
 /********start 照片显示弹出框********/
+#popup .modal-dialog{
+    margin-top:76px;
+}
+
 #popup-btn{
     position:absolute;
     bottom:0px;
@@ -100,6 +104,7 @@ div.desc{
     font-size:72px;
     color:white;
     cursor:pointer;
+    z-index:1200;
 }
 
 /********start 照片显示弹出框********/
@@ -135,9 +140,6 @@ div.desc{
     color: blue;
 }
 
-.modal-body{
-    overflow-y: auto;
-}
 
 #favour_rooms_btn{
     text-align: center;

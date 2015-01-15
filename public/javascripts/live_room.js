@@ -73,4 +73,11 @@ function addListener(){
             waterfall.asyncLoader();
         }
     });
+    $("#popup").on("scroll",function(event){
+        if(event.stopPropagation){
+            event.stopPropagation();
+        }else{
+            event.cancelBubble = true;
+        }
+    })
 }
