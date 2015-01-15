@@ -23,6 +23,7 @@ var Waterfall = function(){
     this.box_w = 200;
     this.h_weights = [];//weight of height,including prices,img size and so on 每列的高度
     this.box_quantity = boxes.length;
+    this.isLoadOver = true;//上一次加载事件是否已经完毕,第一次加载默认为true
     this.init();
 }
 
@@ -53,6 +54,7 @@ Waterfall.prototype.init = function(){
 }
 
 Waterfall.prototype.setPosition = function(add_quantity){
+    this.isLoadOver = true;//开始排位说明已经加载完毕
     var colNum = this.min_col_num,
         hs = this.h_weights,
         box_h,
@@ -105,6 +107,10 @@ Waterfall.prototype.setPosition = function(add_quantity){
 }
 
 Waterfall.prototype.asyncLoader = function(){
+    if(!this.isLoadOver){
+        return;
+    }
+    this.isLoadOver = false;
     var _this = this;
     var productsStrs = '',imgstr = '';
     asyncLoader.load(function(results){
@@ -112,6 +118,7 @@ Waterfall.prototype.asyncLoader = function(){
             return;
         }
         var loadDatas;
+        var urlArray = [],lazyImgs;//需要异步加载的图片数组
         if(results.data){
             loadDatas = results.data.products;
             totalPage = results.data.totalPage;
@@ -121,18 +128,37 @@ Waterfall.prototype.asyncLoader = function(){
             var imgstr = '';
             item.image_url.forEach(function(url,i){
                 if(i > 0){
-                    imgstr += '<img src="/images/'+url+'" data-num="'+(i+1)+'" style="height:'+_this.smallH+'px">';
+                    imgstr += '<img class="lazy" src="/images/'+url+'" data-num="'+(i+1)+'" style="height:'+_this.smallH+'px">';
                 }else{
-                    imgstr += '<img src="/images/'+url+'" data-num="'+(i+1)+'">';
+                    imgstr += '<img class="lazy" src="/images/'+url+'" data-num="'+(i+1)+'">';
                 }
+//                urlArray.push('/images/'+url);
             });
-            $(".waterfall").append('<div class="box" ><div class="desc"><div data-imgnum="'+item.image_url.length+'">'+ item.text +imgstr+
+            $(".waterfall").append('<div class="box" style="width:'+_this.box_w+'px" ><div class="desc"><div data-imgnum="'+item.image_url.length+'">'+ item.text +imgstr+
                 '</div><div class="ontact-saler">联系卖家</div></div></div>');
         });
         $(".waterfall").append(productsStrs);
+        var loadImgCount = 0;
         boxes = $(".box");
+        lazyImgs = document.getElementsByClassName("lazy");
+        preloadImgs(lazyImgs,function ready(width,height){
+
+        },function onload(width,height){
+            loadImgCount++;
+            if(loadImgCount == lazyImgs.length){
+                _this.setPosition(loadDatas.length);
+                $(".lazy").removeClass("lazy");
+            }
+        },function error(){
+            loadImgCount++;
+            if(loadImgCount == lazyImgs.length){
+                _this.setPosition(loadDatas.length);
+                $(".lazy").removeClass("lazy");
+            }
+        });
+//        boxes = $(".box");
 //        $('.box').on("load",function(){
-            _this.setPosition(loadDatas.length);
+//            _this.setPosition(loadDatas.length);
 //        });
     });
 

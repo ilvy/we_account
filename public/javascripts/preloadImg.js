@@ -6,6 +6,7 @@
 var imgReady = (function () {
     var list = [], intervalId = null,
 
+    //
         tick = function () {
             var i = 0;
             for (; i < list.length; i++) {
@@ -14,17 +15,17 @@ var imgReady = (function () {
             !list.length && stop();
         },
 
+    //
         stop = function () {
             clearInterval(intervalId);
             intervalId = null;
         };
 
-    return function (url, ready, load, error) {
-        var check, width, height, newWidth, newHeight,
-            img = new Image();
+    return function (img, ready, load, error) {
+        var check, width, height, newWidth, newHeight;
+//            img = new Image();
 
-        img.src = url;
-
+//        img.src = url;
         if (img.complete) {
             ready(img.width, img.height);
             load && load(img.width, img.height);
@@ -34,22 +35,33 @@ var imgReady = (function () {
         //
         width = img.width;
         height = img.height;
-        check = function () {
-            newWidth = img.width;
-            newHeight = img.height;
-            if (newWidth !== width || newHeight !== height ||
-                //
-                newWidth * newHeight > 1024
-                ) {
-                ready(newWidth, newHeight);
-                check.end = true;
-            };
-        };
+        console.log("origin:w_"+width+"h_"+height);
+        check = (function(){
+            var imgObj = img,
+                listObj = list;
+            return function() {
+                newWidth = imgObj.width;
+                newHeight = imgObj.height;
+                if (newWidth !== width || newHeight !== height
+//                ||newWidth * newHeight > 1024
+                    ) {
+                    width = newWidth;
+                    height = newHeight;
+                    listObj.push(check);
+//                    ready(newWidth, newHeight);
+//                    check.end = true;
+                }else if(newWidth == width && newHeight == height && width != 0){
+                    ready(newWidth, newHeight);
+                    check.end = true;
+                }
+            }
+        })();
         check();
 
         //
         img.onerror = function () {
             error && error();
+            console.log("error:"+img.getAttribute("src"));
             check.end = true;
             img = img.onload = img.onerror = null;
         };
@@ -65,16 +77,18 @@ var imgReady = (function () {
         //
         if (!check.end) {
             list.push(check);
-
             if (intervalId === null) intervalId = setInterval(tick, 40);
         };
     };
 })();
 
-function preloadImgs(urlArray){
+
+function preloadImgs(urlArray,ready,onload,error){
     for(var i = 0; i < urlArray.length; i++){
-        imgReady(urlArray[i],function(){},function onload(width,height){
-            console.log(urlArray[i]+ " finished");
-        });
+        (function(){
+            var url = urlArray[i];
+            imgReady(url,ready,onload,error);
+        })();
+
     }
 }

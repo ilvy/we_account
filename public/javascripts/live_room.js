@@ -61,5 +61,16 @@ function addListener(){
                 console.log(err);
             }
         })
-    })
+    });
+    var waterfallHeight,
+        scrollTop;
+    $(document).on("scroll",function(){
+        if(!waterfallHeight){
+            waterfallHeight = waterfall.min(waterfall.h_weights);
+        }
+        scrollTop = $("body").scrollTop();
+        if(scrollTop + $(window).height() > 0.9 * waterfallHeight){
+            waterfall.asyncLoader();
+        }
+    });
 }
