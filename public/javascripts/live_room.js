@@ -39,9 +39,14 @@ function addListener(){
         $(".modal-header").html($(this).parents('.box').find(".desc").data("desc"));
         $("#popup").modal();
     });
-    $("#next").on("click",function(){
-        currNum = (currNum+1) % currLen;
+    $(".big-img-display").on("swipeleft",function(){
+        currNum = (++currNum) % currLen;
         var imgSrc = $currImgAlbum.eq(currNum - 1).attr("src");
+        $(".big-img-display img").attr("src",imgSrc);
+    });
+    $(".big-img-display").on("swiperight",function(){
+        currNum = (--currNum) % currLen
+        var imgSrc = $currImgAlbum.eq(Math.abs(currNum)).attr("src");
         $(".big-img-display img").attr("src",imgSrc);
     });
     //收藏直播间

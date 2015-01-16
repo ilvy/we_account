@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+
+<script src="javascripts/jquery.js"></script>
+    <script>
+        var data = {
+            filePath:"F://learn/compress/1.png"
+        };
+        $.ajax({
+            url:"localhost:8080/compressPic",
+            data:data,
+            type:"post",
+            success:function(result){
+                console.log(result);
+            },
+            error:function(err){
+                console.log(err);
+            }
+        })
+    </script>
+</body>
+</html>
