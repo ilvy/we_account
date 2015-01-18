@@ -219,6 +219,7 @@ router.post("/upload",function(req,res){
             res.send("err");
         }
         res.send(newFileName);
+        live_room.compressImg(res,newFileName);
     });
 });
 

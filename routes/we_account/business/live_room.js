@@ -5,7 +5,9 @@
 var dbOperator = require("../../../db/dbOperator"),
     urlencode = require('urlencode'),
     response = require("../response/response"),
-    async = require("async");
+    async = require("async"),
+    http = require("http"),
+    querystring = require("querystring");
 
 /**
  * 进入直播间页面
@@ -285,6 +287,40 @@ function renderRoom_door(req,resp){
     }
 }
 
+var filePath,
+    dirPath = '/mnt/projects/weAccount_git/we_account/public/images/';
+function compressImg(res,fileName,callback){
+    filePath = dirPath + fileName;
+    var data = {
+        filePath:filePath
+    };
+    var req = http.request({
+        host:"120.24.224.144",
+        port:"8080",
+        method:"post",
+        path:"/MsecondaryServer/compressPic"
+    },function(res){
+        var result = "";
+        res.on("data",function(chunk){
+            result += chunk;
+        }).on("end",function(){
+            console.log(result);
+            result = JSON.parse(result);
+//            callback(null,result);
+            if(result.code == 1){
+                res.send(fileName);
+            }else{
+                res.send(result.code);
+            }
+        }).on("error",function(err){
+            console.log(err);
+//            callback(err,null);
+        });
+    });
+    req.write(querystring.stringify(data));
+    req.end();
+}
+
 //exports.renderLiveRoom = gotoLiveRoom;
 exports.renderLiveRoom_new = gotoLiveRoom_new;
 exports.knockDoor = knockDoor;
@@ -293,3 +329,4 @@ exports.knockDoor = knockDoor;
 exports.loadMoreProducts_new = loadMoreProducts_new;
 exports.addFavourite = addFavourite;
 exports.renderRoom_door = renderRoom_door;
+exports.compressImg = compressImg;
