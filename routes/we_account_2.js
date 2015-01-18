@@ -198,6 +198,8 @@ router.post("/upload",function(req,res){
         console.log( "rename:"+path.normalize(process.cwd()+"/public/images/" + newFileName));
         fs.rename(file.path, path.normalize(process.cwd()+"/public/images/" + newFileName),function(err){
             console.log("newPath:"+file.path);
+//            live_room.compressImg(res,newFileName);
+            res.send(newFileName);
         });
     })
         .on('error', function(err) {
@@ -210,6 +212,7 @@ router.post("/upload",function(req,res){
         })
         .on('end', function() {
             console.log('-> upload done');
+//            live_room.compressImg(res,newFileName);
         });
 
     form.parse(req,function(err,fields,files){
@@ -218,8 +221,8 @@ router.post("/upload",function(req,res){
             console.log(err);
             res.send("err");
         }
-        res.send(newFileName);
-        live_room.compressImg(res,newFileName);
+
+//        live_room.compressImg(res,newFileName);
     });
 });
 

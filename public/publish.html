@@ -131,12 +131,15 @@
                 },
                 onComplete:function(file,res){
 //                    alert(res);
+                    compress(res,function(err,result){
+                        console.log("compress:"+result.code);
+                        $("#image_content").append('<div class="img-display"><img  src="images/'+res+'"/></div>');
+                    });
                     console.log(res);
-                    $("#image_content").append('<div class="img-display"><img  src="images/'+res+'"/></div>');
                     products?products  += ";"+ res:products += res;
                 }
             })
-        })
+        });
 
         $("#submit").on("click",function(){
             var desc = $(".edit-desc-content").html();//TODO 检验字符串合法性
@@ -161,5 +164,23 @@
             });
         });
     });
+    function compress(fileName,callback){
+        var data = {
+            filePath:"/mnt/projects/weAccount_git/we_account/public/images/"+fileName
+        };
+        $.ajax({
+            url:"http://120.24.224.144:8080/MsecondaryServer/compressPic",
+            data:data,
+            type:"post",
+            success:function(result){
+                console.log(result);
+                callback(null,result);
+            },
+            error:function(err){
+                console.log(err);
+                callback(err,null);
+            }
+        })
+    }
 </script>
 </html>
