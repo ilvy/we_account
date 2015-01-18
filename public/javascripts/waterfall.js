@@ -134,7 +134,7 @@ Waterfall.prototype.asyncLoader = function(){
                 }
 //                urlArray.push('/images/'+url);
             });
-            $(".waterfall").append('<div class="box" style="width:'+_this.box_w+'px" ><div class="desc"><div data-imgnum="'+item.image_url.length+'">'+ item.text +imgstr+
+            $(".waterfall").append('<div class="box" style="width:'+_this.box_w+'px" ><div class="desc"><div class="img-display" data-imgnum="'+item.image_url.length+'">'+ item.text +imgstr+
                 '</div><div class="ontact-saler">联系卖家</div></div></div>');
         });
         $(".waterfall").append(productsStrs);

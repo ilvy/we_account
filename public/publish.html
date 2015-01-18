@@ -47,12 +47,13 @@
             left: 35%;
             top: 0;
         }
-        .img-display{
+        .upload-display{
             display: inline-block;
             width: 150px;
             height: 150px;
+            position: relative;
          }
-        .img-display img{
+        .upload-display img{
             width: 100%;
             height: 100%;
          }
@@ -68,6 +69,13 @@
         }
         #sub-btn{
             text-align: center;position: absolute;bottom: 0;width: 100%;
+        }
+        .delete-img{
+            position: absolute;
+            right: 0;
+            top: 0;
+            color: #222222;
+            font-size: 18px;
         }
     </style>
 </head>
@@ -106,7 +114,7 @@
 <script src="./javascripts/jquery.js"></script>
 <script src="./javascripts/ajaxupload.js"></script>
 <script>
-    var products = '',desc = '';
+    var products = '',desc = '',productArray = [];
     $(document).ready(function(){
         var access_token = 'D3E-YnYHAHuD-UtZBM9KGcXzTLdTf9ImLOtk5zv7Di3BdGGVLhRguXEFImaOmBQR4Tg-FHwpeX1dZEyTjcKfabG9wE9IF8QbugYs91N--Hg';
 //        $("#upload").on("click",function(){
@@ -131,12 +139,13 @@
                 },
                 onComplete:function(file,res){
 //                    alert(res);
+                    $("#image_content").append('<div class="upload-display"><img  src="images/'+res+'"/></div>');
                     compress(res,function(err,result){
-                        console.log("compress:"+result.code);
-                        $("#image_content").append('<div class="img-display"><img  src="images/'+res+'"/></div>');
+
                     });
                     console.log(res);
-                    products?products  += ";"+ res:products += res;
+                    productArray.push(res);
+//                    products?products  += ";"+ res:products += res;
                 }
             })
         });
@@ -145,7 +154,7 @@
             var desc = $(".edit-desc-content").html();//TODO 检验字符串合法性
             var url = "/we_account/publish",
                     postData = {
-                        products:products,
+                        products:getProducts(),
                         desc:desc
                     };
             $.ajax({
@@ -163,7 +172,32 @@
                 }
             });
         });
+
+        $(document).on("taphold",".upload-display",function(event){
+            var $this = $(this);
+            $this.append('<div class="delete-img">x</div>')
+        });
+
+        $(document).on("click",".delete-img",function(){
+            $(this).parents(".upload-display").remove();
+            var delIndex = $(this).index();
+            productArray.splice(delIndex,1);
+        });
     });
+
+
+    function getProducts(){
+        var products = "";
+        productArray.forEach(function(item,i){
+            products += products?products  += ";"+ item:products += item;
+        });
+        return products;
+    }
+    /**
+     *
+     * @param fileName
+     * @param callback
+     */
     function compress(fileName,callback){
         var data = {
             filePath:"/mnt/projects/weAccount_git/we_account/public/images/"+fileName
@@ -172,7 +206,7 @@
             url:"http://120.24.224.144:8080/MsecondaryServer/compressPic",
             data:data,
             type:"post",
-            success:function(result){
+            success:function(result){//不需要响应
                 console.log(result);
                 callback(null,result);
             },

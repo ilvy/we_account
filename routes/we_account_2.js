@@ -199,7 +199,6 @@ router.post("/upload",function(req,res){
         fs.rename(file.path, path.normalize(process.cwd()+"/public/images/" + newFileName),function(err){
             console.log("newPath:"+file.path);
 //            live_room.compressImg(res,newFileName);
-            res.send(newFileName);
         });
     })
         .on('error', function(err) {
@@ -221,7 +220,7 @@ router.post("/upload",function(req,res){
             console.log(err);
             res.send("err");
         }
-
+        res.send(newFileName);
 //        live_room.compressImg(res,newFileName);
     });
 });

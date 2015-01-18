@@ -24,6 +24,7 @@ function addListener(){
         }else{
             event.cancelBubble = true;
         }
+        $("#tools-panel").css("display","none");
     });
     $(document).on("click",function(){
         $("#tools-panel").css("display","none");
@@ -33,22 +34,26 @@ function addListener(){
         currNum = $(this).data("num");
         $currImgAlbum = $(this).parents(".img-display").find("img");
         currLen = $(this).parents(".img-display").data("imgnum");
-        var imgSrc = $(this).attr("src"),
-            naturalWidth = $(this)[0].naturalWidth;
-        $(".big-img-display").html('<img src="'+imgSrc+'">');
+        var bigImgStr = "";
+        $(this).parents(".img-display").find("img").each(function(i){
+            if(i != currNum){
+                bigImgStr += '<img src="'+$(this).attr("src")+'" style="display:none;">';
+            }else{
+                bigImgStr += '<img src="'+$(this).attr("src")+'">';
+            }
+        });
+        $(".big-img-display").html(bigImgStr);
         $(".modal-header").html($(this).parents('.box').find(".desc").data("desc"));
         $("#popup").modal();
     });
-    $(".big-img-display").on("swipeleft",function(){
+    $("#popup .modal-body").on("click",function(){
         currNum = (++currNum) % currLen;
-        var imgSrc = $currImgAlbum.eq(currNum - 1).attr("src");
-        $(".big-img-display img").attr("src",imgSrc);
+        $(".big-img-display img").eq(currNum).css("display","block").siblings("img").css("display","none");
     });
-    $(".big-img-display").on("swiperight",function(){
-        currNum = (--currNum) % currLen
-        var imgSrc = $currImgAlbum.eq(Math.abs(currNum)).attr("src");
-        $(".big-img-display img").attr("src",imgSrc);
-    });
+//    $("#popup .modal-body").on("swiperight",function(){
+//        currNum = (--currNum) % currLen;
+//        $(".big-img-display img").eq(Math.abs(currNum)).css("display","block").siblings("img").css("display","none");
+//    });
     //收藏直播间
     $(".favorite").on("click",function(){
         var url = '/we_account/favourite';
