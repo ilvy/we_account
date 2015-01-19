@@ -139,7 +139,7 @@
                 },
                 onComplete:function(file,res){
 //                    alert(res);
-                    $("#image_content").append('<div class="upload-display"><img  src="images/'+res+'"/></div>');
+                    $("#image_content").append('<div class="upload-display"><img  src="images/'+res+'"/><div class="delete-img">×</div></div>');
                     compress(res,function(err,result){
 
                     });
@@ -179,17 +179,21 @@
         });
 
         $(document).on("click",".delete-img",function(){
+            var delIndex = $(this).parents(".upload-display").index();
             $(this).parents(".upload-display").remove();
-            var delIndex = $(this).index();
             productArray.splice(delIndex,1);
         });
     });
 
-
     function getProducts(){
         var products = "";
         productArray.forEach(function(item,i){
-            products += products?products  += ";"+ item:products += item;
+            if(i == productArray.length - 1){
+                products += item  + ";";
+            }else{
+                products += item;
+            }
+
         });
         return products;
     }
