@@ -115,7 +115,7 @@
     function getProducts(){
         var products = "";
         productArray.forEach(function(item,i){
-            if(i == productArray.length - 1){
+            if(i != productArray.length - 1){
                 products += item  + ";";
             }else{
                 products += item;

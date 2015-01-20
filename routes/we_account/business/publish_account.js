@@ -50,7 +50,7 @@ function register(req,res){
             res.redirect("/err.html");
         }else{
             console.log(rows);
-            res.redirect('/live-room-waterfall.html');
+            res.redirect('/publish.html');
         }
     });
 }
