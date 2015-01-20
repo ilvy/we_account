@@ -128,14 +128,15 @@ Waterfall.prototype.asyncLoader = function(){
             var imgstr = '';
             item.image_url.forEach(function(url,i){
                 if(i > 0){
-                    imgstr += '<img class="lazy" src="http://120.24.224.144/images/'+url+'" data-num="'+(i+1)+'" style="height:'+_this.smallH+'px">';
+                    imgstr += '<img class="lazy" src="http://120.24.224.144/images/'+url+'" data-num="'+(i)+'" style="height:'+_this.smallH+'px">';
                 }else{
-                    imgstr += '<img class="lazy" src="http://120.24.224.144/images/'+url+'" data-num="'+(i+1)+'">';
+                    imgstr += '<img class="lazy" src="http://120.24.224.144/images/'+url+'" data-num="'+(i)+'">';
                 }
 //                urlArray.push('/images/'+url);
             });
-            $(".waterfall").append('<div class="box" style="width:'+_this.box_w+'px" ><div class="desc"><div class="img-display" data-imgnum="'+item.image_url.length+'">'+ item.text +imgstr+
-                '</div><div class="ontact-saler">联系卖家</div></div></div>');
+            $(".waterfall").append('<div class="box" style="width:'+_this.box_w+'px" ><div class="desc" data-desc="'+item.text+'">'+item.text +'</div>' +
+                '<div class="img-display" data-imgnum="'+item.image_url.length+'">'+ imgstr+
+                '</div><div class="ontact-saler">联系卖家</div></div>');
         });
         $(".waterfall").append(productsStrs);
         var loadImgCount = 0;
