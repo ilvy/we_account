@@ -76,10 +76,10 @@ exports.query = query;
 ////    cb(err,results[0][0]);
 //});
 //call pro_check_register_by_weAccount('oHbq1t_wYiRebu6m8Qy8zF2ztreM')
-query("call pro_check_register_by_weAccount(?)",['oHbq1t0enasGWD7eQoJuslZY6R-4'],function(err,rows){
-    if(err){
-        console.log(err);
-    }else{
-        console.log(rows)
-    }
-})
+//query("call pro_check_register_by_weAccount(?)",['oHbq1t0enasGWD7eQoJuslZY6R-4'],function(err,rows){
+//    if(err){
+//        console.log(err);
+//    }else{
+//        console.log(rows)
+//    }
+//})
