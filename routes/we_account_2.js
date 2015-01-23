@@ -163,7 +163,7 @@ router.get("/goto_publish",function(req,resp){
                         resp.redirect("err.html");
                         return;
                     }
-                    if(results[0]["count(1)"]){
+                    if(results[0]&&results[0]["count(1)"]){
                         resp.redirect("/we_account/live-room?room_id="+results[0]["room_id"]);
                     }else{
                         resp.redirect("/register.html");
