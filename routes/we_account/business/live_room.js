@@ -23,17 +23,14 @@ function gotoLiveRoom_new(req,res){//相对布局瀑布流，不加载商品信�
     req.session.room_id = room_id;
     var products,totalPage,
         paras1 = [null,null,0];
-    var funs = [];
     req.session.isPublisher = type==1 ? 1:0;
-    if(type == 1){//发布者
-        funs.unshift(checkPublisher);
-        paras1[0] = openId;
-    }else{
-        paras1[1] = room_id;
-    }
     checkPublisher(function(err,results){
         var productRes,publisher = results;
-        res.render("live_room_rel_layout",{publisher:publisher});
+        if(type == 1){//发布者
+            res.render("live_room_rel_layout",{publisher:publisher});
+        }else{
+            res.render("live_room_rel_layout",{publisher:""});
+        }
     });
 
     //监测是不是发布者自己进入
