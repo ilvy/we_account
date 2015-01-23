@@ -42,6 +42,10 @@ div.desc{
     margin-left: 10px;
 }
 
+.unvisible{
+    visibility: hidden;
+}
+
 #ls-load{position: fixed;left: 0;top: 0;z-index: 10;}
 
 #tools-btn{

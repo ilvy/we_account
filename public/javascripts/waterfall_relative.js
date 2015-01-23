@@ -11,6 +11,8 @@ var boxes = [],
 $(document).ready(function(){
     boxes = $(".box");//sorted date source
     waterfall = new Waterfall();
+    asyncLoader = new AsyncLoader();
+    waterfall.asyncLoader();
 })
 $(window).on("load",function(){
 
@@ -51,7 +53,7 @@ Waterfall.prototype.init = function(){
     $(".box").each(function(){
         $(this).find("img:first-child").siblings("img").css("height",smallH);
     });
-    this.setPosition(boxes);
+//    this.setPosition(boxes);
 }
 
 Waterfall.prototype.generateColumn = function(){
@@ -83,10 +85,8 @@ Waterfall.prototype.setPosition = function(boxes){
         _this = this,
         i = 0;
     for(var ib = 0; ib < boxes.length; ib++){
-        $(".column").eq(ib % colNum).append(boxes.eq?boxes.eq(ib):boxes[ib]);
-    }
-    if(!asyncLoader){
-        asyncLoader = new AsyncLoader();
+//        $(".column").eq(ib % colNum).append(boxes.eq?boxes.eq(ib).removeClass("unvisible"):boxes[ib]);
+        $(".column").eq(ib % colNum).append(boxes[ib]);
     }
 }
 
@@ -175,8 +175,7 @@ AsyncLoader.prototype.load = function(callback){
     if(currentPage + 1 >= totalPage){
         return;
     }
-    currentPage++;
-    var url = '/we_account/load_more?page='+currentPage;
+    var url = '/we_account/load_more?page='+currentPage++;
     $.ajax({
         url:url,
         type:"get",

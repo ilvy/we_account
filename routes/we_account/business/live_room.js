@@ -9,12 +9,51 @@ var dbOperator = require("../../../db/dbOperator"),
     http = require("http"),
     querystring = require("querystring");
 
+
 /**
  * 进入直播间页面
  * @param req
  * @param res
  */
-function gotoLiveRoom_new(req,res){
+function gotoLiveRoom_new(req,res){//相对布局瀑布流，不加载商品信息
+    console.log("***********************gotoLiveRoom");
+    var openId = req.session.openId,
+        type = req.session.type;
+    var room_id = req.query.room_id;
+    req.session.room_id = room_id;
+    var products,totalPage,
+        paras1 = [null,null,0];
+    var funs = [];
+    req.session.isPublisher = type==1 ? 1:0;
+    if(type == 1){//发布者
+        funs.unshift(checkPublisher);
+        paras1[0] = openId;
+    }else{
+        paras1[1] = room_id;
+    }
+    checkPublisher(function(err,results){
+        var productRes,publisher = results;
+        res.render("live_room_rel_layout",{publisher:publisher});
+    });
+
+    //监测是不是发布者自己进入
+    function checkPublisher(cb){
+        dbOperator.query("call pro_check_publisher_knock(?,?)",[null,openId],function(err,results){
+            if(err){
+                console.log(err);
+            }
+            cb(err,results[0][0]);
+        });
+    }
+
+}
+
+/**
+ * 进入直播间页面
+ * @param req
+ * @param res
+ */
+function gotoLiveRoom_new_bak(req,res){
     console.log("***********************gotoLiveRoom");
     var openId = req.session.openId,
         type = req.session.type;
