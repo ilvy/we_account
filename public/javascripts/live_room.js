@@ -3,6 +3,7 @@
  */
 $(document).ready(function(){
     addListener();
+    initPopPanel();
 });
 
 function addListener(){
@@ -76,7 +77,8 @@ function addListener(){
         scrollTop;
     $(document).on("scroll",function(){
         if(!waterfallHeight){
-            waterfallHeight = waterfall.min(waterfall.h_weights);
+//            waterfallHeight = waterfall.min(waterfall.h_weights);//绝对布局方式瀑布流
+            waterfallHeight = waterfall.getHeight();//相对布局方式瀑布流
         }
         scrollTop = $("body").scrollTop();
         if(scrollTop + $(window).height() > 0.9 * waterfallHeight){
@@ -89,5 +91,13 @@ function addListener(){
         }else{
             event.cancelBubble = true;
         }
+    })
+}
+
+function initPopPanel(){
+    var w_h = $(window).height(),
+        modal_head_h = $(".modal-header").outerHeight();
+    $(".modal-body").css({
+        'max-height':w_h - 120
     })
 }

@@ -56,7 +56,7 @@ function gotoLiveRoom_new(req,res){
         }else{
             productRes = results[0];
         }
-        res.render("live-room",{products:productRes["products"]||[],publisher:publisher,totalPage:productRes["totalPage"]});
+        res.render("live_room_rel_layout",{products:productRes["products"]||[],publisher:publisher,totalPage:productRes["totalPage"]});
     });
 
     //监测是不是发布者自己进入
