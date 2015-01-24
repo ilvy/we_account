@@ -27,6 +27,10 @@
         </div>
     </div>
     <div id="sub-btn" style=""><input type="button" id="submit" value="确定"/></div>
+
+    <div id="uploading-mask">
+
+    </div>
     <!--<a id="writeSession" href="http://localhost:880/we_account/writeSession">writeSess</a>-->
 <!--<input type="file" name="media" method="post" multiple size="10" value="多图上传"/>-->
     <!--<input type="button" value="上传" id="upload"/>-->
@@ -63,12 +67,17 @@
                 name:'file',
                 onSubmit:function(file,ext){
                     console.log(file +" "+ ext);
+                    if(filterFile(ext)){
+                        $("#uploading-mask").css("display","block");
+                    }else{
+                        return false;
+                    }
                 },
                 onComplete:function(file,res){
 //                    alert(res);
                     $("#image_content").append('<div class="upload-display"><img  src="images/'+res+'"/><div class="delete-img">×</div></div>');
                     compress(res,function(err,result){
-
+                        $("#uploading-mask").css("display","none");
                     });
                     console.log(res);
                     productArray.push(res);
@@ -79,6 +88,7 @@
 
         $("#submit").on("click",function(){
             var desc = $(".edit-desc-content").html();//TODO 检验字符串合法性
+            $("#uploading-mask").css("display","block");
             var url = "/we_account/publish",
                     postData = {
                         products:getProducts(),
@@ -91,12 +101,16 @@
                 success:function(data){
                     console.log(data);
                     if(data && data.flag == 1){
+                        cleanPosition();
                         alert("上传成功");
                     }
+                    $("#uploading-mask").css("display","none");
                 },
                 error:function(err){
                     console.log(err);
+                    $("#uploading-mask").css("display","none");
                 }
+
             });
         });
 
@@ -146,6 +160,26 @@
                 callback(err,null);
             }
         })
+    }
+    /**
+     * 限制文件格式
+     * @param ext
+     * @returns {boolean}
+     */
+    function filterFile(ext){
+        var exceptExts = ['avi','mp4','wmv','3gp','flv','mkv','txt','js'];
+        for(var i = 0; i < exceptExts.length; i++){
+            if(ext == exceptExts[i]){
+                return false;
+            }
+        }
+        return true;
+    }
+    function cleanPosition(){
+        $(".edit-desc-content").html("");
+        productArray = [];
+        products = "";
+        $("#image_content").html("");
     }
 </script>
 </html>
