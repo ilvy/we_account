@@ -96,13 +96,13 @@ function addListener(){
     /**
      * 删除商品信息
      */
-    $(document).on("click",".select-product",function(event){
+    $(document).on("click",".delete-product",function(event){
         var product_id = $(this).parents(".box").data("id");
         var data = {
             id:id
         }
         $.ajax({
-            url:"we_account/delete_product",
+            url:"/we_account/delete_product",
             data:data,
             type:"post",
             success:function(results){

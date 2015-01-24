@@ -238,9 +238,7 @@ router.get("/load_more",loadMoreProducts);
 
 router.post("/favourite",live_room.addFavourite);
 
-router.get("/delete_product",function(){
-
-});
+router.post("/delete_product",live_room.delete_product);
 
 router.get("/xml",function(req,res){
     xmlParser.parseXml("<xml><ToUserName><![CDATA[gh_d28b25ec1197]]></ToUserName>" +

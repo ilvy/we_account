@@ -385,3 +385,4 @@ exports.loadMoreProducts_new = loadMoreProducts_new;
 exports.addFavourite = addFavourite;
 exports.renderRoom_door = renderRoom_door;
 exports.compressImg = compressImg;
+exports.delete_product = delete_product;

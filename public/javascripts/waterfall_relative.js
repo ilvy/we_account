@@ -125,7 +125,7 @@ Waterfall.prototype.asyncLoader = function(){
             });
             productsStrs.push('<div class="box" data-id="'+item.id+'"><div class="desc" data-desc="'+item.text+'">'+item.text +'</div>' +
                 '<div class="img-display" data-imgnum="'+item.image_url.length+'">'+ imgstr+
-                '</div><div class="ontact-saler">联系卖家</div></div>');
+                '</div><div class="ontact-saler">联系卖家</div>'+deleteProductBtn+'</div>');
         });
         _this.setPosition(productsStrs);
         var loadImgCount = 0;
