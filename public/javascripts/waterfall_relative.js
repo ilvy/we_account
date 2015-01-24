@@ -96,7 +96,7 @@ Waterfall.prototype.asyncLoader = function(){
     }
     this.isLoadOver = false;
     var _this = this;
-    var productsStrs = [],imgstr = '';
+    var productsStrs = [],imgstr = '',isPublisher = "";
     asyncLoader.load(function(results){
         if(results.flag != 1){
             return;
@@ -106,6 +106,11 @@ Waterfall.prototype.asyncLoader = function(){
         if(results.data){
             loadDatas = results.data.products;
             totalPage = results.data.totalPage;
+            isPublisher = results.data.isPublisher;
+        }
+        var deleteProductBtn = "";
+        if(isPublisher){
+            deleteProductBtn = '<div class="delete-product">删除</div>';
         }
         loadDatas.forEach(function(item){
 //        $(this).clone().css(_this.lastPosition).appendTo(".waterfall");
@@ -118,7 +123,7 @@ Waterfall.prototype.asyncLoader = function(){
                 }
 //                urlArray.push('/images/'+url);
             });
-            productsStrs.push('<div class="box"><div class="desc" data-desc="'+item.text+'">'+item.text +'</div>' +
+            productsStrs.push('<div class="box" data-id="'+item.id+'"><div class="desc" data-desc="'+item.text+'">'+item.text +'</div>' +
                 '<div class="img-display" data-imgnum="'+item.image_url.length+'">'+ imgstr+
                 '</div><div class="ontact-saler">联系卖家</div></div>');
         });

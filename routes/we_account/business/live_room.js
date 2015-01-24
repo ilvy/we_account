@@ -27,9 +27,9 @@ function gotoLiveRoom_new(req,res){//相对布局瀑布流，不加载商品信�
     checkPublisher(function(err,results){
         var productRes,publisher = results;
         if(type == 1){//发布者
-            res.render("live_room_rel_layout",{publisher:publisher});
+            res.render("live_room_rel_layout",{publisher:publisher,room:publisher.room_id});
         }else{
-            res.render("live_room_rel_layout",{publisher:""});
+            res.render("live_room_rel_layout",{publisher:"",room:room_id});
         }
     });
 
@@ -236,7 +236,7 @@ function loadMoreProducts_new(req,res){
             item.image_url = item.image_url.split(";");
         });
 //        console.log("products:"+products);
-        response.success({products:products,totalPage:rows[0][0]['totalpage']},res,"加载成功");
+        response.success({products:products,totalPage:rows[0][0]['totalpage'],isPublisher/*发布者有删除按钮*/:session.isPublisher},res,"加载成功");
     });
 }
 
@@ -355,6 +355,25 @@ function compressImg(res,fileName,callback){
     });
     req.write(querystring.stringify(data));
     req.end();
+}
+
+/**
+ * 删除商品
+ * @param req
+ * @param res
+ */
+function delete_product(req,res){
+    var body = req.body;
+    var id = body.id,
+        openId = req.session.openId;
+    dbOperator.query("call pro_delete_product(?,?)",[openId,id],function(err,results){
+        if(err){
+            console.log("call pro_delete_product err:"+err);
+            response.failed("删除失败",res,"删除失败");
+            return;
+        }
+        response.success("删除成功",res,"删除成功");
+    });
 }
 
 //exports.renderLiveRoom = gotoLiveRoom;

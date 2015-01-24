@@ -92,6 +92,31 @@ function addListener(){
             event.cancelBubble = true;
         }
     })
+
+    /**
+     * 删除商品信息
+     */
+    $(document).on("click",".select-product",function(event){
+        var product_id = $(this).parents(".box").data("id");
+        var data = {
+            id:id
+        }
+        $.ajax({
+            url:"we_account/delete_product",
+            data:data,
+            type:"post",
+            success:function(results){
+                if(results.flag == 1){
+                    alert("删除成功");
+                }else{
+                    alert("删除失败");
+                }
+            },
+            error:function(err){
+                console.log(err);
+            }
+        })
+    });
 }
 
 function initPopPanel(){

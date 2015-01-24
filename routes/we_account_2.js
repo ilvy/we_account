@@ -238,7 +238,7 @@ router.get("/load_more",loadMoreProducts);
 
 router.post("/favourite",live_room.addFavourite);
 
-router.get("/favourite",function(){
+router.get("/delete_product",function(){
 
 });
 

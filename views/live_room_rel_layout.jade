@@ -7,7 +7,8 @@
 doctype html
 html
     head
-        title live-room-waterfall
+
+        title 直播号:#{room}
         meta(name="viewport",content="width=device-width,initial-scale=1.0,user-scalable=no")
         link(rel='stylesheet', href='/stylesheets/style_new.css')
         link(rel='stylesheet', href='/stylesheets/bootstrap.css')
@@ -34,8 +35,9 @@ html
                     a(href="/we_account/room_door")切换房间
                 div.favorite 收藏一下
                 div.myFavorite 我的收藏
-        //div#ls-load
-        //    button( onclick="load()")加载
+        - if (publisher)
+            div.user 当前用户:
+                span #{publisher.user_name}
         //- if (products.length)
         section.waterfall
             div.column
