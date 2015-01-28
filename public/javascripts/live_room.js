@@ -35,17 +35,19 @@ function addListener(){
         currNum = $(this).data("num");
         $currImgAlbum = $(this).parents(".img-display").find("img");
         currLen = $(this).parents(".img-display").data("imgnum");
-        var bigImgStr = "";
-        $(this).parents(".img-display").find("img").each(function(i){
-            if(i != currNum){
-                bigImgStr += '<img src="'+$(this).attr("src")+'" style="display:none;">';
-            }else{
-                bigImgStr += '<img src="'+$(this).attr("src")+'">';
-            }
-        });
-        $(".big-img-display").html(bigImgStr);
-        $(".modal-header").html($(this).parents('.box').find(".desc").data("desc"));
-        $("#popup").modal();
+        var product_id = $(this).parents(".box").data("id");
+        window.location.href = '/we_account/product_display?product_id='+product_id;
+//        var bigImgStr = "";
+//        $(this).parents(".img-display").find("img").each(function(i){
+//            if(i != currNum){
+//                bigImgStr += '<img src="'+$(this).attr("src")+'" style="display:none;">';
+//            }else{
+//                bigImgStr += '<img src="'+$(this).attr("src")+'">';
+//            }
+//        });
+//        $(".big-img-display").html(bigImgStr);
+//        $(".modal-header").html($(this).parents('.box').find(".desc").data("desc"));
+//        $("#popup").modal();
     });
     $("#popup .modal-body").on("click",function(){
         currNum = (++currNum) % currLen;
@@ -63,6 +65,7 @@ function addListener(){
             type:"post",
             success:function(result){
                 if(result.flag == 1){
+                    $(".favorite .fa-heart-o").removeClass("fa-heart-o").addClass("fa-heart");
                     alert("收藏成功");
                 }else{
                     alert("收藏失败");
@@ -118,6 +121,104 @@ function addListener(){
             }
         })
     });
+    $(function(){
+        new AjaxUpload("#upload",{
+            action:"http://localhost:880/we_account/upload",
+//                action:"http://120.24.224.144:80/we_account/upload",
+            name:'file',
+            onSubmit:function(file,ext){
+                console.log(file +" "+ ext);
+                if(filterFile(ext)){
+                    $("#uploading-mask").css("display","block");
+                }else{
+                    return false;
+                }
+            },
+            onComplete:function(file,res){
+//                    alert(res);
+                $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div></div>');
+                $("#uploading-mask").css("display","none");
+                showUploadPanel();
+                compress(res,function(err,result){
+
+                });
+                console.log(res);
+                productArray.push(res);
+//                    products?products  += ";"+ res:products += res;
+            }
+        })
+    });;
+    $(function(){
+        new AjaxUpload("#upload2",{
+            action:"http://localhost:880/we_account/upload",
+//                action:"http://120.24.224.144:80/we_account/upload",
+            name:'file',
+            onSubmit:function(file,ext){
+                console.log(file +" "+ ext);
+                if(filterFile(ext)){
+                    $("#uploading-mask").css("display","block");
+                }else{
+                    return false;
+                }
+            },
+            onComplete:function(file,res){
+//                    alert(res);
+                $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div></div>');
+                $("#uploading-mask").css("display","none");
+                compress(res,function(err,result){
+
+                });
+                console.log(res);
+                productArray.push(res);
+//                    products?products  += ";"+ res:products += res;
+            }
+        })
+    });
+
+    $(document).on("click","#submit",function(){
+        var desc = $(".product-desc").val();//TODO 检验字符串合法性
+        $("#uploading-mask").css("display","block");
+        var url = "/we_account/publish",
+            postData = {
+                products:getProducts(),
+                desc:desc
+            };
+        $.ajax({
+            url:url,
+            type:"post",
+            data:postData,
+            success:function(data){
+                console.log(data);
+                if(data && data.flag == 1){
+                    cleanPosition();
+                    removeUploadPanel();
+                    alert("上传成功");
+                }else{
+                    alert("上传失败，请重试！！");
+                }
+                $("#uploading-mask").css("display","none");
+            },
+            error:function(err){
+                console.log(err);
+                $("#uploading-mask").css("display","none");
+            }
+        });
+    });
+
+    $(document).on("taphold",".upload-display",function(event){
+        var $this = $(this);
+        $this.append('<div class="delete-img">x</div>')
+    });
+
+    $(document).on("click",".delete-img",function(){
+        var delIndex = $(this).parents(".upload-display").index();
+        $(this).parents(".upload-display").remove();
+        productArray.splice(delIndex,1);
+    });
+
+    $("#cancel").on("click",function(){
+        removeUploadPanel();
+    });
 }
 
 function initPopPanel(){
@@ -126,4 +227,72 @@ function initPopPanel(){
     $(".modal-body").css({
         'max-height':w_h - 120
     })
+}
+
+var products = '',desc = '',productArray = [];
+
+function getProducts(){
+    var products = "";
+    productArray.forEach(function(item,i){
+        if(i != productArray.length - 1){
+            products += item  + ";";
+        }else{
+            products += item;
+        }
+
+    });
+    return products;
+}
+/**
+ *
+ * @param fileName
+ * @param callback
+ */
+function compress(fileName,callback){
+    var data = {
+        filePath:"/mnt/projects/weAccount_git/we_account/public/images/"+fileName
+    };
+    $.ajax({
+        url:"http://120.24.224.144:8080/MsecondaryServer/compressPic",
+        data:data,
+        type:"post",
+        success:function(result){//不需要响应
+            console.log(result);
+            callback(null,result);
+        },
+        error:function(err){
+            console.log(err);
+            callback(err,null);
+        }
+    })
+}
+/**
+ * 限制文件格式
+ * @param ext
+ * @returns {boolean}
+ */
+function filterFile(ext){
+    var exceptExts = ['avi','mp4','wmv','3gp','flv','mkv','txt','js'];
+    for(var i = 0; i < exceptExts.length; i++){
+        if(ext == exceptExts[i]){
+            return false;
+        }
+    }
+    return true;
+}
+function cleanPosition(){
+    $(".edit-desc-content").html("");
+    productArray = [];
+    products = "";
+    $("#image_content").html("");
+}
+
+function showUploadPanel(){
+    $("#upload-panel").css("display","block");
+    $("body").css("overflow-y","hidden");
+}
+
+function removeUploadPanel(){
+    $("#upload-panel").css("display","none");
+    $("body").css("overflow-y","auto");
 }

@@ -1,0 +1,14 @@
+//
+   Created by Administrator on 15-1-28.
+
+doctype html
+html
+    head(lang="en")
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no")
+        link(rel='stylesheet', href='/stylesheets/bootstrap-grip.css')
+    body
+        ul
+            each roomobj,i in favourite_rooms
+            li.favour_room_option
+                #{roomobj.nickname}的直播间：#{roomobj.room_id}

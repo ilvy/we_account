@@ -10,19 +10,19 @@ html
         link(rel='stylesheet', href='/stylesheets/bootstrap.css')
 
     body
-        div#favour_rooms_btn
+        //div#favour_rooms_btn
             button(type="button" data-toggle="modal" data-target="#favour_rooms_options_popup") 我的收藏
 
-        -if (favourite_rooms.length)
-        div(role="dialog" aria-hidden="true" data-backdrop="static")#favour_rooms_options_popup.modal.fade
-            div(data-dismiss="modal")#popup-close
-                span ×
-            div.modal-dialog
-                div.modal-content
-                    div.modal-body
-                        div.favour_rooms
-                            each room_option,i in favourite_rooms
-                                div.favour_room_option #{room_option.room_id}
+        //-if (favourite_rooms.length)
+        //div(role="dialog" aria-hidden="true" data-backdrop="static")#favour_rooms_options_popup.modal.fade
+        //    div(data-dismiss="modal")#popup-close
+        //        span ×
+        //    div.modal-dialog
+        //        div.modal-content
+        //            div.modal-body
+        //                div.favour_rooms
+        //                    each room_option,i in favourite_rooms
+        //                        div.favour_room_option #{room_option.room_id}
 
         form
             div.room_input_desc 输入直播号:

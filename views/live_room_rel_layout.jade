@@ -12,6 +12,7 @@ html
         meta(name="viewport",content="width=device-width,initial-scale=1.0,user-scalable=no")
         link(rel='stylesheet', href='/stylesheets/style_new.css')
         link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+        link(rel='stylesheet', href='//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css')
         style.
             .back_to_add{
                 position:fixed;
@@ -19,11 +20,11 @@ html
                 top:0;
             }
     body
-        div#tools-btn
+        //div#tools-btn
             div
             div
             div
-        div#tools-panel
+        //div#tools-panel
             - if (publisher)
                 div.myLiveRoom 我的直播间
                 div.addProduct
@@ -34,7 +35,7 @@ html
                     a(href="/we_account/room_door")切换房间
                 div.favorite 收藏一下
                 div.myFavorite 我的收藏
-        - if (publisher)
+        //- if (publisher)
             div.user 当前用户:
                 span #{publisher.user_name}
         //- if (products.length)
@@ -68,11 +69,46 @@ html
                         div.big-img-display
                         //div#next next
         //button(data-toggle="modal" data-target="#popup")#popup-btn popup-btn
+        div#tools-box
+            //- if(publisher)
+            div#upload-div
+                button#upload
+                    div.vertical
+                    div.horizon
+            div.user 当前用户:
+                span  jiang #{publisher.user_name}
+            //- else
+            //    div#tools-btn
+            //        div
+            //        div
+            //        div
+            //    div#tools-panel
+            //        div.changeRoom
+            //            a(href="/we_account/room_door")切换房间
+            //        div.myFavorite 我的收藏
+            //    div.favorite
+            //        i.fa.fa-heart-o
+
+        div#upload-panel
+            div#sub-btn
+                input(type="button" value="确定")#submit
+            textarea(placeholder="给点介绍吧...").product-desc
+            div#image_content
+                div#upload-div2
+                    button(data-type="pop-btn")#upload2
+                        div.vertical
+                        div.horizon
+            div#cancel-btn
+                input(type="button" value="取消")#cancel
+
+        div#uploading-mask
+
 script(src="/javascripts/jquery.js")
 script(src="/javascripts/libs/jquery.mobile.custom.js")
 script(src="/javascripts/libs/bootstrap.min.js")
 script(src="/javascripts/preloadImg.js")
 script(src="/javascripts/waterfall_relative.js")
+script(src="/javascripts/ajaxupload.js")
 script(src="/javascripts/live_room.js")
 script.
     function load(){

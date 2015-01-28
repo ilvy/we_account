@@ -51,6 +51,7 @@ div.desc{
     width: 15%;
     float: left;
     margin-left: 10px;
+    margin-bottom: 40px;
 }
 
 .unvisible{
@@ -61,21 +62,24 @@ div.desc{
 
 #tools-btn{
     position:absolute;
-    right:0;
-    top:0;
-    padding:0px 12px;
+    /*right:0;*/
+    /*top:0;*/
+    /*padding:0px 12px;*/
+    left: 0;
+    bottom: 20%;
     cursor:pointer;
 }
 #tools-btn > div{
-    width:3px;
-    height:3px;
+    width:5px;
+    height:5px;
     display:inline-block;
     margin-left:3px;
     background-color:#cdcdcd;
 }
 #tools-panel{
     position:absolute;
-    right:10px;
+    left: 0px;
+    bottom: 30px;
     display:none;
     z-index:101;
 }
@@ -91,8 +95,180 @@ div.desc{
     background-color:#303030;
 }
 
-.user,.roomid{
+.favorite{
+    width: 20px;
+    height: 20px;
+    margin: 0 auto;
+    font-size: 20px;
+    color: cornflowerblue;
+}
+
+.fa-heart{
+    color: red;
+}
+
+.user{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+#tools-box{
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    background-color: whitesmoke;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+
+#upload-div{
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+}
+#upload{
+    border: none;
+    background-color: transparent;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+#upload .horizon{
+    width: 100%;
+    height: 30%;
+    background-color: #CCCCFF;
+    position: absolute;
+    top: 35%;
+    left: 0;
+}
+#upload .vertical{
+    width: 30%;
+    height: 100%;
+    background-color: #CCCCFF;
+    position: absolute;
+    left: 35%;
+    top: 0;
+}
+
+#uploading-mask{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url("../images/loading.GIF");
+    background-repeat: no-repeat;
+    background-position: center;
+    display: none;
+    background-color: #ffffff;
+}
+
+#upload-panel{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: #4b4b4b;
+    display: none;
+    top: 0;
+}
+
+textarea.product-desc{
+    background: #4b4b4b;
+    border: none;
+    border-bottom: 1px solid black;
+    width: 100%;
+    color: white;
+    margin-top: 30px;
+}
+
+#sub-btn{
+    margin-top: 10px;
+}
+
+#submit{
+    margin: 0 auto;
+    padding: 4px 8px;
+    border: none;
+    background: #58bba7;
+    float: right;
+    color: white;
+    font-weight: bolder;
+}
+#submit:active{
+    background: purple;
+}
+
+#cancel-btn{
+    text-align: center;position: fixed;bottom: 0;width: 100%;
+}
+
+#cancel{
+    margin: 0 auto;
+    padding: 4px 8px;
+    border: none;
+    background: #757978;
+    color: white;
+    font-weight: bolder;
+}
+
+#upload2{
+    border: none;
+    background-color: #cecece;
+    position: relative;
+    width: 50px;
+    height: 50px;
+    margin-top: 15px;
+}
+#upload2 .horizon{
+    width: 88%;
+    height: 10%;
+    background-color: #ffffff;
+    position: absolute;
+    top: 45%;
+    left: 6%;
+}
+#upload2 .vertical{
+    width: 10%;
+    height: 88%;
+    background-color: #ffffff;
+    position: absolute;
+    left: 45%;
+    top: 6%;
+}
+
+#image_content{
+    border-top: 1px solid transparent;
+    margin-top: 30px;
+}
+
+#image_content > div{
     display: inline-block;
+    float: left;
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+.upload-display{
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    position: relative;
+    border: 1px solid #ccccff;
+    margin-left: 10px;
+}
+.upload-display img{
+    width: 100%;
+    height: 100%;
+}
+.delete-img{
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #222222;
+    font-size: 18px;
+    font-weight: bolder;
 }
 
 /********start 照片显示弹出框********/

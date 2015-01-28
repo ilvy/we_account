@@ -66,7 +66,9 @@ Waterfall.prototype.generateColumn = function(){
                 'margin-left': this.margin+"px"
             });
         }else{
-            break;
+            $(".waterfall .column").eq(i).css({
+                display:"none"
+            });
         }
 
     }
