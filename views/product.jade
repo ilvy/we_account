@@ -1,0 +1,52 @@
+//
+   Created by Administrator on 15-1-27.
+
+doctype html
+html
+    head(lang="en")
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no")
+        link(href="/stylesheets/bootstrap-grid.css" rel="stylesheet")
+        style.
+           #product{
+               margin-bottom:35px;
+           }
+           .desc{
+               background-color: #cdcdcd;
+               text-align:center;
+           }
+           .product-photo{
+               width: 100%;
+           }
+           .product-photo img{
+               width: 100%;
+               margin-top: 2px;
+           }
+           .back-live-room{
+               background:rgb(255, 116, 116);
+               text-align:center;
+                padding: 6px 12px;
+                text-decoration: none;
+                color: white;
+                position: fixed;
+                bottom: 0;
+            }
+           .back-live-room a{
+               color: white;
+               font-weight: bolder;
+           }
+
+
+    body
+        -if (!product)
+            #product 当前内容已经被发布者删除
+        -else
+            #product.col-lg-offset-4.col-lg-4.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2.col-xs-8.col-xs-offset-2.col-xxs-12
+                .desc #{product.text}
+                .product-photo
+                    -if (product.image_url && product.image_url.length)
+                        each url,i in product.image_url
+                            img(src="http://120.24.224.144/images/#{url}")
+            a(href="/we_account/live-room?room_id=#{product.room_id}")
+                .back-live-room.col-lg-offset-4.col-lg-4.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2.col-xs-8.col-xs-offset-2.col-xxs-12
+                    返回直播间

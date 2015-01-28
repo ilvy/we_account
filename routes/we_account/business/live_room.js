@@ -307,7 +307,7 @@ function addFavourite(req,res){
  * @param resp
  */
 function renderRoom_door(req,resp){
-    var open_id = req.session.openId||'oHbq1t0enasGWD7eQoJuslZY6R-4';
+    var open_id = req.session.openId;
     var paras = [open_id];
     if(open_id){
         dbOperator.query("call pro_select_favourite_rooms(?)",paras,function(err,rows){
@@ -376,6 +376,45 @@ function delete_product(req,res){
     });
 }
 
+/**
+ * 单个商品展示
+ * @param req
+ * @param res
+ */
+function displayProduct(req,res){
+    var query = req.query;
+    var id = query.product_id;
+    dbOperator.query('call pro_select_product_by_id(?)',[id],function(err,results){
+        if(err){
+            console.log("call pro_select_product_by_id err:"+err);
+            return;
+        }
+        var product = results[0][0];
+        product.image_url = product.image_url.split(";");
+        res.render("product",{product:product});
+    });
+}
+
+/**
+ * 获取收藏的房间列表
+ * @param req
+ * @param res
+ */
+function myFavorite(req,res){
+    var open_id = req.session.openId;
+    var paras = [open_id];
+    if(open_id){
+        dbOperator.query("call pro_select_favourite_rooms(?)",paras,function(err,rows){
+            if(err){
+                console.log(err);
+            }else{
+                console.log(rows);
+                res.render('myFavorite',{favourite_rooms:rows[0]});
+            }
+        })
+    }
+}
+
 //exports.renderLiveRoom = gotoLiveRoom;
 exports.renderLiveRoom_new = gotoLiveRoom_new;
 exports.knockDoor = knockDoor;
@@ -386,3 +425,5 @@ exports.addFavourite = addFavourite;
 exports.renderRoom_door = renderRoom_door;
 exports.compressImg = compressImg;
 exports.delete_product = delete_product;
+exports.displayProduct = displayProduct;
+exports.myFavorite = myFavorite;

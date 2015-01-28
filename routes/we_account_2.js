@@ -171,8 +171,9 @@ router.get("/goto_publish",function(req,resp){
                 });
             }else if(type == 2){//普通用户登录
                 live_room.renderRoom_door(req,resp);//返回room_door
+            }else if(type == 3){//进入收藏页面
+                live_room.myFavorite(req,resp);
             }
-
         })
     }).on("error",function(e){
             console.log("get error:"+ e.message);
@@ -239,6 +240,8 @@ router.get("/load_more",loadMoreProducts);
 router.post("/favourite",live_room.addFavourite);
 
 router.post("/delete_product",live_room.delete_product);
+
+router.get("/product_display",live_room.displayProduct);
 
 router.get("/xml",function(req,res){
     xmlParser.parseXml("<xml><ToUserName><![CDATA[gh_d28b25ec1197]]></ToUserName>" +
