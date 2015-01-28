@@ -54,16 +54,17 @@
 }
 #submit{
     margin: 0 auto;
-    padding: 8px 12px;
     border-radius: 5px;
     border: 1px solid #CCCCFF;
     background: #ffffff;
+    padding: 12px 50px;
 }
 #submit:active{
     background: purple;
 }
 #sub-btn{
     text-align: center;position: fixed;bottom: 0;width: 100%;
+
 }
 .delete-img{
     position: absolute;

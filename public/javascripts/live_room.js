@@ -98,8 +98,9 @@ function addListener(){
      */
     $(document).on("click",".delete-product",function(event){
         var product_id = $(this).parents(".box").data("id");
+        $(this).parents(".box").remove();
         var data = {
-            id:id
+            id:product_id
         }
         $.ajax({
             url:"/we_account/delete_product",
