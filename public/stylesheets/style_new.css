@@ -271,6 +271,10 @@ textarea.product-desc{
     font-weight: bolder;
 }
 
+#warn{
+    position:fixed;top:0;width:100%;z-index: 10;display: none;padding:10px;text-align:center;
+}
+
 /********start 照片显示弹出框********/
 #popup .modal-dialog{
     margin-top:48px;
@@ -314,51 +318,107 @@ textarea.product-desc{
 /********start 照片显示弹出框********/
 
 /*********start room-door*********/
-#room{
-    width: 80%;
-    height: 50px;
-    font-size: 40px;
-    border: 1px solid #cdcdcd;
-    margin: 50px auto;
-    text-align: center;
+/*#room{*/
+    /*width: 80%;*/
+    /*height: 50px;*/
+    /*font-size: 40px;*/
+    /*border: 1px solid #cdcdcd;*/
+    /*margin: 50px auto;*/
+    /*text-align: center;*/
+/*}*/
+/*.room_input_desc{*/
+    /*width: 100%;*/
+    /*text-align: center;*/
+    /*margin-top: 250px;*/
+/*}*/
+/*.submit-div{*/
+    /*width: 100%;*/
+    /*text-align: center;*/
+/*}*/
+/*#enter-room-btn{*/
+    /*padding: 8px 12px;*/
+    /*border: 1px solid #cdcdcd;*/
+    /*background-color: #ffffff;*/
+    /*color: #1c9aff;*/
+    /*font-size: 24px;*/
+    /*cursor: pointer;*/
+/*}*/
+/*#enter-room-btn:hover{*/
+    /*background-color: #c3cece;*/
+    /*color: blue;*/
+/*}*/
+
+
+/*#favour_rooms_btn{*/
+    /*text-align: center;*/
+/*}*/
+
+/*.favour_rooms{*/
+    /*width: 100%;*/
+/*}*/
+
+/*.favour_room_option{*/
+    /*width: 100%;*/
+    /*text-align: center;*/
+    /*border-bottom: 1px solid whitesmoke;*/
+    /*padding-bottom: 5px;*/
+    /*font-size: 18px;*/
+/*}*/
+body.room_door{
+    background: #221A1A;
 }
-.room_input_desc{
-    width: 100%;
-    text-align: center;
-    margin-top: 250px;
+
+form.door{
+    /*margin-top: 45%;*/
 }
-.submit-div{
-    width: 100%;
-    text-align: center;
+
+.room_input{
+    margin-top:45%;
 }
-#enter-room-btn{
-    padding: 8px 12px;
-    border: 1px solid #cdcdcd;
-    background-color: #ffffff;
-    color: #1c9aff;
+
+.room_input > input,.room_input > div{
+    float: left;
+}
+
+.room_input > input{
+    border: none;
+    border-bottom: 1px solid #ffffff;
     font-size: 24px;
-    cursor: pointer;
-}
-#enter-room-btn:hover{
-    background-color: #c3cece;
-    color: blue;
 }
 
-
-#favour_rooms_btn{
-    text-align: center;
+.submit-div{
+    background: whitesmoke;
+    padding: 0px 18px;
+    font-size: 26px;
+    margin-left: 1px;
 }
 
-.favour_rooms{
-    width: 100%;
+.submit-div a:hover{
+    text-decoration: none;
 }
 
-.favour_room_option{
-    width: 100%;
-    text-align: center;
-    border-bottom: 1px solid whitesmoke;
-    padding-bottom: 5px;
+.room_input input{
+    padding-left: 3px;
+    padding-right: 0;
+}
+/*********end room-door*********/
+/************start myfavorite*************/
+
+ #room-list{
+    list-style:none;
+    padding:0;
+ }
+#room-list li:first-child{
+        border-top:none;
+ }
+#room-list li{
+        text-align: center;
+        padding: 5px 12px;
+        border-bottom: 1px solid rgb(195, 222, 233);
+        border-top: 1px solid rgb(160, 178, 211);
+ }
+li.favour_room_option{
+    padding: 12px 8px;
     font-size: 18px;
 }
-
-/*********end room-door*********/
+/************end myfavorite*************/

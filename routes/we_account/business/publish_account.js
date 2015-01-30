@@ -50,7 +50,7 @@ function register(req,res){
             res.redirect("/err.html");
         }else{
             console.log(rows);
-            res.redirect('/publish.html');
+            res.redirect('/we_account/live-room?room_id='+rows[0][0].room_id);
         }
     });
 }
@@ -69,7 +69,8 @@ function publishProduct(req,res){
             console.log(row);
             if(row[0][0] && row[0][0]['publish_res'] != 0){
                 console.log(row[0]['publish_res']);
-                response.success("",res);
+                var product_id = row[0][0]["curr_id"];
+                response.success({id:product_id},res);
             }else{
                 response.failed("",res);
             }

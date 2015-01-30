@@ -297,7 +297,7 @@
         }
 
         if (button.nodeName.toUpperCase() == 'A') {
-            // disable link                       
+            // disable link
             addEvent(button, 'click', function (e) {
                 if (e && e.preventDefault) {
                     e.preventDefault();
@@ -418,19 +418,19 @@
                 }
             });
 
-            addEvent(input, 'mouseover', function () {
-                addClass(self._button, self._settings.hoverClass);
-            });
+//            addEvent(input, 'mouseover', function () {
+//                addClass(self._button, self._settings.hoverClass);
+//            });
 
-            addEvent(input, 'mouseout', function () {
-                removeClass(self._button, self._settings.hoverClass);
-
-                // We use visibility instead of display to fix problem with Safari 4
-                // The problem is that the value of input doesn't change if it 
-                // has display none when user selects a file           
-                input.parentNode.style.visibility = 'hidden';
-
-            });
+//            addEvent(input, 'mouseout', function () {
+//                removeClass(self._button, self._settings.hoverClass);
+//
+//                // We use visibility instead of display to fix problem with Safari 4
+//                // The problem is that the value of input doesn't change if it
+//                // has display none when user selects a file
+//                input.parentNode.style.visibility = 'hidden';
+//
+//            });
 
             div.appendChild(input);
             document.body.appendChild(div);

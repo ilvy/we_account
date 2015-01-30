@@ -164,9 +164,12 @@ form.door{
     /*margin-top: 45%;*/
 }
 
+.room_input{
+    margin-top:45%;
+}
+
 .room_input > input,.room_input > div{
     float: left;
-    margin-top: 45%;
 }
 
 .room_input > input{
@@ -186,4 +189,27 @@ form.door{
     text-decoration: none;
 }
 
+.room_input input{
+    padding-left: 3px;
+    padding-right: 0;
+}
+
 /*********end room-door*********/
+
+/************start myfavorite*************/
+
+ ul{
+    list-style:none;
+    padding:0;
+ }
+ li:first-child{
+        border-top:none;
+ }
+ li{
+        text-align: center;
+        padding: 5px 12px;
+        border-bottom: 1px solid rgb(195, 222, 233);
+        border-top: 1px solid rgb(160, 178, 211);
+ }
+
+/************end myfavorite*************/

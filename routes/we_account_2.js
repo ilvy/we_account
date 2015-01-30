@@ -180,6 +180,7 @@ router.get("/goto_publish",function(req,resp){
         });
 });
 
+router.get("/fav",live_room.myFavorite);
 router.get("/live-room",gotoLiveRoom);//带上参数room_id
 
 router.post("/publish",function(req,res){

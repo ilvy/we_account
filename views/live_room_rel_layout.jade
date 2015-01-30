@@ -70,26 +70,27 @@ html
                         //div#next next
         //button(data-toggle="modal" data-target="#popup")#popup-btn popup-btn
         div#tools-box
-            //- if(publisher)
-            div#upload-div
-                button#upload
-                    div.vertical
-                    div.horizon
-            div.user 当前用户:
-                span  jiang #{publisher.user_name}
-            //- else
-            //    div#tools-btn
-            //        div
-            //        div
-            //        div
-            //    div#tools-panel
-            //        div.changeRoom
-            //            a(href="/we_account/room_door")切换房间
-            //        div.myFavorite 我的收藏
-            //    div.favorite
-            //        i.fa.fa-heart-o
+            - if(!publisher)
+                div#upload-div
+                    button#upload
+                        div.vertical
+                        div.horizon
+                div.user 当前用户:
+                    //span  jiang #{publisher.user_name}
+            - else
+                div#tools-btn
+                    div
+                    div
+                    div
+                div#tools-panel
+                    div.changeRoom
+                        a(href="/we_account/room_door")切换房间
+                    div.myFavorite 我的收藏
+                div.favorite
+                    i.fa.fa-heart-o
 
         div#upload-panel
+            div(role="alert")#warn.alert.alert-warning.fade.in 至少需要发布一张图片
             div#sub-btn
                 input(type="button" value="确定")#submit
             textarea(placeholder="给点介绍吧...").product-desc
@@ -102,6 +103,11 @@ html
                 input(type="button" value="取消")#cancel
 
         div#uploading-mask
+
+        //div(data-dismiss="alert")#warn.fade.in
+
+
+        button(value="" style="position:fixed;left:0;top:0;")#alertTest 测试alert
 
 script(src="/javascripts/jquery.js")
 script(src="/javascripts/libs/jquery.mobile.custom.js")

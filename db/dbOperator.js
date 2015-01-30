@@ -45,7 +45,7 @@ exports.query = query;
 //});
 
 
-//query("call pro_publish(?,?,?)",["img1.jpg;img2.jpg",'hhhhhhhhhhaaaaaaa',100],function(err,row){
+//query("call pro_publish(?,?,?)",["img1.jpg;img2.jpg",'hhhhhhhhhhaaaaaaa','oHbq1t0enasGWD7eQoJuslZY6R-4'],function(err,row){
 //    if(err){
 //        console.log(err);
 //    }else{

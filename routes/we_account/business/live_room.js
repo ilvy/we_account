@@ -206,6 +206,19 @@ function knockDoor(req,res){
     }
 
 }
+/**
+ * 顾客（非发布者）直接在微信输入框输入门牌号，敲门，检测是否存在房间
+ */
+function checkRoom(room,callback){
+
+    dbOperator.query("call pro_customer_knock_door(?)",[room],function(err,results){
+        if(results[0][0]['result'] > 0){
+            callback(err,room);
+        }else{
+            callback(err,null);
+        }
+    });
+}
 
 /**
  * 延时加载接口
@@ -401,7 +414,7 @@ function displayProduct(req,res){
  * @param res
  */
 function myFavorite(req,res){
-    var open_id = req.session.openId;
+    var open_id = req.session.openId;//||'oHbq1t0enasGWD7eQoJuslZY6R-4';
     var paras = [open_id];
     if(open_id){
         dbOperator.query("call pro_select_favourite_rooms(?)",paras,function(err,rows){
@@ -409,7 +422,7 @@ function myFavorite(req,res){
                 console.log(err);
             }else{
                 console.log(rows);
-                res.render('myFavorite',{favourite_rooms:rows[0]});
+                res.render('myfavorite',{favourite_rooms:rows[0]});
             }
         })
     }
@@ -427,3 +440,4 @@ exports.compressImg = compressImg;
 exports.delete_product = delete_product;
 exports.displayProduct = displayProduct;
 exports.myFavorite = myFavorite;
+exports.checkRoom = checkRoom;

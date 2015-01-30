@@ -8,7 +8,7 @@ $(document).ready(function(){
 
 function addListener(){
     $(".favour_room_option").on("click",function(){
-        var room = encodeURI($(this).html().trim());
+        var room = encodeURI($(this).data("id"));
         $.ajax({
             url:'/we_account/knock_door',
             type:"post",
@@ -16,10 +16,8 @@ function addListener(){
             success:function(results){
                 if(results && results.flag == 1){
                     window.location.href = '/we_account/live-room?room_id='+room;
-                    $("#favour_rooms_options_popup").modal('hide');
                 }else{
                     alert("对不起，您输入的门牌号有误");
-                    $("#favour_rooms_options_popup").modal('hide');
                 }
             },
             error:function(err){
@@ -27,8 +25,8 @@ function addListener(){
             }
         })
     });
-    $("#enter-room-btn").on("click",function(){
-        var room = encodeURI($("#room").html().trim());
+    $(".submit-div").on("click",function(){
+        var room = encodeURI($("#room").val().trim());
         if(room.length > 20){
             alert("输入不合法");
         }else if(room.length == 0){

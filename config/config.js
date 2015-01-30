@@ -9,8 +9,23 @@ var menusObj = {
             url:"http://120.24.224.144/we_account/publish?type=1"
         },
         {
-            type:"view",
             name:"进入直播间",
+            sub_button:[
+                {
+                    type:"click",
+                    name:"输入直播号",
+                    key:"input_room_num"
+                },
+                {
+                    type:"view",
+                    name:"我的收藏",
+                    url:"http://120.24.224.144/we_account/publish?type=3"
+                }
+            ]
+        },
+        {
+            type:"view",
+            name:"直播间",
             url:"http://120.24.224.144/we_account/publish?type=2"
         }
     ]

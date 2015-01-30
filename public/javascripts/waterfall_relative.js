@@ -153,7 +153,7 @@ Waterfall.prototype.asyncLoader = function(){
  * 获取当前图片列的最小高度值，用于滚动加载判断
  * @returns {number}
  */
-Waterfall.prototype.getHeight = function(){
+Waterfall.prototype.getMinHeight = function(){
     var $columns = $(".column"),
         colHeights = [];
     var _this = this;
@@ -163,6 +163,27 @@ Waterfall.prototype.getHeight = function(){
         }
     });
     return Math.min.apply(null,colHeights);
+}
+
+/**
+ * 获取当前图片列的最小高度值，用于滚动加载判断
+ * @returns {number}
+ */
+Waterfall.prototype.getMinHeightColumnIndex = function(){
+    var $columns = $(".column"),
+        colHeights = [];
+    var _this = this,minH = $columns.eq(0).outerHeight(),minInd = 0,tmpH;
+    $columns.each(function(i){
+        if(i == 0 || i >= _this.min_col_num){
+            return;
+        }else{
+            if(minH > (tmpH = $(this).outerHeight())){
+                minH = tmpH;
+                minInd = i;
+            }
+        }
+    });
+    return minInd;
 }
 
 

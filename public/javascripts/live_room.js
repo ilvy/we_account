@@ -81,7 +81,7 @@ function addListener(){
     $(document).on("scroll",function(){
         if(!waterfallHeight){
 //            waterfallHeight = waterfall.min(waterfall.h_weights);//绝对布局方式瀑布流
-            waterfallHeight = waterfall.getHeight();//相对布局方式瀑布流
+            waterfallHeight = waterfall.getMinHeight();//相对布局方式瀑布流
         }
         scrollTop = $("body").scrollTop();
         if(scrollTop + $(window).height() > 0.9 * waterfallHeight){
@@ -99,7 +99,7 @@ function addListener(){
     /**
      * 删除商品信息
      */
-    $(document).on("click",".delete-product",function(event){
+    $(document).on("vclick",".delete-product",function(event){
         var product_id = $(this).parents(".box").data("id");
         $(this).parents(".box").remove();
         var data = {
@@ -123,7 +123,7 @@ function addListener(){
     });
     $(function(){
         new AjaxUpload("#upload",{
-            action:"http://localhost:880/we_account/upload",
+            action:"/we_account/upload",
 //                action:"http://120.24.224.144:80/we_account/upload",
             name:'file',
             onSubmit:function(file,ext){
@@ -150,7 +150,7 @@ function addListener(){
     });;
     $(function(){
         new AjaxUpload("#upload2",{
-            action:"http://localhost:880/we_account/upload",
+            action:"/we_account/upload",
 //                action:"http://120.24.224.144:80/we_account/upload",
             name:'file',
             onSubmit:function(file,ext){
@@ -175,8 +175,16 @@ function addListener(){
         })
     });
 
+//    $("#alertTest").on("click",function(){
+//        $("#warn").fadeInAndOut();
+//    });
+
     $(document).on("click","#submit",function(){
         var desc = $(".product-desc").val();//TODO 检验字符串合法性
+        if(productArray.length == 0){
+            $("#warn").fadeInAndOut();
+            return;
+        }
         $("#uploading-mask").css("display","block");
         var url = "/we_account/publish",
             postData = {
@@ -190,6 +198,7 @@ function addListener(){
             success:function(data){
                 console.log(data);
                 if(data && data.flag == 1){
+                    showNewUploadImg(data.data.id,productArray,desc);
                     cleanPosition();
                     removeUploadPanel();
                     alert("上传成功");
@@ -210,7 +219,7 @@ function addListener(){
         $this.append('<div class="delete-img">x</div>')
     });
 
-    $(document).on("click",".delete-img",function(){
+    $(document).on("vclick",".delete-img",function(){
         var delIndex = $(this).parents(".upload-display").index();
         $(this).parents(".upload-display").remove();
         productArray.splice(delIndex,1);
@@ -281,10 +290,10 @@ function filterFile(ext){
     return true;
 }
 function cleanPosition(){
-    $(".edit-desc-content").html("");
+    $(".product-desc").val("");
     productArray = [];
     products = "";
-    $("#image_content").html("");
+    $("#image_content .upload-display").remove();
 }
 
 function showUploadPanel(){
@@ -295,4 +304,43 @@ function showUploadPanel(){
 function removeUploadPanel(){
     $("#upload-panel").css("display","none");
     $("body").css("overflow-y","auto");
+}
+
+/**
+ *
+ * @param product_id
+ * @param productArray
+ * @param desc
+ * @param smallH
+ */
+function showNewUploadImg(product_id,productArray,desc){
+    var minColIndex = waterfall.getMinHeightColumnIndex();
+    alert(minColIndex);
+    var imgstr = '';
+    productArray.forEach(function(item,i){
+        if(i == 0){
+            imgstr += '<img class="lazy" src="http://120.24.224.144/images/'+item+'" data-num="'+i+'">';
+        }else{
+            imgstr += '<img class="lazy" src="http://120.24.224.144/images/'+item+'" data-num="'+i+'"  style="height:'+waterfall.smallH+'">';
+        }
+    });
+    $(".column").eq(minColIndex).prepend('<div class="box" data-id="'+product_id+'">' +
+        '<div class="desc" data-desc="'+desc+'">'+desc+'</div>' +
+        '<div class="img-display" data-imgnum="'+productArray.length+'">' +imgstr+
+        '</div><div class="ontact-saler">联系卖家</div><div class="delete-product">删除</div></div>');
+}
+
+/**
+ * 渐入渐出
+ * @returns {*|jQuery}
+ */
+$.fn.fadeInAndOut = function(){
+    return $(this).each(function(){
+        var $this = $(this);
+        $this.fadeIn(2000,function(){
+            setTimeout(function(){
+                $this.fadeOut();
+            },2000);
+        });
+    });
 }
