@@ -130,6 +130,7 @@ function addListener(){
                 console.log(file +" "+ ext);
                 if(filterFile(ext)){
                     $("#uploading-mask").css("display","block");
+                    hideWaterfallScroll();
                 }else{
                     return false;
                 }
@@ -173,6 +174,12 @@ function addListener(){
 //                    products?products  += ";"+ res:products += res;
             }
         })
+    });
+
+    $(document).on("click","#upload,#upload2",function(){
+        var $this = $(this);
+        var btn_id = $this.attr("id");
+        $("#"+btn_id+"_file_type").click();
     });
 
 //    $("#alertTest").on("click",function(){
@@ -299,11 +306,32 @@ function cleanPosition(){
 function showUploadPanel(){
     $("#upload-panel").css("display","block");
     $("body").css("overflow-y","hidden");
+    hideWaterfallScroll();
 }
 
 function removeUploadPanel(){
     $("#upload-panel").css("display","none");
     $("body").css("overflow-y","auto");
+    showWaterfallScroll();
+}
+
+/**
+ * 恢复瀑布流
+ */
+function showWaterfallScroll(){
+    $(".waterfall").css({
+        height:'initial',
+        overflow:"initial"
+    });
+}
+/**
+ * 隐藏瀑布流的滚动条，防止在图片上传或者在上传界面被滚动
+ */
+function hideWaterfallScroll(){
+    $(".waterfall").css({
+        height:'400px',
+        overflow:"hidden"
+    });
 }
 
 /**
@@ -315,7 +343,7 @@ function removeUploadPanel(){
  */
 function showNewUploadImg(product_id,productArray,desc){
     var minColIndex = waterfall.getMinHeightColumnIndex();
-    alert(minColIndex);
+//    alert(minColIndex);
     var imgstr = '';
     productArray.forEach(function(item,i){
         if(i == 0){

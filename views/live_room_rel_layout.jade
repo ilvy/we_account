@@ -7,8 +7,10 @@
 doctype html
 html
     head
-
-        title 直播号:#{room}
+        - if(publisher)
+            title #{publisher.nickname}直播间：#{room}
+        - else
+            title 直播号:#{room}
         meta(name="viewport",content="width=device-width,initial-scale=1.0,user-scalable=no")
         link(rel='stylesheet', href='/stylesheets/style_new.css')
         link(rel='stylesheet', href='/stylesheets/bootstrap.css')
@@ -70,13 +72,13 @@ html
                         //div#next next
         //button(data-toggle="modal" data-target="#popup")#popup-btn popup-btn
         div#tools-box
-            - if(!publisher)
+            - if(publisher)
                 div#upload-div
                     button#upload
                         div.vertical
                         div.horizon
                 div.user 当前用户:
-                    //span  jiang #{publisher.user_name}
+                    span #{publisher.user_name}
             - else
                 div#tools-btn
                     div
@@ -84,10 +86,13 @@ html
                     div
                 div#tools-panel
                     div.changeRoom
-                        a(href="/we_account/room_door")切换房间
+                        a(href="/we_account/room_door") 切换房间
                     div.myFavorite 我的收藏
                 div.favorite
-                    i.fa.fa-heart-o
+                    - if (isFavorite)
+                        i.fa.fa-heart
+                    - else
+                        i.fa.fa-heart-o
 
         div#upload-panel
             div(role="alert")#warn.alert.alert-warning.fade.in 至少需要发布一张图片
@@ -106,8 +111,7 @@ html
 
         //div(data-dismiss="alert")#warn.fade.in
 
-
-        button(value="" style="position:fixed;left:0;top:0;")#alertTest 测试alert
+        //button(value="" style="position:fixed;left:0;top:0;")#alertTest 测试alert
 
 script(src="/javascripts/jquery.js")
 script(src="/javascripts/libs/jquery.mobile.custom.js")

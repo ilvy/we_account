@@ -29,7 +29,16 @@ function gotoLiveRoom_new(req,res){//相对布局瀑布流，不加载商品信�
         if(type == 1){//发布者
             res.render("live_room_rel_layout",{publisher:publisher,room:publisher.room_id});
         }else{
-            res.render("live_room_rel_layout",{publisher:"",room:room_id});
+            if(openId){
+                dbOperator.query("call pro_select_favourite_rooms(?,?)",[openId,room_id],function(err,favResult){
+                    if(err){
+                        console.log("pro_select_favourite_rooms err:");
+                        console.log(err);
+                    }
+                    res.render("live_room_rel_layout",{publisher:"",room:room_id,isFavorite:favResult[0][0]['result']});
+                });
+            }
+            res.render("live_room_rel_layout",{publisher:"",room:room_id,isFavorite:0});
         }
     });
 

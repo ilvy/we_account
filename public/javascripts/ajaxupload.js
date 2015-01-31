@@ -163,9 +163,14 @@
         var box = getBox(from);
 
         addStyles(to, {
+//            position: 'absolute',
+//            left: box.left + 'px',
+//            top: box.top + 'px',
+//            width: from.offsetWidth + 'px',
+//            height: from.offsetHeight + 'px'
             position: 'absolute',
-            left: box.left + 'px',
-            top: box.top + 'px',
+            left: 0 + 'px',
+            top: 0 + 'px',
             width: from.offsetWidth + 'px',
             height: from.offsetHeight + 'px'
         });
@@ -360,6 +365,7 @@
             var input = document.createElement("input");
             input.setAttribute('type', 'file');
             input.setAttribute('name', this._settings.name);
+            input.setAttribute("id",this._button.getAttribute("id")+"_file_type");//标示对应的file input id，点击对应按钮时点击对应文件按钮
 
             addStyles(input, {
                 'position': 'absolute',
@@ -460,7 +466,7 @@
             // if you use using self._input.click()
             // other browsers just ignore click()
 
-            addEvent(self._button, 'mouseover', function () {
+//            addEvent(self._button, 'touchstart', function () {
                 if (self._disabled) {
                     return;
                 }
@@ -473,7 +479,22 @@
                 copyLayout(self._button, div);
                 div.style.visibility = 'visible';
 
-            });
+//            });
+
+//            addEvent(self._button, 'mouseover', function () {
+//                if (self._disabled) {
+//                    return;
+//                }
+//
+//                if (!self._input) {
+//                    self._createInput();
+//                }
+//
+//                var div = self._input.parentNode;
+//                copyLayout(self._button, div);
+//                div.style.visibility = 'visible';
+//
+//            });
 
 
             // commented because we now hide input on mouseleave
@@ -683,6 +704,7 @@
 
             // get ready for next request            
             this._createInput();
+//            this._rerouteClicks();
         }
     };
 })();
