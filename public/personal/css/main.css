@@ -1,0 +1,206 @@
+﻿body {
+}
+.col-8-10 {
+    width: 80%;
+}
+.col-10-10 {
+    width: 100%;
+}
+header {
+    height: 280px;
+    background-color: #333333;
+    margin: 0 auto;
+    text-align: center;
+}
+header span {
+    color: #cdcdcd;
+    font-size: 3em;
+}
+
+section.resumeBg {
+    height: 1000px;
+    background-image: url('../img/seaView.png');
+    background-repeat: no-repeat;
+    background-position: center 0px;
+    -webkit-background-size: 90% 90%;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    position: fixed;
+    top: 0px;
+    z-index: -1;
+}
+section.resume {
+    height: 280px;
+    background-color: rgba(244, 121, 208, 0.3);/*rgba(0,255,255,0.3);*/
+    margin: 0px auto;
+    /*display: -webkit-flex;
+    -webkit-justify-content: center;
+    -webkit-align-items: center;*/
+}
+article.resume-content {
+    height: 60%;
+   
+}
+
+.introduce {
+    /*height: 1000px;*/
+    width: 100%;
+    background-color: white;
+    /*margin-top: 200px;*/
+}
+.main-content {
+    border: 1px solid white;
+    background: white;
+    font: 18px/30px "ff-tisa-web-pro",Palatino,"Palatino Linotype","Palatino LT STD","Book Antiqua",Georgia,serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+#categories {
+    width: 15%;
+    background: white;
+    position: absolute;
+    /*border-right:*/
+    box-shadow: 1px 0.3px 1px #cdcdcd;
+    border-left: 1px #cdcdcd;
+}
+
+.fixed-bar {
+    width: 100%;
+    height: 60px;
+}
+#categories ul li {
+    list-style-type: none;
+    text-align: center;
+    margin-top: 55px;
+    margin-bottom: 25px;
+}
+
+#categories ul li:first-child {
+    margin-top: 25px;
+}
+
+#categories ul li a {
+    display: block;
+    cursor: pointer;
+    text-decoration: none;
+}
+#categories ul li a:hover {
+    color: #fb7b7b;
+    text-shadow: .5px .5px .5px red;
+}
+#categories ul,h3{
+    margin: 0;
+    padding: 0;
+}
+
+.bar-content {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    background: #cecffe;
+}
+
+.i-part {
+    width: 100%;
+    height: calc(100% - 80px);
+    background: white;
+    text-align: center;
+    /*margin: 0 auto;*/
+}
+
+.i-a-head {
+    width: 100%;
+    padding: 25px;
+}
+
+.i-main-content {
+    width: calc(100% - 16%);
+    /*height: 100px;*/
+    background: #f0f0f0;
+    margin-left: 16%;
+}
+
+.i-a-content {
+    width: 60%;
+    text-align: left;
+    padding-top: 15px;
+    padding-left: 25px;
+}
+
+.i-a-content-left {
+    width: 60%;
+    text-align: left;
+    padding-top: 15px;
+    padding-left: 25px;
+    /*float: left;*/
+    display: inline-block;
+}
+
+.i-a-content-right {
+    width: 30%;
+    text-align: left;
+    padding-top: 15px;
+    padding-left: 25px;
+    /*float: left;*/
+    display: inline-block;
+}
+
+#infos {
+    margin: 0 auto;
+    width: 1000px;
+    height: 100%;
+}
+
+.info-col {
+    /*float: left;*/
+    display: inline-block;
+    margin-left: 10%;
+
+}
+
+
+
+.info-col div {
+    padding: 15px;
+}
+
+.info-col input {
+    border: none;
+    background: none;
+    width: 80px;
+    color: white;
+    font-size: 16px;
+}
+
+#hobby input,#signal input {
+    width: 180px;
+}
+
+.info-col input:focus {
+    border: none;
+}
+
+.info-col input:active {
+    border: none;
+}
+
+#skill {
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    margin-top: 30px;
+}
+#skill input {
+    width: 500px;
+    border: none;
+    background: none;
+
+}
+
+.welcome {
+    font-family: single_maltaregular;
+    color: white;
+    font-size: 3em;
+    padding-top: 10px;
+}

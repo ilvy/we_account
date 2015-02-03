@@ -37,8 +37,9 @@ function gotoLiveRoom_new(req,res){//相对布局瀑布流，不加载商品信�
                     }
                     res.render("live_room_rel_layout",{publisher:"",room:room_id,isFavorite:favResult[0][0]['result'],host:publisher.nickname});
                 });
+            }else{
+                res.render("live_room_rel_layout",{publisher:"",room:room_id,isFavorite:0,host:publisher.nickname});
             }
-            res.render("live_room_rel_layout",{publisher:"",room:room_id,isFavorite:0,host:publisher.nickname});
         }
     });
 
