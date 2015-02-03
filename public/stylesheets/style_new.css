@@ -6,9 +6,19 @@ body {
 a {
     color: #00B7FF;
 }
+
+#header{
+    width: 100%;
+    text-align: center;
+    background-color: rgba(200,30,40,0.8);
+    color: white;
+    padding: 8px 6px;
+    font-size: 2rem;
+}
+
 .waterfall{
     width: 100%;
-    margin-top: 20px;
+    /*margin-top: 20px;*/
     position: relative;
 }
 .box{
@@ -96,11 +106,13 @@ div.desc{
 }
 
 .favorite{
-    width: 20px;
-    height: 20px;
     margin: 0 auto;
-    font-size: 20px;
-    color: cornflowerblue;
+    font-size: 3.5rem;
+    color: white;
+    text-shadow: 0px -2px 4px #c81e28;
+    position: absolute;
+    left: 47%;
+    bottom: 2px;
 }
 
 .fa-heart{
@@ -117,16 +129,63 @@ div.desc{
     width: 100%;
     position: fixed;
     bottom: 0;
-    background-color: whitesmoke;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    background-color: rgba(200,30,40,0.8);
+    padding-top: 6px;
+    min-height: 34px;
 }
 
+.myfavorites{
+    color: #ffffff;
+    position: absolute;
+    left: 25%;
+}
+
+.myfavorites .fa-folder-o{
+    position: absolute;
+    font-size: 2.8rem;
+    left: 0px;
+}
+.myfavorites .fa-heart{
+    position: absolute;
+    color: #ffffff;
+    left: 6px;
+    top: 9px;
+    font-size: 0.8rem;
+}
+
+.changeRoom{
+    padding: 0px 6px;
+    position: absolute;
+    left: 75%;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+}
+
+.changeRoom .fa-exchange:hover{
+    text-decoration: none;
+}
+
+.changeRoom .fa-exchange{
+    font-size: 1.5rem;
+    color: #ffffff;
+}
+
+#upload-div-box{
+    position: absolute;
+    background-color: rgba(200,30,40,0.6);
+    padding: 5px;
+    bottom: -2px;
+    left: 45%;
+    border-radius: 32px;
+}
 
 #upload-div{
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     margin: 0 auto;
+    border: 4px solid white;
+    padding: 3px;
+    border-radius: 20px;
 }
 #upload{
     border: none;
@@ -137,18 +196,18 @@ div.desc{
 }
 #upload .horizon{
     width: 100%;
-    height: 30%;
-    background-color: #CCCCFF;
+    height: 20%;
+    background-color: white;
     position: absolute;
-    top: 35%;
+    top: 41%;
     left: 0;
 }
 #upload .vertical{
-    width: 30%;
+    width: 20%;
     height: 100%;
-    background-color: #CCCCFF;
+    background-color: white;
     position: absolute;
-    left: 35%;
+    left: 40%;
     top: 0;
 }
 
@@ -422,3 +481,30 @@ li.favour_room_option{
     font-size: 18px;
 }
 /************end myfavorite*************/
+
+
+
+
+@media screen and (min-width: 361px) {
+
+}
+
+@media screen and (min-width: 561px) {
+
+}
+
+@media screen and (min-width: 768px){/*0.71*/
+
+}
+
+@media screen and (min-width: 1367px) {/*0.75*/
+
+}
+
+@media screen and (min-width: 1601px){/*0.85*/
+
+}
+
+@media screen and (min-width: 1681px) { /*适配1920以及以上*/
+
+}

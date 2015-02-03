@@ -36,7 +36,8 @@ function register(req,res){
     var body = req.body;
     var openId = session.openId,
         username = body.username,
-        pwd = body.pwd;
+        pwd = body.pwd,
+        nickname = body.nickname;
     if(!openId){
         res.redirect("/err.html");
         return;
@@ -44,7 +45,7 @@ function register(req,res){
 //    console.log(session);
 //    console.log("**************"+session.name+"*********openId:"+openId);
 //    res.send("**************"+session.name+"*********openId:"+openId);
-    dbOperator.query('call pro_register(?,?,?,?)',[openId,username,username,pwd],function(err,rows){
+    dbOperator.query('call pro_register(?,?,?,?,?)',[openId,username,username,pwd,nickname],function(err,rows){
         if(err){
             console.log(err);
             res.redirect("/err.html");

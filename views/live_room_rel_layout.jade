@@ -8,9 +8,9 @@ doctype html
 html
     head
         - if(publisher)
-            title #{publisher.nickname}直播间：#{room}
+            title #{publisher.nickname}代购直播间
         - else
-            title 直播号:#{room}
+            title #{host}代购直播间
         meta(name="viewport",content="width=device-width,initial-scale=1.0,user-scalable=no")
         link(rel='stylesheet', href='/stylesheets/style_new.css')
         link(rel='stylesheet', href='/stylesheets/bootstrap.css')
@@ -22,25 +22,8 @@ html
                 top:0;
             }
     body
-        //div#tools-btn
-            div
-            div
-            div
-        //div#tools-panel
-            - if (publisher)
-                div.myLiveRoom 我的直播间
-                div.addProduct
-                    a(href='/publish.html') 发布
-                div.myFavorite 我的收藏
-            -else
-                div.changeRoom
-                    a(href="/we_account/room_door")切换房间
-                div.favorite 收藏一下
-                div.myFavorite 我的收藏
-        //- if (publisher)
-            div.user 当前用户:
-                span #{publisher.user_name}
-        //- if (products.length)
+        #header
+            .room_num 直播号:#{room}
         section.waterfall
             div.column
             div.column
@@ -73,21 +56,27 @@ html
         //button(data-toggle="modal" data-target="#popup")#popup-btn popup-btn
         div#tools-box
             - if(publisher)
-                div#upload-div
-                    button#upload
-                        div.vertical
-                        div.horizon
-                div.user 当前用户:
-                    span #{publisher.user_name}
+                div#upload-div-box
+                    div#upload-div
+                        button#upload
+                            div.vertical
+                            div.horizon
             - else
-                div#tools-btn
-                    div
-                    div
-                    div
-                div#tools-panel
+                //div#tools-btn
+                //    div
+                //    div
+                //    div
+                //div#tools-panel
+                //    div.changeRoom
+                //        a(href="/we_account/room_door") 切换房间
+                //    div.myFavorite 我的收藏
+                div.myfavorites
+                    //div.heart-folder
+                    i.fa.fa-folder-o
+                    i.fa.fa-heart
+                a(href="/we_account/room_door")
                     div.changeRoom
-                        a(href="/we_account/room_door") 切换房间
-                    div.myFavorite 我的收藏
+                        i.fa.fa-exchange
                 div.favorite
                     - if (isFavorite)
                         i.fa.fa-heart

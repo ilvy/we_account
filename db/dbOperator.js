@@ -83,3 +83,19 @@ exports.query = query;
 //        console.log(rows)
 //    }
 //})
+
+
+//query("call pro_check_user_favorite_room(?,?)",['oHbq1t0enasGWD7eQoJuslZY6R-4','999999'],function(err,rows){
+//    if(err){
+//        console.log(err);
+//    }else{
+//        console.log(rows)
+//    }
+//})
+
+//query("call pro_check_publisher_knock(?,?)",['999999','oHbq1t0enasGWD7eQoJuslZY6R-4'],function(err,results){
+//    if(err){
+//        console.log(err);
+//    }
+//    console.log(results);
+//});

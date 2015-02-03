@@ -30,21 +30,21 @@ function gotoLiveRoom_new(req,res){//相对布局瀑布流，不加载商品信�
             res.render("live_room_rel_layout",{publisher:publisher,room:publisher.room_id});
         }else{
             if(openId){
-                dbOperator.query("call pro_select_favourite_rooms(?,?)",[openId,room_id],function(err,favResult){
+                dbOperator.query("call pro_check_user_favorite_room(?,?)",[openId,room_id],function(err,favResult){
                     if(err){
                         console.log("pro_select_favourite_rooms err:");
                         console.log(err);
                     }
-                    res.render("live_room_rel_layout",{publisher:"",room:room_id,isFavorite:favResult[0][0]['result']});
+                    res.render("live_room_rel_layout",{publisher:"",room:room_id,isFavorite:favResult[0][0]['result'],host:publisher.nickname});
                 });
             }
-            res.render("live_room_rel_layout",{publisher:"",room:room_id,isFavorite:0});
+            res.render("live_room_rel_layout",{publisher:"",room:room_id,isFavorite:0,host:publisher.nickname});
         }
     });
 
     //监测是不是发布者自己进入
     function checkPublisher(cb){
-        dbOperator.query("call pro_check_publisher_knock(?,?)",[null,openId],function(err,results){
+        dbOperator.query("call pro_check_publisher_knock(?,?)",[room_id,openId],function(err,results){
             if(err){
                 console.log(err);
             }
