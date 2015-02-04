@@ -122,7 +122,7 @@ function addListener(){
         })
     });
     $(function(){
-        new AjaxUpload("#upload",{
+        new AjaxUpload("#upload-div-box",{
             action:"/we_account/upload",
 //                action:"http://120.24.224.144:80/we_account/upload",
             name:'file',
@@ -176,7 +176,12 @@ function addListener(){
         })
     });
 
-    $(document).on("click","#upload,#upload2",function(){
+    $(document).on("click","#upload-div-box,#upload2",function(event){
+        if(event.stopPropagation){
+            event.stopPropagation();
+        }else if(event.cancelBubble){
+            event.cancelBubble = true;
+        }
         var $this = $(this);
         var btn_id = $this.attr("id");
         $("#"+btn_id+"_file_type").click();
@@ -349,13 +354,12 @@ function showNewUploadImg(product_id,productArray,desc){
         if(i == 0){
             imgstr += '<img class="lazy" src="http://120.24.224.144/images/'+item+'" data-num="'+i+'">';
         }else{
-            imgstr += '<img class="lazy" src="http://120.24.224.144/images/'+item+'" data-num="'+i+'"  style="height:'+waterfall.smallH+'">';
+            imgstr += '<img class="lazy" src="http://120.24.224.144/images/'+item+'" data-num="'+i+'"  style="height:'+waterfall.smallH+';width:'+waterfall.smallH+';">';
         }
     });
     $(".column").eq(minColIndex).prepend('<div class="box" data-id="'+product_id+'">' +
-        '<div class="desc" data-desc="'+desc+'">'+desc+'</div>' +
         '<div class="img-display" data-imgnum="'+productArray.length+'">' +imgstr+
-        '</div><div class="ontact-saler">联系卖家</div><div class="delete-product">删除</div></div>');
+        '</div><div class="desc" data-desc="'+desc+'">'+desc+'</div><div class="delete-product"><input type="button" value="删除"/></div></div>');
 }
 
 /**

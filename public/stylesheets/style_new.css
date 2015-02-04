@@ -1,6 +1,8 @@
 body {
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
     overflow-x:hidden;
+    /*padding: 6px;*/
+    background-color: #c5c5c5 !important;
 }
 
 a {
@@ -12,8 +14,9 @@ a {
     text-align: center;
     background-color: rgba(200,30,40,0.8);
     color: white;
-    padding: 8px 6px;
-    font-size: 2rem;
+    /*padding: 8px 6px;*/
+    font-size: 1.5rem;
+    margin-top: 3px;
 }
 
 .waterfall{
@@ -23,38 +26,57 @@ a {
 }
 .box{
     border:1px solid #CCCCFF;
-    border-radius: 5px;
+    /*border-radius: 5px;*/
     width: 100%;
-    margin-top: 10px;
+    margin-top: 4px;
     position: relative;
+    padding: 2px 3px;
+    background-color: white;
 }
 .box img{
-    width:33%;
-    /*margin-left:1%;*/
+    /*width:30%;*/
+    margin-left:3px;
+    margin-top: 3px;
 }
 .box img:first-child{
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    /*border-top-left-radius: 5px;*/
+    /*border-top-right-radius: 5px;*/
     width: 100%;
-    /*margin-left:1%;*/
+    margin-left:0%;
+    /*margin-bottom: 3px;*/
+    margin-top: 0px;
+}
+.box .img-display img[data-num = "1"],.box .img-display img[data-num='4'],.box .img-display img[data-num='7']{
+    margin-left: 0px;
 }
 .box div{
     word-break:break-all;
-    text-align:center;
+    /*text-align:center;*/
     font-size: 12px;
     font-family: "microsoft yahei";
 }
 div.desc{
     border-bottom: 1px solid #CCCCFF;
+    padding: 3px 8px 8px 8px;
+    text-align: center;
 }
 
 .delete-product{
-    position: absolute;
+    /*position: absolute;*/
     text-decoration: underline;
     color: red;
     right: 0;
     font-size: 12px;
     bottom: 0px;
+    text-align: right !important;
+    margin-top: 3px;
+}
+
+.delete-product input{
+    padding: 1px 3px;
+    border: none;
+    color: #ffffff;
+    background-color: red;
 }
 
 .column{
@@ -129,7 +151,7 @@ div.desc{
     width: 100%;
     position: fixed;
     bottom: 0;
-    background-color: rgba(200,30,40,0.8);
+    background-color: rgba(200,30,40,1);
     padding-top: 6px;
     min-height: 34px;
 }
@@ -172,7 +194,7 @@ div.desc{
 
 #upload-div-box{
     position: absolute;
-    background-color: rgba(200,30,40,0.6);
+    background-color: rgba(200,30,40,1);
     padding: 5px;
     bottom: -2px;
     left: 45%;
@@ -193,22 +215,28 @@ div.desc{
     position: relative;
     width: 100%;
     height: 100%;
+    text-align: center;
+    padding-top: 15%;
+}
+#upload i{
+    color: white;
+    font-size: 20px;
 }
 #upload .horizon{
-    width: 100%;
-    height: 20%;
+    width: 60%;
+    height: 16%;
     background-color: white;
     position: absolute;
-    top: 41%;
-    left: 0;
+    top: 42%;
+    left: 20%;
 }
 #upload .vertical{
-    width: 20%;
-    height: 100%;
+    width: 16%;
+    height: 60%;
     background-color: white;
     position: absolute;
-    left: 40%;
-    top: 0;
+    left: 42%;
+    top: 20%;
 }
 
 #uploading-mask{
