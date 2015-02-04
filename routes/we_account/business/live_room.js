@@ -321,6 +321,8 @@ function addFavourite(req,res){
                 }
             }
         })
+    }else if(!open_id){
+        response.failed("-2",res,'需要先关注公众号');//当前用户并未关注公众号，无法收藏
     }
 }
 
@@ -435,6 +437,8 @@ function myFavorite(req,res){
                 res.render('myfavorite',{favourite_rooms:rows[0]});
             }
         })
+    }else{//需要先关注公众号
+        res.redirect("/follow_account.html");
     }
 }
 
