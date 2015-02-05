@@ -23,7 +23,7 @@ $(window).on("resize",function(){
 
 var Waterfall = function(){
     this.displayWay = '';//1.image size,2.self defined
-    this.margin = 10;
+    this.margin = 6;
     this.box_w = 200;
     this.h_weights = [];//weight of height,including prices,img size and so on 每列的高度
     this.isLoadOver = true;//上一次加载事件是否已经完毕,第一次加载默认为true

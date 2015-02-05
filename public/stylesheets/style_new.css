@@ -12,11 +12,11 @@ a {
 #header{
     width: 100%;
     text-align: center;
-    background-color: rgba(200,30,40,0.8);
+    background-color: rgba(200,30,40,1);
     color: white;
     /*padding: 8px 6px;*/
     font-size: 1.5rem;
-    margin-top: 3px;
+    margin-top: 6px;
 }
 
 .waterfall{
@@ -25,10 +25,10 @@ a {
     position: relative;
 }
 .box{
-    border:1px solid #CCCCFF;
+    /*border:1px solid #CCCCFF;*/
     /*border-radius: 5px;*/
     width: 100%;
-    margin-top: 4px;
+    margin-top: 6px;
     position: relative;
     padding: 2px 3px;
     background-color: white;
