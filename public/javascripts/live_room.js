@@ -67,8 +67,10 @@ function addListener(){
                 if(result.flag == 1){
                     $(".favorite .fa-heart-o").removeClass("fa-heart-o").addClass("fa-heart");
                     alert("收藏成功");
-                }else{
+                }else if(result.flag == -1){
                     alert("收藏失败");
+                }else if(result.flag == -2){
+                    window.location.href = '/follow_account.html';
                 }
             },
             error:function(err){
@@ -176,7 +178,7 @@ function addListener(){
         })
     });
 
-    $(document).on("click","#upload-div-box,#upload2",function(event){
+    $(document).on("vclick","#upload-div-box,#upload2",function(event){
         if(event.stopPropagation){
             event.stopPropagation();
         }else if(event.cancelBubble){
@@ -354,7 +356,7 @@ function showNewUploadImg(product_id,productArray,desc){
         if(i == 0){
             imgstr += '<img class="lazy" src="http://120.24.224.144/images/'+item+'" data-num="'+i+'">';
         }else{
-            imgstr += '<img class="lazy" src="http://120.24.224.144/images/'+item+'" data-num="'+i+'"  style="height:'+waterfall.smallH+';width:'+waterfall.smallH+';">';
+            imgstr += '<img class="lazy" src="http://120.24.224.144/images/'+item+'" data-num="'+i+'"  style="height:'+waterfall.smallH+'px;width:'+waterfall.smallH+'px;">';
         }
     });
     $(".column").eq(minColIndex).prepend('<div class="box" data-id="'+product_id+'">' +
