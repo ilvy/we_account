@@ -99,3 +99,26 @@ exports.query = query;
 //    }
 //    console.log(results);
 //});
+var http = require("http");
+var querystring = require('querystring');
+var path = '/mnt/projects/weAccount_git/we_account/public/images/test_1423127310729.jpg';//"F:/learn/compress/2.jpg";//
+var post_data = querystring.stringify({
+    filePath:path
+});
+var req = http.request({
+    host:"120.24.224.144",//"localhost",//
+    port:"8080",
+    method:"post",
+    path:"/MsecondaryServer/compressPic?filePath="+path
+},function(res){
+    var result = "";
+    res.on("data",function(chunk){
+        result += chunk;
+    }).on("end",function(){
+            console.log(result);
+        }).on("error",function(err){
+            console.log(err);
+        });
+});
+//req.write(post_data+"\n");
+req.end();

@@ -2,7 +2,7 @@ body {
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
     overflow-x:hidden;
     /*padding: 6px;*/
-    background-color: #c5c5c5 !important;
+    background-color: rgba(230,230,230,1) !important;
 }
 
 a {
@@ -30,8 +30,10 @@ a {
     width: 100%;
     margin-top: 6px;
     position: relative;
-    padding: 2px 3px;
+    /*padding: 2px 3px;*/
     background-color: white;
+    padding: 3px 3px 0px 3px;
+    border-bottom: 1px white solid;
 }
 .box img{
     /*width:30%;*/
@@ -56,9 +58,9 @@ a {
     font-family: "microsoft yahei";
 }
 div.desc{
-    border-bottom: 1px solid #CCCCFF;
-    padding: 3px 8px 8px 8px;
-    text-align: center;
+    border-bottom: 1px solid #e6e6e6;
+    padding: 6px 0px 6px 0px;
+    text-align: left;
 }
 
 .delete-product{
@@ -70,6 +72,7 @@ div.desc{
     bottom: 0px;
     text-align: right !important;
     margin-top: 3px;
+    margin-bottom: 3px;
 }
 
 .delete-product input{

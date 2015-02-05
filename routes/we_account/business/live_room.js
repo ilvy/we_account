@@ -314,8 +314,10 @@ function addFavourite(req,res){
                 var result = rows[0][0]["res"];
                 if(result == 1){//添加收藏成功
                     response.success("1",res,'收藏成功');
-                }else if(result == 0){//房间不存在或者已经收藏过
-                    response.failed("-1",res,'已经收藏，不能重复收藏');
+                }else if(result == 0){//房间不存在
+                    response.failed("0",res,'');
+                }else if(result == 2){//已经收藏过
+                    response.success("2",res,'是否取消收藏');
                 }else if(result == -1){//当前房间发布者不用收藏
 
                 }
@@ -324,6 +326,28 @@ function addFavourite(req,res){
     }else if(!open_id){
         response.failed("-2",res,'需要先关注公众号');//当前用户并未关注公众号，无法收藏
     }
+}
+/**
+ * 取消关注直播间
+ * @param req
+ * @param res
+ */
+function cancelFavorite(req,res){
+    var room = req.session.room,
+        open_id = req.session.openId;
+    var paras = [open_id,room];
+    dbOperator.query("call pro_cancel_favorite(?,?)",paras,function(err,rows){
+        if(err){
+            console.log(err);
+            response.failed("err",res,"err");
+        }else{
+            if(rows[0][0] && rows[0][0]['res'] > 0){
+                response.success("10",res,"取消关注成功");//
+            }else{
+                response.failed("-10",res,"");//取消失败
+            }
+        }
+    });
 }
 
 /**
@@ -442,6 +466,37 @@ function myFavorite(req,res){
     }
 }
 
+querystring = require('querystring');
+/**
+ * 图片压缩
+ * @param req
+ * @param res
+ */
+function compressPic(req,resp){
+    var path = '/mnt/projects/weAccount_git/we_account/public/images/'+req.body.filePath;
+    var post_data = querystring.stringify({
+        filePath:path
+    });
+    var req = http.request({
+        host:"localhost",
+        port:"8080",
+        method:"post",
+        path:"/MsecondaryServer/compressPic?filePath="+path
+    },function(res){
+        var result = "";
+        res.on("data",function(chunk){
+            result += chunk;
+        }).on("end",function(){
+                console.log(result);
+                response.success("",resp,"");
+            }).on("error",function(err){
+                console.log(err);
+                response.failed("",resp,"");
+            });
+    });
+    req.end();
+}
+
 //exports.renderLiveRoom = gotoLiveRoom;
 exports.renderLiveRoom_new = gotoLiveRoom_new;
 exports.knockDoor = knockDoor;
@@ -449,9 +504,11 @@ exports.knockDoor = knockDoor;
 //exports.loadMoreProducts = loadMoreProducts;
 exports.loadMoreProducts_new = loadMoreProducts_new;
 exports.addFavourite = addFavourite;
+exports.cancelFavorite = cancelFavorite;
 exports.renderRoom_door = renderRoom_door;
 exports.compressImg = compressImg;
 exports.delete_product = delete_product;
 exports.displayProduct = displayProduct;
 exports.myFavorite = myFavorite;
 exports.checkRoom = checkRoom;
+exports.compressPic = compressPic;

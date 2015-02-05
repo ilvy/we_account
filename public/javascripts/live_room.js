@@ -58,19 +58,31 @@ function addListener(){
 //        $(".big-img-display img").eq(Math.abs(currNum)).css("display","block").siblings("img").css("display","none");
 //    });
     //收藏直播间
-    $(".favorite").on("click",function(){
+    $(".favorite").on("vclick",function(){
         var url = '/we_account/favourite';
+        if($(this).find('i').hasClass("fa-heart")){
+            if(!confirm("是否取消关注")){
+                return;
+            }
+            url = '/we_account/favourite_cancel';
+        }
         $.ajax({
             url:url,
             type:"post",
             success:function(result){
                 if(result.flag == 1){
-                    $(".favorite .fa-heart-o").removeClass("fa-heart-o").addClass("fa-heart");
-                    alert("收藏成功");
-                }else if(result.flag == -1){
-                    alert("收藏失败");
-                }else if(result.flag == -2){
+                    if(result.data == 1){
+                        $(".favorite .fa-heart-o").removeClass("fa-heart-o").addClass("fa-heart");
+                        alert("收藏成功");
+                    }else if(result.data == 10){
+                        $(".favorite .fa-heart").removeClass("fa-heart").addClass("fa-heart-o");
+                    }
+                }else if(result.data == 0){
+                    alert("房间不存在");
+                }else if(result.data == -2){
                     window.location.href = '/follow_account.html';
+                }else if(result.data == -10){
+                    alert("取消关注失败");
                 }
             },
             error:function(err){
@@ -78,6 +90,25 @@ function addListener(){
             }
         })
     });
+    /**
+     * 取消关注直播间
+     * @param callback
+     */
+    function cancelFavorite(callback){
+        var url = '/we_account/favourite_cancel';
+        $.ajax({
+            url:url,
+            type:"post",
+            success:function(result){
+                callback(null,result);
+            },
+            error:function(err){
+                console.log(err);
+                callback(err,null);
+            }
+        });
+    }
+
     var waterfallHeight,
         scrollTop;
     $(document).on("scroll",function(){
@@ -101,7 +132,7 @@ function addListener(){
     /**
      * 删除商品信息
      */
-    $(document).on("vclick",".delete-product",function(event){
+    $(document).on("vclick",".delete-product input",function(event){
         var product_id = $(this).parents(".box").data("id");
         $(this).parents(".box").remove();
         var data = {
@@ -139,11 +170,14 @@ function addListener(){
             },
             onComplete:function(file,res){
 //                    alert(res);
-                $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div></div>');
-                $("#uploading-mask").css("display","none");
-                showUploadPanel();
                 compress(res,function(err,result){
-
+                    $("#uploading-mask").css("display","none");
+                    if(result.flag == 1){
+                        $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div></div>');
+                        showUploadPanel();
+                    }else{
+                        alert("上传失败");
+                    }
                 });
                 console.log(res);
                 productArray.push(res);
@@ -166,10 +200,13 @@ function addListener(){
             },
             onComplete:function(file,res){
 //                    alert(res);
-                $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div></div>');
-                $("#uploading-mask").css("display","none");
                 compress(res,function(err,result){
-
+                    $("#uploading-mask").css("display","none");
+                    if(result.flag == 1){
+                        $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div></div>');
+                    }else{
+                        alert("上传失败");
+                    }
                 });
                 console.log(res);
                 productArray.push(res);
@@ -273,10 +310,10 @@ function getProducts(){
  */
 function compress(fileName,callback){
     var data = {
-        filePath:"/mnt/projects/weAccount_git/we_account/public/images/"+fileName
+        filePath:fileName//"/mnt/projects/weAccount_git/we_account/public/images/"+fileName
     };
     $.ajax({
-        url:"http://120.24.224.144:8080/MsecondaryServer/compressPic",
+        url:"/we_account/compressPic",
         data:data,
         type:"post",
         success:function(result){//不需要响应
@@ -285,7 +322,7 @@ function compress(fileName,callback){
         },
         error:function(err){
             console.log(err);
-            callback(err,null);
+            callback(err,{});
         }
     })
 }

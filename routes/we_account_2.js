@@ -227,6 +227,8 @@ router.post("/upload",function(req,res){
     });
 });
 
+router.post("/compressPic",live_room.compressPic);
+
 /**
  *
  */
@@ -239,6 +241,8 @@ router.post("/knock_door",knockDoor);
 router.get("/load_more",loadMoreProducts);
 
 router.post("/favourite",live_room.addFavourite);
+
+router.post("/favourite_cancel",live_room.cancelFavorite);
 
 router.post("/delete_product",live_room.delete_product);
 
