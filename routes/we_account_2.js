@@ -154,7 +154,7 @@ router.get("/goto_publish",function(req,resp){
         res.on('end',function(){
 //            console.log(chunks.toString());
             var userInfo = JSON.parse(chunks);
-            var openId = userInfo.openid || 'oHbq1t0enasGWD7eQoJuslZY6R-4';
+            var openId = userInfo.openid;// || 'oHbq1t0enasGWD7eQoJuslZY6R-4';
             session.openId = openId;
             session.type = type;
             if(type == 1){//发布者登录

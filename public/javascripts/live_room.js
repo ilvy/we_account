@@ -4,6 +4,7 @@
 $(document).ready(function(){
     addListener();
     initPopPanel();
+    initToolsPosition();
 });
 
 function addListener(){
@@ -132,7 +133,10 @@ function addListener(){
     /**
      * 删除商品信息
      */
-    $(document).on("vclick",".delete-product input",function(event){
+    $(document).on("vclick",".delete-product .fa-times-circle",function(event){
+        if(!confirm("确定删除该商品?")){
+            return;
+        }
         var product_id = $(this).parents(".box").data("id");
         $(this).parents(".box").remove();
         var data = {
@@ -156,7 +160,7 @@ function addListener(){
     });
     $(function(){
         new AjaxUpload("#upload-div-box",{
-            action:"/we_account/upload",
+            action:"http://localhost:880/we_account/upload",
 //                action:"http://120.24.224.144:80/we_account/upload",
             name:'file',
             onSubmit:function(file,ext){
@@ -184,10 +188,10 @@ function addListener(){
 //                    products?products  += ";"+ res:products += res;
             }
         })
-    });;
+    });
     $(function(){
         new AjaxUpload("#upload2",{
-            action:"/we_account/upload",
+            action:"http://localhost:880/we_account/upload",
 //                action:"http://120.24.224.144:80/we_account/upload",
             name:'file',
             onSubmit:function(file,ext){
@@ -398,7 +402,7 @@ function showNewUploadImg(product_id,productArray,desc){
     });
     $(".column").eq(minColIndex).prepend('<div class="box" data-id="'+product_id+'">' +
         '<div class="img-display" data-imgnum="'+productArray.length+'">' +imgstr+
-        '</div><div class="desc" data-desc="'+desc+'">'+desc+'</div><div class="delete-product"><input type="button" value="删除"/></div></div>');
+        '</div><div class="desc" data-desc="'+desc+'">'+desc+'</div><div class="delete-product"><i class="fa fa-times-circle"></div></div>');
 }
 
 /**
@@ -413,5 +417,21 @@ $.fn.fadeInAndOut = function(){
                 $this.fadeOut();
             },2000);
         });
+    });
+}
+
+/**
+ * 初始化底部工具栏位置
+ */
+function initToolsPosition(){
+    var $fav = $(".favorite"),
+        $upload = $("#upload-div-box"),
+        f_w = $fav.outerWidth(),
+        u_w = $upload.outerWidth();
+    $fav.css({
+        left:Math.floor((waterfall.win_w - f_w) / 2)
+    });
+    $upload.css({
+        left:Math.floor((waterfall.win_w - u_w) / 2)
     });
 }

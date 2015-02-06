@@ -23,7 +23,7 @@ $(window).on("resize",function(){
 
 var Waterfall = function(){
     this.displayWay = '';//1.image size,2.self defined
-    this.margin = 6;
+    this.margin = 8;
     this.box_w = 200;
     this.h_weights = [];//weight of height,including prices,img size and so on 每列的高度
     this.isLoadOver = true;//上一次加载事件是否已经完毕,第一次加载默认为true
@@ -129,8 +129,8 @@ Waterfall.prototype.asyncLoader = function(){
             isPublisher = results.data.isPublisher;
         }
         var deleteProductBtn = "";
-        if(!isPublisher){
-            deleteProductBtn = '<div class="delete-product"><input type="button" value="删除"/></div>';
+        if(isPublisher){
+            deleteProductBtn = '<div class="delete-product"><i class="fa fa-times-circle"></div>';//<input type="button" value="删除"/>
         }
         loadDatas.forEach(function(item){
 //        $(this).clone().css(_this.lastPosition).appendTo(".waterfall");
@@ -141,7 +141,7 @@ Waterfall.prototype.asyncLoader = function(){
                 }else{
                     imgstr += '<img class="lazy" src="http://120.24.224.144/images/'+url+'" data-num="'+(i)+'">';
                 }
-                descStr = '<div class="desc" data-desc="'+item.text+'">'+item.text +'</div>';
+                descStr = '<div class="desc" style="'+(isPublisher?"border-bottom:1px solid #e6e6e6;":"")+'" data-desc="'+item.text+'">'+item.text +'</div>';
 //                urlArray.push('/images/'+url);
             });
             productsStrs.push('<div class="box" data-id="'+item.id+'">' +
