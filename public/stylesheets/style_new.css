@@ -263,37 +263,38 @@ div.desc{
     position: fixed;
     width: 100%;
     height: 100%;
-    background-color: #4b4b4b;
+    background-color: #444444;
     display: none;
     top: 0;
 }
 
 textarea.product-desc{
-    background: #4b4b4b;
+    background: #444444;
     border: none;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #ffffff;
     width: 100%;
     color: white;
-    margin-top: 30px;
+    margin-top: 56px;
     margin-bottom: 30px;
+    font-weight: bolder;
 }
 
 .lr-btn-group{
-    position: fixed;
+    position: fixed !important;
     bottom: 0;
     text-align: center;
     width: 100%;
 }
 
 .lr-btn-group > div{
-    float: left;
+    /*float: left;*/
 }
 
 #sub-btn{
     /*margin-top: 10px;*/
-    width: 30px;
+    /*width: 30px;*/
     font-size: 26px;
-    margin-left: 10%;
+    /*margin-left: 10%;*/
 }
 
 #submit{
@@ -312,10 +313,9 @@ textarea.product-desc{
 #cancel-btn{
     /*text-align: center;position: fixed;bottom: 0;width: 100%;*/
     margin: 0 auto;
-    width: 30px;
-    margin-left: 38%;
+    /*width: 30px;*/
+    /*margin-left: 38%;*/
     font-size: 28px;
-    color: green;
 }
 
 #cancel{
@@ -323,7 +323,7 @@ textarea.product-desc{
     /*padding: 4px 8px;*/
     border: none;
     /*background: #757978;*/
-    color: rgba(200,30,40,1);
+    color: rgba(168, 65, 71, 1);
     font-weight: bolder;
 }
 
@@ -529,14 +529,35 @@ form.door{
  }
 #room-list li{
         text-align: center;
-        padding: 5px 12px;
-        border-bottom: 1px solid rgb(195, 222, 233);
-        border-top: 1px solid rgb(160, 178, 211);
+        padding: 3px 12px;
+        /*border-bottom: 1px solid rgb(195, 222, 233);*/
+        /*border-top: 1px solid rgb(160, 178, 211);*/
  }
 li.favour_room_option{
     padding: 12px 8px;
     font-size: 18px;
 }
+
+li.favour_room_option > div{
+
+}
+
+.nickname,.room,.fav-remove{
+    background-color: whitesmoke;
+    border-left: 3px solid rgba(230,230,230,1);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.nickname{
+    border-left: none;
+}
+
+.fav-remove{
+    color: rgba(200,30,40,1);
+    /*font-size: 24px;*/
+}
+
 /************end myfavorite*************/
 
 

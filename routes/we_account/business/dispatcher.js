@@ -61,6 +61,8 @@ function dispatch(data,res){
                     })
                 }
             }else if(data.Event == 'VIEW'){
+                data.replyContent = "这里是moment的代购聚集地，感谢您的关注！！！";
+                response(data,res);
                 break;
             }
             break;

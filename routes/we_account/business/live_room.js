@@ -24,22 +24,26 @@ function gotoLiveRoom_new(req,res){//相对布局瀑布流，不加载商品信�
     var products,totalPage,
         paras1 = [null,null,0];
     req.session.isPublisher = type==1 ? 1:0;
+    req.session.type = 0;
+    console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"+req.session.type);
     checkPublisher(function(err,results){
         var productRes,publisher = results;
         if(type == 1){//发布者
             res.render("live_room_rel_layout",{publisher:publisher,room:publisher.room_id});
-        }else{
+        }else if(type > 1){
             if(openId){
                 dbOperator.query("call pro_check_user_favorite_room(?,?)",[openId,room_id],function(err,favResult){
                     if(err){
                         console.log("pro_select_favourite_rooms err:");
                         console.log(err);
                     }
-                    res.render("live_room_rel_layout",{publisher:"",room:room_id,isFavorite:favResult[0][0]['result'],host:publisher.nickname});
+                    res.render("live_room_rel_layout",{publisher:"",room:publisher.room_id,isFavorite:favResult[0][0]['result'],host:publisher.nickname});
                 });
             }else{
                 res.render("live_room_rel_layout",{publisher:"",room:room_id,isFavorite:0,host:publisher.nickname});
             }
+        }else{
+            res.render("live_room_rel_layout",{publisher:"",room:room_id,isFavorite:0,host:publisher.nickname});
         }
     });
 
@@ -333,21 +337,26 @@ function addFavourite(req,res){
  * @param res
  */
 function cancelFavorite(req,res){
-    var room = req.session.room,
+    var room = req.query.room_id || req.session.room,
         open_id = req.session.openId;
     var paras = [open_id,room];
-    dbOperator.query("call pro_cancel_favorite(?,?)",paras,function(err,rows){
-        if(err){
-            console.log(err);
-            response.failed("err",res,"err");
-        }else{
-            if(rows[0][0] && rows[0][0]['res'] > 0){
-                response.success("10",res,"取消关注成功");//
+    if(open_id){
+        dbOperator.query("call pro_cancel_favorite(?,?)",paras,function(err,rows){
+            if(err){
+                console.log(err);
+                response.failed("err",res,"err");
             }else{
-                response.failed("-10",res,"");//取消失败
+                if(rows[0][0] && rows[0][0]['res'] > 0){
+                    response.success("10",res,"取消关注成功");//
+                }else{
+                    response.failed("-10",res,"");//取消失败
+                }
             }
-        }
-    });
+        });
+    }else{
+        response.failed("-11",res,"");//取消失败,请先关注公众号
+    }
+
 }
 
 /**
@@ -462,7 +471,8 @@ function myFavorite(req,res){
             }
         })
     }else{//需要先关注公众号
-        res.redirect("/follow_account.html");
+//        res.redirect("/follow_account.html");
+        res.render('myfavorite',{favourite_rooms:[{nickname:"威廉鸡煲",room_id:"111111"},{nickname:"威廉鸡煲",room_id:"111111"},{nickname:"威廉鸡煲",room_id:"111111"}]});
     }
 }
 

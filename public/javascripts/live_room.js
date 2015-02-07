@@ -160,7 +160,7 @@ function addListener(){
     });
     $(function(){
         new AjaxUpload("#upload-div-box",{
-            action:"http://localhost:880/we_account/upload",
+            action:"/we_account/upload",
 //                action:"http://120.24.224.144:80/we_account/upload",
             name:'file',
             onSubmit:function(file,ext){
@@ -191,7 +191,7 @@ function addListener(){
     });
     $(function(){
         new AjaxUpload("#upload2",{
-            action:"http://localhost:880/we_account/upload",
+            action:"/we_account/upload",
 //                action:"http://120.24.224.144:80/we_account/upload",
             name:'file',
             onSubmit:function(file,ext){
@@ -402,7 +402,7 @@ function showNewUploadImg(product_id,productArray,desc){
     });
     $(".column").eq(minColIndex).prepend('<div class="box" data-id="'+product_id+'">' +
         '<div class="img-display" data-imgnum="'+productArray.length+'">' +imgstr+
-        '</div><div class="desc" data-desc="'+desc+'">'+desc+'</div><div class="delete-product"><i class="fa fa-times-circle"></div></div>');
+        '</div><div class="desc" style="border-bottom:1px solid #e6e6e6;" data-desc="'+desc+'">'+desc+'</div><div class="delete-product"><i class="fa fa-times-circle"></div></div>');
 }
 
 /**

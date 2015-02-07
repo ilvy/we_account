@@ -50,4 +50,34 @@ function addListener(){
             })
         }
     });
+    /**
+     * 取消该直播间收藏
+     */
+    $(".fav-remove").on("click",function(event){
+        if(event.stopPropagation){
+            event.stopPropagation();
+        }else if(event.cancelBubble){
+            event.cancelBubble = true;
+        }
+        var $this = $(this);
+        var roomId = $this.parents("li").find(".room").val();
+        if(!confirm("取消收藏该直播间?")){
+            return;
+        }
+        var url = '/we_account/favourite_cancel?room_id='+roomId;
+        $.ajax({
+            url:url,
+            type:"post",
+            success:function(result){
+                if(result.flag == 1){
+                    $this.parents("li").remove();
+                }else if(result.data == -11){
+                    window.location.href = '/follow_account.html';
+                }
+            },
+            error:function(err){
+                console.log(err);
+            }
+        });
+    });
 }

@@ -56,7 +56,7 @@ html
                         //div#next next
         //button(data-toggle="modal" data-target="#popup")#popup-btn popup-btn
         div#tools-box
-            - if(!publisher)
+            - if(publisher)
                 div#upload-div-box
                     div#upload-div
                         div#upload
@@ -92,23 +92,14 @@ html
             //    input(type="button" value="确定")#submit
             textarea(placeholder="说点什么，让顾客更好的了解您的产品...").product-desc
             div#image_content
-                .upload-display
-                    img(src='/images/test_1423213682462.jpg')
-                    div.delete-img
-                .upload-display
-                    img(src='/images/test_1423213682462.jpg')
-                    div.delete-img
-                .upload-display
-                    img(src='/images/test_1423213682462.jpg')
-                    div.delete-img
                 div#upload-div2
                     button(data-type="pop-btn")#upload2
                         div.vertical
                         div.horizon
-            .lr-btn-group
-                div#cancel-btn
+            .lr-btn-group.col-xxs-6.col-xxs-offset-3
+                div#cancel-btn.col-xxs-6
                     i#cancel.fa.fa-times-circle
-                div#sub-btn
+                div#sub-btn.col-xxs-6
                     i#submit.fa.fa-upload
         div#uploading-mask
 
