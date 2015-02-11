@@ -507,6 +507,37 @@ function compressPic(req,resp){
     req.end();
 }
 
+/**
+ * 旋转图片
+ * @param req
+ * @param resp
+ */
+function rotateImg(req,resp){
+//    var path = '/mnt/projects/weAccount_git/we_account/public'+req.body.filePath;
+    var path = 'F:/weAccount_test/weAccountServerTest/public'+req.body.filePath;
+    var post_data = querystring.stringify({
+        filePath:path
+    });
+    var req = http.request({
+        host:"localhost",
+        port:"8080",
+        method:"post",
+        path:"/MsecondaryServer/img_rotate?filePath="+path+"&rotate_type="+req.body.type
+    },function(res){
+        var result = "";
+        res.on("data",function(chunk){
+            result += chunk;
+        }).on("end",function(){
+                console.log(result);
+                response.success("",resp,"");
+            }).on("error",function(err){
+                console.log(err);
+                response.failed("-10",resp,"");
+            });
+    });
+    req.end();
+}
+
 //exports.renderLiveRoom = gotoLiveRoom;
 exports.renderLiveRoom_new = gotoLiveRoom_new;
 exports.knockDoor = knockDoor;
@@ -522,3 +553,4 @@ exports.displayProduct = displayProduct;
 exports.myFavorite = myFavorite;
 exports.checkRoom = checkRoom;
 exports.compressPic = compressPic;
+exports.rotateImg = rotateImg;

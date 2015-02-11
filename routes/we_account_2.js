@@ -248,6 +248,8 @@ router.post("/delete_product",live_room.delete_product);
 
 router.get("/product_display",live_room.displayProduct);
 
+router.post("/rotateImg",live_room.rotateImg);
+
 router.get("/xml",function(req,res){
     xmlParser.parseXml("<xml><ToUserName><![CDATA[gh_d28b25ec1197]]></ToUserName>" +
         "<FromUserName><![CDATA[oHbq1t0enasGWD7eQoJuslZY6R-4]]></FromUserName>" +
