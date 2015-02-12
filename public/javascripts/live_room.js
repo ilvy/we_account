@@ -234,7 +234,7 @@ function addListener(){
 //        $("#warn").fadeInAndOut();
 //    });
 
-    $(document).on("click","#submit",function(){
+    $(document).on("vclick","#submit",function(){
         var desc = $(".product-desc").val();//TODO 检验字符串合法性
         if(productArray.length == 0){
             $("#warn").fadeInAndOut();
