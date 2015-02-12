@@ -124,6 +124,7 @@ router.post("/register",function(req,res){
 //AUTH2.0 网页获取用户权限
 router.get("/publish",function(req,res){
     var type = req.query.type;
+    req.session.isPublisher = type==1 ? 1:0;
     //判断用户是否存在账号，若无，返回注册界面，若已有账号，直接登录即可
     var redirect_uri;// = urlencode("http://120.24.224.144/we_account/goto_publish");
     redirect_uri = urlencode("http://120.24.224.144/we_account/goto_publish?type="+type);

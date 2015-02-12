@@ -45,8 +45,10 @@ function addListener(){
         currNum = $(this).data("num");
         $currImgAlbum = $(this).parents(".img-display").find("img");
         currLen = $(this).parents(".img-display").data("imgnum");
-        var product_id = $(this).parents(".box").data("id");
-        window.location.href = '/we_account/product_display?product_id='+product_id;
+        var product_id = $(this).parents(".box").data("id"),
+            type = $(".waterfall").data("type");
+        type?type = "&u_type=" + type:"";
+        window.location.href = '/we_account/product_display?product_id='+product_id+type;
 //        var bigImgStr = "";
 //        $(this).parents(".img-display").find("img").each(function(i){
 //            if(i != currNum){
@@ -185,6 +187,10 @@ function addListener(){
             },
             onComplete:function(file,res){
 //                    alert(res);
+//                $("#uploading-mask").css("display","none");
+//                    $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div>' +
+//                        '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');
+//                    showUploadPanel();
                 compress(res,function(err,result){
                     $("#uploading-mask").css("display","none");
                     if(result.flag == 1){
@@ -216,6 +222,9 @@ function addListener(){
             },
             onComplete:function(file,res){
 //                    alert(res);
+//                $("#uploading-mask").css("display","none");
+//                    $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div>' +
+//                        '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');
                 compress(res,function(err,result){
                     $("#uploading-mask").css("display","none");
                     if(result.flag == 1){

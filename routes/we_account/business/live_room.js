@@ -17,19 +17,19 @@ var dbOperator = require("../../../db/dbOperator"),
  */
 function gotoLiveRoom_new(req,res){//相对布局瀑布流，不加载商品信息
     console.log("***********************gotoLiveRoom");
-    var openId = req.session.openId,
+    var openId = req.session.openId||(req.session.openId = 'oHbq1t0enasGWD7eQoJuslZY6R-4'),
         type = req.session.type;
+    var u_type = req.query.u_type;//u_type:用户类型，用于区别 发布者和普通用户 从商品详细页面跳回商品瀑布流展示页面的判断
     var room_id = req.query.room_id;
     req.session.room_id = room_id;
     var products,totalPage,
         paras1 = [null,null,0];
-    req.session.isPublisher = type==1 ? 1:0;
     req.session.type = 0;
     console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"+req.session.type);
     checkPublisher(function(err,results){
         var productRes,publisher = results;
-        if(type == 1){//发布者
-            res.render("live_room_rel_layout",{publisher:publisher,room:publisher.room_id});
+        if(type == 1 || (u_type == 1 && req.session.isPublisher)){//发布者
+            res.render("live_room_rel_layout",{publisher:publisher.isPublisher?publisher:"",room:publisher.room_id,u_type:1});
         }else if(type > 1){
             if(openId){
                 dbOperator.query("call pro_check_user_favorite_room(?,?)",[openId,room_id],function(err,favResult){
@@ -441,7 +441,8 @@ function delete_product(req,res){
  */
 function displayProduct(req,res){
     var query = req.query;
-    var id = query.product_id;
+    var id = query.product_id,
+        u_type = query.u_type;
     dbOperator.query('call pro_select_product_by_id(?)',[id],function(err,results){
         if(err){
             console.log("call pro_select_product_by_id err:"+err);
@@ -449,7 +450,7 @@ function displayProduct(req,res){
         }
         var product = results[0][0];
         product.image_url = product.image_url.split(";");
-        res.render("product",{product:product});
+        res.render("product",{product:product,u_type:u_type||""});
     });
 }
 
