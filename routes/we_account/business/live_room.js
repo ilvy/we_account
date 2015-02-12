@@ -17,7 +17,7 @@ var dbOperator = require("../../../db/dbOperator"),
  */
 function gotoLiveRoom_new(req,res){//相对布局瀑布流，不加载商品信息
     console.log("***********************gotoLiveRoom");
-    var openId = req.session.openId||(req.session.openId = 'oHbq1t0enasGWD7eQoJuslZY6R-4'),
+    var openId = req.session.openId;//||(req.session.openId = 'oHbq1t0enasGWD7eQoJuslZY6R-4'),
         type = req.session.type;
     var u_type = req.query.u_type;//u_type:用户类型，用于区别 发布者和普通用户 从商品详细页面跳回商品瀑布流展示页面的判断
     var room_id = req.query.room_id;

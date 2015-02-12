@@ -267,7 +267,7 @@ div.desc{
     left: 0;
     display: none;
     background-color: rgba(255,255,255,0);
-    filter: alpha(opacity=100);
+    filter: alpha(opacity=0);
     opacity: 0;
 }
 
@@ -413,6 +413,11 @@ textarea.product-desc{
 
 #warn{
     position:fixed;top:0;width:100%;z-index: 10;display: none;padding:10px;text-align:center;
+}
+
+input[type=file]{
+    width: 0;
+    height: 0;
 }
 
 /********start 照片显示弹出框********/

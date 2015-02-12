@@ -129,17 +129,17 @@ Waterfall.prototype.asyncLoader = function(){
             isPublisher = results.data.isPublisher;
         }
         var deleteProductBtn = "";
-        if(isPublisher){
+        if(!isPublisher){
             deleteProductBtn = '<div class="delete-product"><i class="fa fa-times-circle"></div>';//<input type="button" value="删除"/>
         }
         loadDatas.forEach(function(item){
 //        $(this).clone().css(_this.lastPosition).appendTo(".waterfall");
             var imgstr = '',descStr;
             item.image_url.forEach(function(url,i){
-                if(i > 0){
-                    imgstr += '<img class="lazy" src="http://120.24.224.144/images/'+url+'" data-num="'+(i)+'" style="height:'+_this.smallH+'px;width:'+_this.smallH+'px">';
+                if(i < item.image_url.length - 1){
+                    imgstr = '<img class="lazy" src="http://120.24.224.144/images/'+url+'" data-num="'+(i)+'" style="height:'+_this.smallH+'px;width:'+_this.smallH+'px">' + imgstr;
                 }else{
-                    imgstr += '<img class="lazy" src="http://120.24.224.144/images/'+url+'" data-num="'+(i)+'">';
+                    imgstr = '<img class="lazy" src="http://120.24.224.144/images/'+url+'" data-num="'+(i)+'">' + imgstr;
                 }
                 descStr = '<div class="desc" style="'+(isPublisher?"border-bottom:1px solid #e6e6e6;":"")+'" data-desc="'+item.text+'">'+item.text +'</div>';
 //                urlArray.push('/images/'+url);

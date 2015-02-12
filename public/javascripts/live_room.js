@@ -125,10 +125,10 @@ function addListener(){
         scrollTop;
     $(document).on("scroll",function(){
         $("#disableClick-mask").css("display","none");
-        if(!waterfallHeight){
+//        if(!waterfallHeight){
 //            waterfallHeight = waterfall.min(waterfall.h_weights);//绝对布局方式瀑布流
             waterfallHeight = waterfall.getMinHeight();//相对布局方式瀑布流
-        }
+//        }
         scrollTop = $("body").scrollTop();
         if(scrollTop + $(window).height() > 0.9 * waterfallHeight){
             waterfall.asyncLoader();
