@@ -1,10 +1,12 @@
 /**
  * Created by Administrator on 15-1-12.
  */
+var disableClick = false;
 $(document).ready(function(){
     addListener();
     initPopPanel();
     initToolsPosition();
+    rotateImg();
 });
 
 function addListener(){
@@ -28,16 +30,25 @@ function addListener(){
         }
         $("#tools-panel").css("display","none");
     });
-    $(document).on("click",function(){
-        $("#tools-panel").css("display","none");
+
+    $(document).on("click","#disableClick-mask",function(event){
+        stopPropagation(event);
+        $("#disableClick-mask").css("display","none");
+//        alert("stop click");
+        console.log("stop click");
     });
     var currLen,currNum,$currImgAlbum;
     $(document).on("click",".img-display img",function(){
+        if(disableClick){
+            return;
+        }
         currNum = $(this).data("num");
         $currImgAlbum = $(this).parents(".img-display").find("img");
         currLen = $(this).parents(".img-display").data("imgnum");
-        var product_id = $(this).parents(".box").data("id");
-        window.location.href = '/we_account/product_display?product_id='+product_id;
+        var product_id = $(this).parents(".box").data("id"),
+            type = $(".waterfall").data("type");
+        type?type = "&u_type=" + type:"";
+        window.location.href = '/we_account/product_display?product_id='+product_id+type;
 //        var bigImgStr = "";
 //        $(this).parents(".img-display").find("img").each(function(i){
 //            if(i != currNum){
@@ -62,7 +73,7 @@ function addListener(){
     $(".favorite").on("vclick",function(){
         var url = '/we_account/favourite';
         if($(this).find('i').hasClass("fa-heart")){
-            if(!confirm("是否取消关注")){
+            if(!alertWithoutClickBubble("confirm","是否取消关注")){
                 return;
             }
             url = '/we_account/favourite_cancel';
@@ -113,6 +124,7 @@ function addListener(){
     var waterfallHeight,
         scrollTop;
     $(document).on("scroll",function(){
+        $("#disableClick-mask").css("display","none");
         if(!waterfallHeight){
 //            waterfallHeight = waterfall.min(waterfall.h_weights);//绝对布局方式瀑布流
             waterfallHeight = waterfall.getMinHeight();//相对布局方式瀑布流
@@ -134,11 +146,11 @@ function addListener(){
      * 删除商品信息
      */
     $(document).on("vclick",".delete-product .fa-times-circle",function(event){
-        if(!confirm("确定删除该商品?")){
+        if(!alertWithoutClickBubble("confirm","确定删除该商品?")){
             return;
         }
         var product_id = $(this).parents(".box").data("id");
-        $(this).parents(".box").remove();
+        var $this = $(this);
         var data = {
             id:product_id
         }
@@ -148,7 +160,8 @@ function addListener(){
             type:"post",
             success:function(results){
                 if(results.flag == 1){
-                    alert("删除成功");
+                    console.log("删除成功");
+                    $this.parents(".box").remove();
                 }else{
                     alert("删除失败");
                 }
@@ -174,17 +187,22 @@ function addListener(){
             },
             onComplete:function(file,res){
 //                    alert(res);
+//                $("#uploading-mask").css("display","none");
+//                    $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div>' +
+//                        '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');
+//                    showUploadPanel();
                 compress(res,function(err,result){
                     $("#uploading-mask").css("display","none");
                     if(result.flag == 1){
-                        $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div></div>');
+                        $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div>' +
+                            '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');
                         showUploadPanel();
                     }else{
                         alert("上传失败");
                     }
                 });
                 console.log(res);
-                productArray.push(res);
+                productArray.unshift(res);
 //                    products?products  += ";"+ res:products += res;
             }
         })
@@ -204,16 +222,20 @@ function addListener(){
             },
             onComplete:function(file,res){
 //                    alert(res);
+//                $("#uploading-mask").css("display","none");
+//                    $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div>' +
+//                        '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');
                 compress(res,function(err,result){
                     $("#uploading-mask").css("display","none");
                     if(result.flag == 1){
-                        $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div></div>');
+                        $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div>' +
+                            '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');
                     }else{
                         alert("上传失败");
                     }
                 });
                 console.log(res);
-                productArray.push(res);
+                productArray.unshift(res);
 //                    products?products  += ";"+ res:products += res;
             }
         })
@@ -256,9 +278,9 @@ function addListener(){
                     showNewUploadImg(data.data.id,productArray,desc);
                     cleanPosition();
                     removeUploadPanel();
-                    alert("上传成功");
+                    alertWithoutClickBubble("alert","上传成功");
                 }else{
-                    alert("上传失败，请重试！！");
+                    alertWithoutClickBubble("alert","上传失败，请重试！！");
                 }
                 $("#uploading-mask").css("display","none");
             },
@@ -435,3 +457,66 @@ function initToolsPosition(){
         left:Math.floor((waterfall.win_w - u_w) / 2)
     });
 }
+
+/**
+ * 旋转图片
+ */
+var rotateI = 1000;
+function rotateImg(){
+    $(document).on("vclick",".adjustImg",function(){
+        var $this = $(this),
+            $uploadBox = $this.parents(".upload-display"),
+            $img;
+        var imgSrc = ($img = $this.siblings("img")).attr("src").split("?")[0];
+        var data = {
+            filePath:imgSrc,
+            type:1
+        }
+        $.ajax({
+            url:"/we_account/rotateImg",
+            type:"post",
+            data:data,
+            success:function(result){
+                if(result.flag == 1){
+//                    $img.remove();
+                    setTimeout(function(){
+                        $img.attr("src",imgSrc + '?v='+ rotateI++);
+//                        $uploadBox.prepend('<img src="'+imgSrc+'?v='+ rotateI++ +'"/>');
+                    },200);
+
+                }
+            },
+            error:function(err){
+                console.log(err);
+            }
+        })
+    });
+}
+
+/**
+ * 弹出框点击防止穿透
+ */
+function alertWithoutClickBubble(alertType,text){
+    $("#disableClick-mask").css("display","block");
+    switch (alertType){
+        case "alert":
+            alert(text);
+            break;
+        case "confirm":
+            return confirm(text);
+        case "":
+            break;
+    }
+}
+
+function stopPropagation(event){
+    if(event.stopPropagation){
+        event.stopPropagation();
+    }else if(event.cancelBubble){
+        event.cancelBubble = true;
+    }
+}
+
+//setTimeout(function(){
+//    alertWithoutClickBubble("alert","hehe");
+//},1000)

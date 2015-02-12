@@ -47,6 +47,11 @@ html
                     -if (product.image_url && product.image_url.length)
                         each url,i in product.image_url
                             img(src="http://120.24.224.144/images/#{url}")
-            a(href="/we_account/live-room?room_id=#{product.room_id}")
-                .back-live-room.col-lg-offset-4.col-lg-4.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2.col-xs-8.col-xs-offset-2.col-xxs-12
-                    返回直播间
+            - if (u_type)
+                a(href="/we_account/live-room?room_id=#{product.room_id}&u_type=#{u_type}")
+                    .back-live-room.col-lg-offset-4.col-lg-4.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2.col-xs-8.col-xs-offset-2.col-xxs-12
+                        返回直播间
+            - else
+                a(href="/we_account/live-room?room_id=#{product.room_id}")
+                    .back-live-room.col-lg-offset-4.col-lg-4.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2.col-xs-8.col-xs-offset-2.col-xxs-12
+                        返回直播间

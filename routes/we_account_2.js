@@ -124,6 +124,7 @@ router.post("/register",function(req,res){
 //AUTH2.0 网页获取用户权限
 router.get("/publish",function(req,res){
     var type = req.query.type;
+    req.session.isPublisher = type==1 ? 1:0;
     //判断用户是否存在账号，若无，返回注册界面，若已有账号，直接登录即可
     var redirect_uri;// = urlencode("http://120.24.224.144/we_account/goto_publish");
     redirect_uri = urlencode("http://120.24.224.144/we_account/goto_publish?type="+type);
@@ -247,6 +248,8 @@ router.post("/favourite_cancel",live_room.cancelFavorite);
 router.post("/delete_product",live_room.delete_product);
 
 router.get("/product_display",live_room.displayProduct);
+
+router.post("/rotateImg",live_room.rotateImg);
 
 router.get("/xml",function(req,res){
     xmlParser.parseXml("<xml><ToUserName><![CDATA[gh_d28b25ec1197]]></ToUserName>" +
