@@ -392,9 +392,9 @@ textarea.product-desc{
 }
 .delete-img{
     position: absolute;
-    right: 0;
+    left: 0;
     top: 0;
-    color: #222222;
+    color: rgba(168, 65, 71, 1);/*#222222;*/
     font-size: 18px;
     font-weight: bolder;
     z-index: 1;

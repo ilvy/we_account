@@ -31,14 +31,13 @@ function addListener(){
         $("#tools-panel").css("display","none");
     });
 
-    $(document).on("click","#disableClick-mask",function(event){
+    $(document).on("vclick","#disableClick-mask",function(event){
         stopPropagation(event);
         $("#disableClick-mask").css("display","none");
-//        alert("stop click");
         console.log("stop click");
     });
     var currLen,currNum,$currImgAlbum;
-    $(document).on("click",".img-display img",function(){
+    $(document).on("vclick",".img-display img",function(){
         if(disableClick){
             return;
         }
@@ -187,20 +186,20 @@ function addListener(){
             },
             onComplete:function(file,res){
 //                    alert(res);
-//                $("#uploading-mask").css("display","none");
-//                    $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div>' +
-//                        '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');
-//                    showUploadPanel();
-                compress(res,function(err,result){
-                    $("#uploading-mask").css("display","none");
-                    if(result.flag == 1){
-                        $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div>' +
-                            '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');
-                        showUploadPanel();
-                    }else{
-                        alert("上传失败");
-                    }
-                });
+                $("#uploading-mask").css("display","none");
+                    $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div>' +
+                        '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');
+                    showUploadPanel();
+//                compress(res,function(err,result){
+//                    $("#uploading-mask").css("display","none");
+//                    if(result.flag == 1){
+//                        $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><a id="delete-img"><div class="delete-img"><i class="fa fa-times-circle"></i></div></a>' +
+//                            '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');//×
+//                        showUploadPanel();
+//                    }else{
+//                        alert("上传失败");
+//                    }
+//                });
                 console.log(res);
                 productArray.unshift(res);
 //                    products?products  += ";"+ res:products += res;
@@ -222,18 +221,18 @@ function addListener(){
             },
             onComplete:function(file,res){
 //                    alert(res);
-//                $("#uploading-mask").css("display","none");
-//                    $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div>' +
-//                        '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');
-                compress(res,function(err,result){
-                    $("#uploading-mask").css("display","none");
-                    if(result.flag == 1){
-                        $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div>' +
-                            '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');
-                    }else{
-                        alert("上传失败");
-                    }
-                });
+                $("#uploading-mask").css("display","none");
+                    $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div>' +
+                        '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');
+//                compress(res,function(err,result){
+//                    $("#uploading-mask").css("display","none");
+//                    if(result.flag == 1){
+//                        $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><a id="delete-img"><div class="delete-img"><i class="fa fa-times-circle"></i></div></a>' +
+//                            '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');
+//                    }else{
+//                        alert("上传失败");
+//                    }
+//                });
                 console.log(res);
                 productArray.unshift(res);
 //                    products?products  += ";"+ res:products += res;
@@ -241,12 +240,24 @@ function addListener(){
         })
     });
 
-    $(document).on("vclick","#upload-div-box,#upload2",function(event){
+    $(document).on("vclick","#upload2",function(event){
         if(event.stopPropagation){
             event.stopPropagation();
         }else if(event.cancelBubble){
             event.cancelBubble = true;
         }
+        alert("upload:"+$(this).attr("id"));
+        var $this = $(this);
+        var btn_id = $this.attr("id");
+        $("#"+btn_id+"_file_type").click();
+    });
+    $(document).on("vclick","#upload-div-box",function(event){
+        if(event.stopPropagation){
+            event.stopPropagation();
+        }else if(event.cancelBubble){
+            event.cancelBubble = true;
+        }
+//        alert("upload:"+$(this).attr("id"));
         var $this = $(this);
         var btn_id = $this.attr("id");
         $("#"+btn_id+"_file_type").click();
@@ -293,12 +304,16 @@ function addListener(){
 
     $(document).on("taphold",".upload-display",function(event){
         var $this = $(this);
-        $this.append('<div class="delete-img">x</div>')
+        $this.append('<a id="delete-img"><div class="delete-img">x</div></a>')
     });
 
-    $(document).on("vclick",".delete-img",function(){
+    $(document).on("vclick",".delete-img",function(event){
+        stopPropagation(event);
         var delIndex = $(this).parents(".upload-display").index();
-        $(this).parents(".upload-display").remove();
+        var _this = $(this);
+        setTimeout(function(){
+            _this.parents(".upload-display").remove();
+        },200);
         productArray.splice(delIndex,1);
     });
 

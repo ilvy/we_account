@@ -92,11 +92,13 @@ html
             //    input(type="button" value="确定")#submit
             textarea(placeholder="说点什么，让顾客更好的了解您的产品...").product-desc
             div#image_content
-                //div.upload-display
-                //    img(src="/images/test_1423213682462.jpg")
-                //    .delete-img ×
-                //    .adjustImg
-                //        i.fa.fa-rotate-right
+                div.upload-display
+                    img(src="/images/test_1423213682462.jpg")
+                    a#delete-img
+                        .delete-img
+                            i.fa.fa-times-circle
+                    .adjustImg
+                        i.fa.fa-rotate-right
                 div#upload-div2
                     button(data-type="pop-btn")#upload2
                         div.vertical
