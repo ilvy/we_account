@@ -186,22 +186,22 @@ function addListener(){
             },
             onComplete:function(file,res){
 //                    alert(res);
-                $("#uploading-mask").css("display","none");
-                    $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div>' +
-                        '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');
-                    showUploadPanel();
-//                compress(res,function(err,result){
-//                    $("#uploading-mask").css("display","none");
-//                    if(result.flag == 1){
-//                        $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><a id="delete-img"><div class="delete-img"><i class="fa fa-times-circle"></i></div></a>' +
-//                            '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');//×
-//                        showUploadPanel();
-//                    }else{
-//                        alert("上传失败");
-//                    }
-//                });
+//                $("#uploading-mask").css("display","none");
+//                    $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div>' +
+//                        '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');
+//                    showUploadPanel();
+                compress(res,function(err,result){
+                    $("#uploading-mask").css("display","none");
+                    if(result.flag == 1){
+                        $("#upload-div2").before('<div class="upload-display"><img  src="/images/'+res+'"/><a id="delete-img"><div class="delete-img"><i class="fa fa-times-circle"></i></div></a>' +
+                            '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');//×
+                        showUploadPanel();
+                    }else{
+                        alert("上传失败");
+                    }
+                });
                 console.log(res);
-                productArray.unshift(res);
+                productArray.push(res);
 //                    products?products  += ";"+ res:products += res;
             }
         })
@@ -221,20 +221,20 @@ function addListener(){
             },
             onComplete:function(file,res){
 //                    alert(res);
-                $("#uploading-mask").css("display","none");
-                    $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div>' +
-                        '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');
-//                compress(res,function(err,result){
-//                    $("#uploading-mask").css("display","none");
-//                    if(result.flag == 1){
-//                        $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><a id="delete-img"><div class="delete-img"><i class="fa fa-times-circle"></i></div></a>' +
-//                            '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');
-//                    }else{
-//                        alert("上传失败");
-//                    }
-//                });
+//                $("#uploading-mask").css("display","none");
+//                    $("#image_content").prepend('<div class="upload-display"><img  src="/images/'+res+'"/><div class="delete-img">×</div>' +
+//                        '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');
+                compress(res,function(err,result){
+                    $("#uploading-mask").css("display","none");
+                    if(result.flag == 1){
+                        $("#upload-div2").before('<div class="upload-display"><img  src="/images/'+res+'"/><a id="delete-img"><div class="delete-img"><i class="fa fa-times-circle"></i></div></a>' +
+                            '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');
+                    }else{
+                        alert("上传失败");
+                    }
+                });
                 console.log(res);
-                productArray.unshift(res);
+                productArray.push(res);
 //                    products?products  += ";"+ res:products += res;
             }
         })
@@ -246,7 +246,7 @@ function addListener(){
         }else if(event.cancelBubble){
             event.cancelBubble = true;
         }
-        alert("upload:"+$(this).attr("id"));
+//        alert("upload:"+$(this).attr("id"));
         var $this = $(this);
         var btn_id = $this.attr("id");
         $("#"+btn_id+"_file_type").click();
@@ -463,13 +463,23 @@ $.fn.fadeInAndOut = function(){
 function initToolsPosition(){
     var $fav = $(".favorite"),
         $upload = $("#upload-div-box"),
+        $favBox = $(".myfavorites"),
+        $changeRoomBox = $(".changeRoom"),
         f_w = $fav.outerWidth(),
-        u_w = $upload.outerWidth();
+        u_w = $upload.outerWidth(),
+        fb_w= $(".myfavorites .fa-folder-o").outerWidth(),
+        crb_w = $changeRoomBox.outerWidth();
     $fav.css({
         left:Math.floor((waterfall.win_w - f_w) / 2)
     });
     $upload.css({
         left:Math.floor((waterfall.win_w - u_w) / 2)
+    });
+    $favBox.css({
+        left:Math.floor((waterfall.win_w) / 4.0 - fb_w / 2.0)
+    });
+    $changeRoomBox.css({
+        left:Math.floor((waterfall.win_w) * 0.75 - crb_w / 2.0)
     });
 }
 

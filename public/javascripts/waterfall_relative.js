@@ -129,7 +129,7 @@ Waterfall.prototype.asyncLoader = function(){
             isPublisher = results.data.isPublisher;
         }
         var deleteProductBtn = "";
-        if(!isPublisher){
+        if(isPublisher){
             deleteProductBtn = '<div class="delete-product"><i class="fa fa-times-circle"></div>';//<input type="button" value="删除"/>
         }
         loadDatas.forEach(function(item){
