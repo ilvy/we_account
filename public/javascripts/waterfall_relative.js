@@ -131,6 +131,8 @@ Waterfall.prototype.asyncLoader = function(){
         var deleteProductBtn = "";
         if(isPublisher){
             deleteProductBtn = '<div class="delete-product"><i class="fa fa-times-circle"></div>';//<input type="button" value="删除"/>
+        }else{
+            deleteProductBtn = '<div class="contact">联系卖家</div>';
         }
         loadDatas.forEach(function(item){
 //        $(this).clone().css(_this.lastPosition).appendTo(".waterfall");
@@ -141,7 +143,7 @@ Waterfall.prototype.asyncLoader = function(){
                 }else{
                     imgstr = '<img class="lazy" src="http://120.24.224.144/images/'+url+'" data-num="'+(i)+'">' + imgstr;
                 }
-                descStr = '<div class="desc" style="'+(isPublisher?"border-bottom:1px solid #e6e6e6;":"")+'" data-desc="'+item.text+'">'+item.text +'</div>';
+                descStr = '<div class="desc" style="'+("border-bottom:1px solid #e6e6e6;")+'" data-desc="'+item.text+'">'+item.text +'</div>';
 //                urlArray.push('/images/'+url);
             });
             productsStrs.push('<div class="box" data-id="'+item.id+'">' +

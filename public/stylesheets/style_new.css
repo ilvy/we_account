@@ -75,6 +75,12 @@ div.desc{
     margin-bottom: 2px;
 }
 
+.contact{
+    text-align: center;
+    font-family: "microsoft yahei";
+    padding: 6px;
+}
+
 .delete-product i{
     font-size: 23px;
 }
@@ -590,7 +596,13 @@ li.favour_room_option > div{
 
 /************end myfavorite*************/
 
+/**************start contact page**************/
 
+.contact-page{
+    display: none;
+}
+
+/**************end contact page**************/
 
 
 @media screen and (min-width: 361px) {
