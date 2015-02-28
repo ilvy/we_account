@@ -98,9 +98,9 @@ Waterfall.prototype.setPosition = function(boxes){
         i = 0;
     for(var ib = 0; ib < boxes.length; ib++){
 //        $(".column").eq(ib % colNum).append(boxes.eq?boxes.eq(ib).removeClass("unvisible"):boxes[ib]);
-        $(".column").eq(ib % colNum).append(boxes[ib]);
+        $(".column").eq((ib + this.getMinHeightColumnIndex()) % colNum).append(boxes[ib]); 
     }
-}
+};
 
 Waterfall.prototype.setHeader = function(){
     var headerW = this.win_w - 2 * this.margin;
