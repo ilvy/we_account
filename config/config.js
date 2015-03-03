@@ -20,6 +20,11 @@ var menusObj = {
                     type:"view",
                     name:"我的收藏",
                     url:"http://120.24.224.144/we_account/publish?type=3"
+                },
+                {
+                    type:"view",
+                    name:"个人信息",
+                    url:"http://120.24.224.144/we_account/publish?type=4"
                 }
             ]
         },
@@ -30,6 +35,11 @@ var menusObj = {
         }
     ]
 };
+
+var dataviewConfig = {
+    personality:"UPDATE t_weix_account_info set ?? = ? where open_id = ?;"
+}
+
 //        ,
 //        {
 //            type:"click",
@@ -59,3 +69,4 @@ exports.menusObj = menusObj;
 exports.dbPoolConfig = dbPoolConfig;
 exports.serverConfig = serverConfig;
 exports.appConfig = appConfig;
+exports.dataviewConfig = dataviewConfig;

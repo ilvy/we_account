@@ -174,6 +174,8 @@ router.get("/goto_publish",function(req,resp){
                 live_room.renderRoom_door(req,resp);//返回room_door
             }else if(type == 3){//进入收藏页面
                 live_room.myFavorite(req,resp);
+            }else if(type == 4){//进入个人信息页面
+                publish_account.getPersonalInfo(req,resp,1);
             }
         })
     }).on("error",function(e){
@@ -250,6 +252,10 @@ router.post("/delete_product",live_room.delete_product);
 router.get("/product_display",live_room.displayProduct);
 
 router.post("/rotateImg",live_room.rotateImg);
+
+router.get("/personalInfo",publish_account.getPersonalInfo);
+
+router.post("/updatePersonality",publish_account.updatePersonality);
 
 router.get("/xml",function(req,res){
     xmlParser.parseXml("<xml><ToUserName><![CDATA[gh_d28b25ec1197]]></ToUserName>" +

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>个人资料</title>
+    <link href="./stylesheets/bootstrap-grid.css" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+    <meta charset="utf-8"/>
+    <style>
+        body{
+            background: #F2F2F2;
+        }
+        .head img{
+            width: 100%;
+        }
+        .personal-info{
+            /*width: 96%;*/
+            /*margin-left: 2%;*/
+            background-color: #ffffff;
+            margin-top: 20px;
+        }
+        .cell{
+            padding: 10px 5px;
+            border-bottom: 1px solid #e0d9da;
+        }
+        .cell:active{
+            background-color: #F2F2F2;
+        }
+        .cell:last-child{
+            border: none;
+        }
+        .cell > div{
+            padding-left: 0px;
+        }
+        .cell input{
+            border: none;
+            color: #ffffff;
+        }
+        .btn-group{
+            margin-top: 5px;
+            display: none;
+        }
+        .btn-group > div:first-child{
+            display: inline-block;
+            left: 0;
+        }
+        .btn-group > div:last-child{
+            display: inline-block;
+            right: 0;
+            float: right;
+        }
+        .cancel{
+            background-color: #44b549;
+        }
+        .cancel:active{
+            background-color: #2f9833;
+        }
+        .sure{
+            background-color: #C83B3D;
+        }
+        .sure:active{
+            background-color: #C8050D;
+        }
+    </style>
+</head>
+<body>
+    <div class="personal-info col-xxs-12">
+        <div class="cell col-xxs-12">
+            <div class=" col-xxs-4">头像</div>
+            <div class="head col-xxs-3 col-xxs-offset-2">
+                <img src="./images/person.jpg">
+            </div>
+        </div>
+        <div class="cell col-xxs-12">
+            <div class=" col-xxs-4">昵称</div>
+            <div class="nickname col-xxs-6 col-xxs-offset-2">
+                <div class="value"  data-type="nickname" data-value="SHU">
+                    SHU
+                </div>
+                <div class="btn-group">
+                    <div><input class="sure" type="button" value="确定"/></div>
+                    <div><input class="cancel" type="button" value="取消"/></div>
+                </div>
+            </div>
+        </div>
+        <div class="cell col-xxs-12">
+            <div class=" col-xxs-4">微信账号</div>
+            <div class="weix_account col-xxs-6 col-xxs-offset-2" >
+                <div class="value"  data-type="weix_account" data-value="weix_478283225">
+                    weix_478283225(猛戳复制)
+                </div>
+                <div class="btn-group">
+                    <div><input class="sure" type="button" value="确定"/></div>
+                    <div><input class="cancel" type="button" value="取消"/></div>
+                </div>
+            </div>
+        </div>
+        <div class="cell col-xxs-12">
+            <div class=" col-xxs-4">性别</div>
+            <div class="col-xxs-6 col-xxs-offset-2">
+                <div class="value"  data-type="sex" data-value="男">
+                    男
+                </div>
+                <div class="btn-group">
+                    <div><input class="sure" type="button" value="确定"/></div>
+                    <div><input class="cancel" type="button" value="取消"/></div>
+                </div>
+            </div>
+        </div>
+        <div class="cell col-xxs-12">
+            <div class=" col-xxs-4">城市</div>
+            <div class="col-xxs-6 col-xxs-offset-2">
+                <div class="value"  data-type="city" data-value="深圳市">
+                    深圳市
+                </div>
+                <div class="btn-group">
+                    <div><input class="sure" type="button" value="确定"/></div>
+                    <div><input class="cancel" type="button" value="取消"/></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="javascripts/jquery.js"></script>
+<script>
+    $(document).ready(function(){
+
+        $(document).on("click",".cell",function(event){
+            var $this = $(this);
+//            if($this.find(".btn-group").is(":visible")){
+//                $this.find(".btn-group").css("display","none");
+//            }else{
+            $this.find(".btn-group").css("display","block");
+            $this.find(".value").attr("contenteditable",true).focus();
+            $this.siblings(".cell").find(".btn-group").css("display","none");
+//            }
+
+        });
+        $(document).on("click",".sure,.cancel",function(event){
+            stopPropagation(event);
+            var $this = $(this);
+            var $obj = $this.parents(".btn-group").siblings(".value");
+            if($this.hasClass("sure")){
+                var value = $obj.text(),
+                    type = $obj.data("type");
+            }else{
+                $this.parents(".btn-group").css("display","none").siblings(".value").attr("contenteditable",false).html($obj.data("value"));
+            }
+        });
+    });
+    function stopPropagation(event){
+        if(event.stopPropagation){
+            event.stopPropagation();
+        }else if(event.cancelBubble){
+            event.cancelBubble = true;
+        }
+    }
+
+</script>
+</html>
