@@ -21,7 +21,7 @@ function gotoLiveRoom_new(req,res){//相对布局瀑布流，不加载商品信�
         type = req.session.type;
 //    var u_type = req.query.u_type;//u_type:用户类型，用于区别 发布者和普通用户 从商品详细页面跳回商品瀑布流展示页面的判断
     var room_id = req.query.room_id;
-    req.session.room_id = room_id;
+    req.session.room = room_id;
     var products,totalPage,
         paras1 = [null,null,0];
     req.session.type = 0;
@@ -261,7 +261,7 @@ function loadMoreProducts_new(req,res){
     var session = req.session,
         openId = session.openId,
         type = req.session.type;
-    var room_id = session.room_id;
+    var room_id = session.room;
     var query = req.query;
     var paras = [null,null,query.page];
     var products;
@@ -323,9 +323,9 @@ function loadMoreProducts(req,res){
  * @param res
  */
 function addFavourite(req,res){
-    console.log("*****************");
     var room = req.session.room,
         open_id = req.session.openId;
+    console.log("*****************%%%%%%%%%%%%%%%%%%%%%%%"+room+"            "+open_id);
     var paras = [open_id,room];
     if(room && open_id){
         dbOperator.query('call pro_add_favourite(?,?)',paras,function(err,rows){
