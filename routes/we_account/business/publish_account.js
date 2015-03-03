@@ -3,7 +3,10 @@
  */
 
 var dbOperator = require("../../../db/dbOperator"),
-    response = require("../response/response");
+    response = require("../response/response"),
+    accountInfo = require("../accountInfo"),
+    tokenManager = require("../access_token"),
+    dataviewConfig = require("../../../config/config").dataviewConfig;
 
 function applyAccount(data,res){
 
@@ -52,6 +55,71 @@ function register(req,res){
         }else{
             console.log(rows);
             res.redirect('/we_account/live-room?room_id='+rows[0][0].room_id);
+            asyncAccountInfoFromWeix(openId);
+        }
+    });
+}
+/**
+ * 同步微信账户信息
+ * @param openid
+ */
+function asyncAccountInfoFromWeix(openid){
+    accountInfo.getAccountInfo(tokenManager.access_token,openid,function(accountInfo){
+        console.log(accountInfo);
+        accountInfo = JSON.parse(accountInfo);
+        var args = [openid,accountInfo.nickname,accountInfo.headimgurl,accountInfo.sex,accountInfo.province+accountInfo.city,accountInfo.country,accountInfo.unionid,accountInfo.subscribe_time];
+        dbOperator.query('call pro_weix_account_info(?,?,?,?,?,?,?,?)',args,function(err,rows){
+            if(err){
+                console.log(err);
+            }else{
+                console.log(rows);
+            }
+        });
+    });
+
+}
+
+/**
+ * 更新微信账号信息
+ * @param req
+ * @param res
+ */
+function updatePersonality(req,res){
+    var body = req.body;
+    var open_id = req.session.openId,
+        key = body.key,
+        value = body.value;
+    var sql = dataviewConfig.personality;
+    dbOperator.query(sql,[key,value,open_id],function(err,rows){
+        if(err){
+            console.log("personality err:"+err);
+        }else{
+            console.log(rows);
+        }
+    });
+}
+
+/**
+ * 获取用户个人信息
+ * @param req
+ * @param res
+ * @param isHost
+ */
+function getPersonalInfo(req,res,isHost){
+    var session = req.session;
+    var open_id = session.openId,
+        args = [open_id,null],
+        room_id = session.room;
+    if(!isHost){
+        args = [null,room_id];
+    }
+    dbOperator.query("call pro_weix_account_info_get(?,?)",args,function(err,row){
+        if(err){
+            console.log("pro_weix_account_info_get:"+err);
+        }else{
+            var user = row[0][0];
+            res.render("personality",{user:user?user:null});
+
         }
     });
 }
@@ -79,7 +147,10 @@ function publishProduct(req,res){
     });
 }
 
+
 exports.applyAccount = applyAccount;
 exports.publishProduct = publishProduct;
 exports.checkUser = checkUser;
 exports.register = register;
+exports.getPersonalInfo = getPersonalInfo;
+exports.updatePersonality = updatePersonality;

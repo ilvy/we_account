@@ -8,6 +8,7 @@ var session = require('express-session');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var access_token = require("./routes/we_account/access_token");//定时刷新access_token
 var we_account = require('./routes/we_account_2');
 
 var app = express();

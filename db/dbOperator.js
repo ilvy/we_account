@@ -122,3 +122,12 @@ exports.query = query;
 //});
 ////req.write(post_data+"\n");
 //req.end();
+
+
+//query("UPDATE t_weix_account_info set ?? = ? where open_id = ?;",["weix_account","weix_test","oHbq1t0enasGWD7eQoJuslZY6R-4"],function(err,rows){
+//    if(err){
+//        console.log("personality err:"+err);
+//    }else{
+//        console.log(rows);
+//    }
+//});
