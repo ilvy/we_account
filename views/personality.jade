@@ -23,23 +23,25 @@ html
                     .col-xxs-4 昵称
                     .nickname.col-xxs-6.col-xxs-offset-2
                         .value(data-type="nickname" data-value="#{user.nickname}") #{user.nickname}
-                        .btn-group
-                            div
-                                input.sure(type="button" value="确定")
-                            div
-                                input.cancel(type="button" value="取消")
+                        - if (isHost)
+                            .btn-group
+                                div
+                                    input.sure(type="button" value="确定")
+                                div
+                                    input.cancel(type="button" value="取消")
                 .cell.col-xxs-12
                     .col-xxs-4 微信账号
                     .weix_account.col-xxs-6.col-xxs-offset-2
-                        - if (user.weix_account)
+                        - if (user.weix_account && isHost)
+                            .value(data-type="weix_account" data-value="#{user.weix_account}") #{user.weix_account}
+                        - else if(user.weix_account && !isHost)
                             .value(data-type="weix_account" data-value="#{user.weix_account}(猛戳复制)") #{user.weix_account}(猛戳复制)
-                        - else
-                            .value(data-type="weix_account" data-value="")
-                        .btn-group
-                            div
-                                input.sure(type="button" value="确定")
-                            div
-                                input.cancel(type="button" value="取消")
+                        - if (isHost)
+                            .btn-group
+                                div
+                                    input.sure(type="button" value="确定")
+                                div
+                                    input.cancel(type="button" value="取消")
                 .cell.col-xxs-12
                     .col-xxs-4 性别
                     .col-xxs-6.col-xxs-offset-2
@@ -47,19 +49,22 @@ html
                             .value(data-type="sex" data-value="男") 男
                         - else
                             .value(data-type="sex" data-value="女") 女
-                        .btn-group
-                            div
-                                input.sure(type="button" value="确定")
-                            div
-                                input.cancel(type="button" value="取消")
+                        - if (isHost)
+                            .btn-group
+                                div
+                                    input.sure(type="button" value="确定")
+                                div
+                                    input.cancel(type="button" value="取消")
                 .cell.col-xxs-12
                     .col-xxs-4 城市
                     .col-xxs-6.col-xxs-offset-2
                         .value(data-type="city" data-value="#{user.city}") #{user.city}
-                        .btn-group
-                            div
-                                input.sure(type="button" value="确定")
-                            div
-                                input.cancel(type="button" value="取消")
+                        - if (isHost)
+                            .btn-group
+                                div
+                                    input.sure(type="button" value="确定")
+                                div
+                                    input.cancel(type="button" value="取消")
 script(src="/javascripts/jquery.js")
-script(src="/javascripts/personality.js")
+- if (isHost)
+    script(src="/javascripts/personality.js")

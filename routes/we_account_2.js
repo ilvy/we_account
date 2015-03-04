@@ -13,7 +13,6 @@ var express = require("express"),
     path = require("path"),
     fs = require("fs"),
     dispatcher = require("./we_account/business/dispatcher"),
-    publishAccount = require("./we_account/business/publish_account"),
     urlencode = require("urlencode"),
     appConfig = require("../config/config").appConfig,
     async = require("async"),
@@ -186,9 +185,7 @@ router.get("/goto_publish",function(req,resp){
 router.get("/fav",live_room.myFavorite);
 router.get("/live-room",gotoLiveRoom);//带上参数room_id
 
-router.post("/publish",function(req,res){
-    publishAccount.publishProduct(req,res);
-});
+router.post("/publish",publish_account.publishProduct);
 
 router.post("/upload",function(req,res){
     //console.log(req);
@@ -253,9 +250,11 @@ router.get("/product_display",live_room.displayProduct);
 
 router.post("/rotateImg",live_room.rotateImg);
 
-router.get("/personalInfo",publish_account.getPersonalInfo);
+router.get("/personalInfo",function(req,res){
+    publish_account.getPersonalInfo(req,res,0);//买家查看卖家信息
+});
 
-router.post("/updatePersonality",publish_account.updatePersonality);
+router.post("/update_personality",publish_account.updatePersonality);
 
 router.get("/xml",function(req,res){
     xmlParser.parseXml("<xml><ToUserName><![CDATA[gh_d28b25ec1197]]></ToUserName>" +
@@ -272,5 +271,6 @@ router.get("/xml",function(req,res){
     });
     res.send("OK");
 });
+
 
 module.exports = router;
