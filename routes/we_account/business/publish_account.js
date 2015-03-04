@@ -90,11 +90,14 @@ function updatePersonality(req,res){
         key = body.key,
         value = body.value;
     var sql = dataviewConfig.personality;
+//    console.log(sql+" "+key+" "+value);
     dbOperator.query(sql,[key,value,open_id],function(err,rows){
         if(err){
             console.log("personality err:"+err);
+            response.failed("0",res,"");
         }else{
             console.log(rows);
+            response.success("1",res,"");
         }
     });
 }
@@ -111,15 +114,17 @@ function getPersonalInfo(req,res,isHost){
         args = [open_id,null],
         room_id = session.room;
     if(!isHost){
-        args = [null,room_id];
+        args = [null,room_id||"888888"];
     }
     dbOperator.query("call pro_weix_account_info_get(?,?)",args,function(err,row){
         if(err){
             console.log("pro_weix_account_info_get:"+err);
         }else{
             var user = row[0][0];
-            res.render("personality",{user:user?user:null});
-
+            console.log(user);
+            user.sex = user.sex[0];
+            console.log(user);
+            res.render("personality",{user:user?user:null,isHost:isHost});
         }
     });
 }

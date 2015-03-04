@@ -289,7 +289,7 @@ function addListener(){
                     showNewUploadImg(data.data.id,productArray,desc);
                     cleanPosition();
                     removeUploadPanel();
-                    alertWithoutClickBubble("alert","上传成功");
+//                    alertWithoutClickBubble("alert","上传成功");
                 }else{
                     alertWithoutClickBubble("alert","上传失败，请重试！！");
                 }

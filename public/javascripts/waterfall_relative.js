@@ -132,7 +132,7 @@ Waterfall.prototype.asyncLoader = function(){
         if(isPublisher){
             deleteProductBtn = '<div class="delete-product"><i class="fa fa-times-circle"></div>';//<input type="button" value="删除"/>
         }else{
-            deleteProductBtn = '<div class="contact">联系卖家</div>';
+            deleteProductBtn = '<a href="/we_account/personalInfo"><div class="contact">联系卖家</div></a>';
         }
         loadDatas.forEach(function(item){
 //        $(this).clone().css(_this.lastPosition).appendTo(".waterfall");

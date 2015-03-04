@@ -131,3 +131,5 @@ exports.query = query;
 //        console.log(rows);
 //    }
 //});
+
+console.log(new Buffer([01])[0]);

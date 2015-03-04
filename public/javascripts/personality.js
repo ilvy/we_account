@@ -27,16 +27,20 @@ $(document).ready(function(){
                 value:value
             }
             $.ajax({
-                url:'/we_account/updatePersonality',
+                url:'/we_account/update_personality',
                 type:"post",
                 data:data,
                 success:function(results){
                     if(results.flag == 1){
-                        $obj.attr("data-value",$obj.text());
+                        $obj.attr("data-value",$obj.text()).attr("contenteditable",false);
+                        $this.parents(".btn-group").css("display","none");
                         alert("修改成功");
                     }else{
                         alert("失败，请重试");
                     }
+                },
+                error:function(err){
+                    console.log(err);
                 }
             })
         }else{
