@@ -137,15 +137,8 @@ Waterfall.prototype.asyncLoader = function(){
         loadDatas.forEach(function(item){
 //        $(this).clone().css(_this.lastPosition).appendTo(".waterfall");
             var imgstr = '',descStr;
-            item.image_url.forEach(function(url,i){
-                if(i < item.image_url.length - 1){
-                    imgstr = '<img class="lazy" src="http://120.24.224.144/images/'+url+'" data-num="'+(i)+'" style="height:'+_this.smallH+'px;width:'+_this.smallH+'px">' + imgstr;
-                }else{
-                    imgstr = '<img class="lazy" src="http://120.24.224.144/images/'+url+'" data-num="'+(i)+'">' + imgstr;
-                }
-                descStr = '<div class="desc" style="'+("border-bottom:1px solid #e6e6e6;")+'" data-desc="'+item.text+'">'+item.text +'</div>';
-//                urlArray.push('/images/'+url);
-            });
+            imgstr = '<img class="lazy" src="http://120.24.224.144/images/'+item.image_url[0]+'" data-num="0">' + imgstr;
+            descStr = '<div class="desc" style="'+("border-bottom:1px solid #e6e6e6;")+'" data-desc="'+item.text+'">'+item.text +'</div>';
             productsStrs.push('<div class="box" data-id="'+item.id+'">' +
                 '<div class="img-display" data-imgnum="'+item.image_url.length+'">'+ imgstr+
                 '</div>'+descStr+deleteProductBtn+'</div>');

@@ -132,17 +132,17 @@ exports.query = query;
 //    }
 //});
 
-query("call pro_weix_account_info_get(?,?)",[null,'20003'],function(err,row){
-    if(err){
-        console.log("pro_weix_account_info_get:"+err);
-    }else{
-        console.log(row);
-        var user = row[0][0];
-        console.log(user);
-        user.sex = user.sex[0];
-        console.log(user);
-//        res.render("personality",{user:user?user:null,isHost:isHost});
-    }
-});
+//query("call pro_weix_account_info_get(?,?)",[null,'20003'],function(err,row){
+//    if(err){
+//        console.log("pro_weix_account_info_get:"+err);
+//    }else{
+//        console.log(row);
+//        var user = row[0][0];
+//        console.log(user);
+//        user.sex = user.sex[0];
+//        console.log(user);
+////        res.render("personality",{user:user?user:null,isHost:isHost});
+//    }
+//});
 
 //console.log(new Buffer([01])[0]);
