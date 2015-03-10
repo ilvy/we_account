@@ -467,7 +467,7 @@ function initToolsPosition(){
         $changeRoomBox = $(".changeRoom"),
         f_w = $fav.outerWidth(),
         u_w = $upload.outerWidth(),
-        fb_w= $(".myfavorites .fa-folder-o").outerWidth(),
+        fb_w= $(".myfavorites .fa-folder").outerWidth(),
         crb_w = $changeRoomBox.outerWidth();
     $fav.css({
         left:Math.floor((waterfall.win_w - f_w) / 2)

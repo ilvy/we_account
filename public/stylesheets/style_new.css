@@ -141,17 +141,20 @@ div.desc{
 }
 
 .favorite{
-    margin: 0 auto;
-    font-size: 3.5rem;
+    margin: -7px auto;
+    font-size: 4.3rem;
     color: white;
     text-shadow: 0px -2px 4px #c81e28;
     position: absolute;
     left: 47%;
-    bottom: 2px;
+    bottom: 4px;
+    /*width: 50px;*/
+    /*height: 50px;*/
 }
 
 .fa-heart{
-    color: red;
+    color: #c81e28;
+    text-shadow: none;
 }
 
 .user{
@@ -164,7 +167,7 @@ div.desc{
     width: 100%;
     position: fixed;
     bottom: 0;
-    background-color: rgba(200,30,40,1);
+    background-color: rgba(200,30,40,0);
     padding-top: 6px;
     min-height: 34px;
 }
@@ -181,20 +184,65 @@ div.desc{
     left: 0px;
     top: -2px;
 }
+
+.myfavorites .fa-folder{
+    /*position: absolute;*/
+    /*font-size: 2rem;*/
+    /*left: 0px;*/
+    /*top: -13px;*/
+    /*background-color: red;*/
+    /*border-radius: 22px;*/
+    /*width: 36px;*/
+    /*height: 36px;*/
+    /*padding: 9px 9px;*/
+    position: absolute;
+    font-size: 2rem;
+    left: 0px;
+    top: -20px;
+    background-color: #c81e28;
+    border-radius: 29px;
+    width: 40px;
+    height: 40px;
+    padding: 11px 11px;
+}
 .myfavorites .fa-heart{
     position: absolute;
-    color: #ffffff;
-    left: 8px;
-    top: 8px;
-    font-size: 1rem;
+    color: red;
+    left: 12px;
+    top: 1px;
+    font-size: 0.1rem;
 }
 
 .changeRoom{
-    padding: 0px 6px;
+    /*padding: 0px 6px;*/
+    /*position: absolute;*/
+    /*left: 75%;*/
+    /*border: 2px solid #ffffff;*/
+    /*border-radius: 5px;*/
+    /*padding: 8px 10px;*/
+    /*position: absolute;*/
+    /*left: 75%;*/
+    /* border: 2px solid #ffffff; */
+    /*border-radius: 5px;*/
+    /*height: 36px;*/
+    /*width: 36px;*/
+    /*background-color: red;*/
+    /*border-radius: 20px;*/
+    /*bottom: 5px;*/
+    /* padding: 0px 6px; */
+    /* position: absolute; */
+    /* left: 75%; */
+    /* border: 2px solid #ffffff; */
+    /* border-radius: 5px; */
+    padding: 10px 11px;
     position: absolute;
     left: 75%;
-    border: 2px solid #ffffff;
-    border-radius: 5px;
+    /* border: 2px solid #ffffff; */
+    height: 40px;
+    width: 40px;
+    background-color: #c81e28;
+    border-radius: 30px;
+    bottom: 8px;
 }
 
 .changeRoom .fa-exchange:hover{
@@ -202,7 +250,7 @@ div.desc{
 }
 
 .changeRoom .fa-exchange{
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: #ffffff;
 }
 
@@ -210,7 +258,7 @@ div.desc{
     position: absolute;
     background-color: rgba(200,30,40,1);
     padding: 5px;
-    bottom: -2px;
+    bottom: 20%;
     left: 44%;
     border-radius: 32px;
 }
@@ -544,6 +592,9 @@ form.door{
     font-size: 26px;
     margin-left: 1px;
 }
+.submit-div a{
+    color: #c81e28;
+}
 
 .submit-div a:hover{
     text-decoration: none;
@@ -553,6 +604,13 @@ form.door{
     padding-left: 3px;
     padding-right: 0;
 }
+
+#room{
+    border-radius: 0px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
 /*********end room-door*********/
 /************start myfavorite*************/
 

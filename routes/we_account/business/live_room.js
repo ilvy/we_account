@@ -383,7 +383,7 @@ function cancelFavorite(req,res){
  * @param resp
  */
 function renderRoom_door(req,resp){
-    var open_id = req.session.openId;//||'oHbq1t0enasGWD7eQoJuslZY6R-4';
+    var open_id = req.session.openId||'oHbq1t0enasGWD7eQoJuslZY6R-4';
     var paras = [open_id];
     if(open_id){
         dbOperator.query("call pro_select_favourite_rooms(?)",paras,function(err,rows){
