@@ -11,11 +11,11 @@ var menusObj = {
         {
             name:"进入直播间",
             sub_button:[
-                {
-                    type:"click",
-                    name:"输入直播号",
-                    key:"input_room_num"
-                },
+//                {
+//                    type:"click",
+//                    name:"输入直播号",
+//                    key:"input_room_num"
+//                },
                 {
                     type:"view",
                     name:"我的收藏",
@@ -23,15 +23,15 @@ var menusObj = {
                 },
                 {
                     type:"view",
-                    name:"个人信息",
-                    url:"http://120.24.224.144/we_account/publish?type=4"
+                    name:"直播间",
+                    url:"http://120.24.224.144/we_account/publish?type=2"
                 }
             ]
         },
         {
             type:"view",
-            name:"直播间",
-            url:"http://120.24.224.144/we_account/publish?type=2"
+            name:"个人信息",
+            url:"http://120.24.224.144/we_account/publish?type=4"
         }
     ]
 };

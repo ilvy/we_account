@@ -193,7 +193,7 @@ function addListener(){
                 compress(res,function(err,result){
                     $("#uploading-mask").css("display","none");
                     if(result.flag == 1){
-                        $("#upload-div2").before('<div class="upload-display"><img  src="/images/'+res+'"/><a id="delete-img"><div class="delete-img"><i class="fa fa-times-circle"></i></div></a>' +
+                        $("#image_content").append('<div class="upload-display"><img  src="/images/'+res+'"/><a id="delete-img"><div class="delete-img"><i class="fa fa-times-circle"></i></div></a>' +
                             '<div class="adjustImg"><i class="fa fa-rotate-right"></i></div></div>');//×
                         showUploadPanel();
                     }else{

@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 14-12-26.
  * 瀑布流相对布局
- *
+ * 多张图片上传版本备份
  */
 var boxes = [],
     waterfall,
@@ -98,9 +98,9 @@ Waterfall.prototype.setPosition = function(boxes){
         i = 0;
     for(var ib = 0; ib < boxes.length; ib++){
 //        $(".column").eq(ib % colNum).append(boxes.eq?boxes.eq(ib).removeClass("unvisible"):boxes[ib]);
-        $(".column").eq((ib + this.getMinHeightColumnIndex()) % colNum).append(boxes[ib]); 
+        $(".column").eq(ib % colNum).append(boxes[ib]);
     }
-};
+}
 
 Waterfall.prototype.setHeader = function(){
     var headerW = this.win_w - 2 * this.margin;
@@ -137,8 +137,15 @@ Waterfall.prototype.asyncLoader = function(){
         loadDatas.forEach(function(item){
 //        $(this).clone().css(_this.lastPosition).appendTo(".waterfall");
             var imgstr = '',descStr;
-            imgstr = '<img class="lazy" src="http://120.24.224.144/images/'+item.image_url[0]+'" data-num="0">' + imgstr;
-            descStr = '<div class="desc" style="'+("border-bottom:1px solid #e6e6e6;")+'" data-desc="'+item.text+'">'+item.text +'</div>';
+            item.image_url.forEach(function(url,i){
+                if(i < item.image_url.length - 1){
+                    imgstr = '<img class="lazy" src="http://120.24.224.144/images/'+url+'" data-num="'+(i)+'" style="height:'+_this.smallH+'px;width:'+_this.smallH+'px">' + imgstr;
+                }else{
+                    imgstr = '<img class="lazy" src="http://120.24.224.144/images/'+url+'" data-num="'+(i)+'">' + imgstr;
+                }
+                descStr = '<div class="desc" style="'+("border-bottom:1px solid #e6e6e6;")+'" data-desc="'+item.text+'">'+item.text +'</div>';
+//                urlArray.push('/images/'+url);
+            });
             productsStrs.push('<div class="box" data-id="'+item.id+'">' +
                 '<div class="img-display" data-imgnum="'+item.image_url.length+'">'+ imgstr+
                 '</div>'+descStr+deleteProductBtn+'</div>');

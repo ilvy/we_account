@@ -30,8 +30,8 @@ function gotoLiveRoom_new(req,res){//相对布局瀑布流，不加载商品信�
         var session = req.session;
         var productRes,publisher = results;
         if(publisher.isPublisher){//发布者进入房间
-            res.render("live_room_rel_layout",{publisher:publisher.isPublisher?publisher:"",room:publisher.room_id});
             session.isPublisher = 1;
+            res.render("live_room_rel_layout",{publisher:publisher.isPublisher?publisher:"",room:publisher.room_id});
         }else{
             session.isPublisher = 0;
             if(openId){

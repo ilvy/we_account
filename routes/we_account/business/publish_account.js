@@ -120,7 +120,7 @@ function getPersonalInfo(req,res,isHost){
         if(err){
             console.log("pro_weix_account_info_get:"+err);
         }else{
-            var user = row[0][0];
+            var user = row[0][0] || {};
             console.log(user);
             user.sex = user.sex[0];
             console.log(user);
