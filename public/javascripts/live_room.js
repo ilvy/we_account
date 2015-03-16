@@ -269,6 +269,7 @@ function addListener(){
 
     $(document).on("vclick","#submit",function(){
         var desc = $(".product-desc").val();//TODO 检验字符串合法性
+        var title = $(".product-title").val();
         if(productArray.length == 0){
             $("#warn").fadeInAndOut();
             return;
@@ -277,7 +278,8 @@ function addListener(){
         var url = "/we_account/publish",
             postData = {
                 products:getProducts(),
-                desc:desc
+                desc:desc,
+                title:title
             };
         $.ajax({
             url:url,

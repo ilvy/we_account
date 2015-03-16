@@ -132,9 +132,10 @@ function publishProduct(req,res){
     var body = req.body;
     var products = body.products,
         desc = body.desc,
+        title = body.title,
         open_id = req.session.openId,
-        params = [products,desc,open_id];
-    dbOperator.query("call pro_publish(?,?,?)",params,function(err,row){
+        params = [products,desc,open_id,title];
+    dbOperator.query("call pro_publish(?,?,?,?)",params,function(err,row){
         if(err){
             console.log(err);
             response.failed("",res,err);
