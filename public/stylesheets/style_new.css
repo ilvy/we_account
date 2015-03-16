@@ -376,13 +376,23 @@ input.product-title{
     /*margin-left: 10%;*/
 }
 
+#sub-btn > div{
+    width: 36px;
+    height: 36px;
+    background-color: #58bba7;
+    border-radius: 20px;
+    padding-left: 0px;
+    float: right;
+    margin-top: 10px;
+}
+
 #submit{
     margin: 0 auto;
-    padding: 4px 8px;
+    /*padding: 4px 8px;*/
     border: none;
     /*background: #58bba7;*/
-    float: right;
-    color: #58bba7;
+    /*float: right;*/
+    color: #ffffff;
     font-weight: bolder;
 }
 #submit:active{
@@ -394,7 +404,7 @@ input.product-title{
     margin: 0 auto;
     /*width: 30px;*/
     /*margin-left: 38%;*/
-    font-size: 28px;
+    font-size: 40px;
 }
 
 #cancel{
