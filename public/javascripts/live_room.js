@@ -288,7 +288,7 @@ function addListener(){
             success:function(data){
                 console.log(data);
                 if(data && data.flag == 1){
-                    showNewUploadImg(data.data.id,productArray,desc);
+                    showNewUploadImg(data.data.id,productArray,title);
                     cleanPosition();
                     removeUploadPanel();
 //                    alertWithoutClickBubble("alert","上传成功");

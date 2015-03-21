@@ -2,7 +2,7 @@ body {
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
     overflow-x:hidden;
     /*padding: 6px;*/
-    background-color: rgba(230,230,230,1) !important;
+    background-color: #f1f1f1 !important;
 }
 
 a {
@@ -32,8 +32,11 @@ a {
     position: relative;
     /*padding: 2px 3px;*/
     background-color: white;
-    padding: 3px 3px 0px 3px;
+    /*padding: 3px 3px 0px 3px;*/
     border-bottom: 1px white transparent;
+    box-shadow: 2px 2px 2px #a1a1a1;
+    /*border-right: inset 2px #e3e3e3;*/
+    /*border-bottom: inset 2px #e3e3e3;*/
 }
 .box img{
     /*width:30%;*/
@@ -59,7 +62,7 @@ a {
 }
 div.desc{
     /*border-bottom: 1px solid #e6e6e6;*/
-    padding: 10px 0px 10px 0px;
+    padding: 10px 0px 3px 0px;
     text-align: left;
 }
 
@@ -73,6 +76,7 @@ div.desc{
     text-align: right !important;
     margin-top: 2px;
     margin-bottom: 2px;
+    padding-right: 3px;
 }
 
 .contact{

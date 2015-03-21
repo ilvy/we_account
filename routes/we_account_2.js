@@ -48,7 +48,7 @@ router.get("/",function(req,res){
     if(sign == signature){
         res.send(echostr);
     }else{
-        console.log("check failed：生成signature:"+sign+",微信signature:"+signature)
+        console.log("check failed：生成signature:"+sign+",微信signature:"+signature);
         console.log("weixin_sign:"+signature);
         console.log("my_sign:"+sign);
     }
@@ -255,6 +255,10 @@ router.get("/personalInfo",function(req,res){
 });
 
 router.post("/update_personality",publish_account.updatePersonality);
+
+router.post("/asyncAccountInfoFromWeix",function(req,res){
+    publish_account.asyncAccountInfoFromWeix(req.session.openId,res);
+});
 
 router.get("/xml",function(req,res){
     xmlParser.parseXml("<xml><ToUserName><![CDATA[gh_d28b25ec1197]]></ToUserName>" +

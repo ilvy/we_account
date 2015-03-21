@@ -26,6 +26,10 @@ body{
 .cell input{
     border: none;
     color: #ffffff;
+    background-color: #cdcdcd;
+}
+.async-btn{
+    text-align: center;
 }
 .btn-group{
     margin-top: 5px;

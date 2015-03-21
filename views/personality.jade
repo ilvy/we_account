@@ -36,6 +36,8 @@ html
                             .value(data-type="weix_account" data-value="#{user.weix_account}") #{user.weix_account}
                         - else if(user.weix_account && !isHost)
                             .value(data-type="weix_account" data-value="#{user.weix_account}(猛戳复制)") #{user.weix_account}(猛戳复制)
+                        - else id(!user.weix_account)
+                            .value(data-type="weix_account" data-value="")
                         - if (isHost)
                             .btn-group
                                 div
@@ -44,7 +46,7 @@ html
                                     input.cancel(type="button" value="取消")
                 .cell.col-xxs-12
                     .col-xxs-4 性别
-                    .col-xxs-6.col-xxs-offset-2
+                    .sex.col-xxs-6.col-xxs-offset-2
                         - if (user.sex == 1)
                             .value(data-type="sex" data-value="男") 男
                         - else
@@ -57,7 +59,7 @@ html
                                     input.cancel(type="button" value="取消")
                 .cell.col-xxs-12
                     .col-xxs-4 城市
-                    .col-xxs-6.col-xxs-offset-2
+                    .city.col-xxs-6.col-xxs-offset-2
                         .value(data-type="city" data-value="#{user.city}") #{user.city}
                         - if (isHost)
                             .btn-group
@@ -65,6 +67,10 @@ html
                                     input.sure(type="button" value="确定")
                                 div
                                     input.cancel(type="button" value="取消")
+                - if (isHost)
+                    .cell.col-xxs-12.async-btn
+                        input(type='button',value='从微信同步')#asyncWeiAccount
 script(src="/javascripts/jquery.js")
+script(src="/javascripts/libs/jquery.mobile.custom.js")
 - if (isHost)
     script(src="/javascripts/personality.js")

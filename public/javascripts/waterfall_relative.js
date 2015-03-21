@@ -129,7 +129,7 @@ Waterfall.prototype.asyncLoader = function(){
             isPublisher = results.data.isPublisher;
         }
         var deleteProductBtn = "";
-        if(isPublisher){
+        if(!isPublisher){
             deleteProductBtn = '<div class="delete-product"><i class="fa fa-times-circle"></div>';//<input type="button" value="删除"/>
         }else{
             deleteProductBtn = '<a href="/we_account/personalInfo"><div class="contact">联系卖家</div></a>';
@@ -138,7 +138,7 @@ Waterfall.prototype.asyncLoader = function(){
 //        $(this).clone().css(_this.lastPosition).appendTo(".waterfall");
             var imgstr = '',descStr;
             imgstr = '<img class="lazy" src="http://120.24.224.144/images/'+item.image_url[0]+'" data-num="0">' + imgstr;
-            descStr = '<div class="desc" style="'+("border-bottom:1px solid #e6e6e6;")+'" data-desc="'+item.title+'">'+item.title +'</div>';
+            descStr = '<div class="desc" style="'+("border-bottom:1px solid #e6e6e6;")+'" data-desc="'+item.title+'">'+(item.title?item.title:"") +'</div>';
             productsStrs.push('<div id="'+item.id+'" class="box" data-id="'+item.id+'">' +
                 '<div class="img-display" data-imgnum="'+item.image_url.length+'">'+ imgstr+
                 '</div>'+descStr+deleteProductBtn+'</div>');

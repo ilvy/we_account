@@ -16,9 +16,9 @@ html
                 li(data-id='#{roomobj.room_id}').favour_room_option.col-xxs-10.col-xxs-offset-1.col-xs-6.col-xs-offset-3
                     .nickname.col-xxs-6
                         - if(roomobj.nickname)
-                            #{roomobj.nickname}
+                            span #{roomobj.nickname}
                         - else
-                            &nbsp;
+                            span &nbsp;
                     .room.col-xxs-4 #{roomobj.room_id}
                     .fav-remove.col-xxs-2
                         i.fa.fa-times-circle

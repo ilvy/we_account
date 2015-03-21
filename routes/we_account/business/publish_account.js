@@ -62,10 +62,13 @@ function register(req,res){
  * 同步微信账户信息
  * @param openid
  */
-function asyncAccountInfoFromWeix(openid){
+function asyncAccountInfoFromWeix(openid,res){
     accountInfo.getAccountInfo(tokenManager.access_token,openid,function(accountInfo){
         console.log(accountInfo);
         accountInfo = JSON.parse(accountInfo);
+        if(res){
+            response.success(accountInfo,res);
+        }
         var args = [openid,accountInfo.nickname,accountInfo.headimgurl,accountInfo.sex,accountInfo.province+accountInfo.city,accountInfo.country,accountInfo.unionid,accountInfo.subscribe_time];
         dbOperator.query('call pro_weix_account_info(?,?,?,?,?,?,?,?)',args,function(err,rows){
             if(err){
@@ -121,7 +124,9 @@ function getPersonalInfo(req,res,isHost){
         }else{
             var user = row[0][0] || {};
             console.log(user);
-            user.sex = user.sex[0];
+            if(user.sex){
+                user.sex = user.sex[0];
+            }
             console.log(user);
             res.render("personality",{user:user?user:null,isHost:isHost});
         }
@@ -159,3 +164,4 @@ exports.checkUser = checkUser;
 exports.register = register;
 exports.getPersonalInfo = getPersonalInfo;
 exports.updatePersonality = updatePersonality;
+exports.asyncAccountInfoFromWeix = asyncAccountInfoFromWeix;
